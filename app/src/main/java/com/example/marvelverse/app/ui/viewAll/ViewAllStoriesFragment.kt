@@ -1,0 +1,14 @@
+package com.example.marvelverse.app.ui.viewAll
+
+import android.os.Bundle
+import android.view.View
+import com.example.marvelverse.app.ui.abstracts.BaseFragment
+import com.example.marvelverse.databinding.FragmentStoriesBinding
+
+class ViewAllStoriesFragment: BaseFragment<FragmentStoriesBinding>(FragmentStoriesBinding::inflate) {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+}
