@@ -22,10 +22,10 @@ class SeriesViewModel : ViewModel(), SeriesAdapter.OnSeriesClickListener {
     val series: LiveData<DataState<List<Series>>> get() = _series
 
     init {
-        getseries()
+        getSeries()
     }
 
-    private fun getseries() {
+    private fun getSeries() {
         _series.postValue(DataState.Loading)
         MarvelRepository.searchSeries()
             .subscribeOn(Schedulers.io())
