@@ -10,12 +10,12 @@ class ViewAllCreatorsFragment: BaseFragment<FragmentViewAllCreatorsBinding>
     (FragmentViewAllCreatorsBinding::inflate) {
 
     private val viewModel:MainViewModel by viewModels()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel=viewModel
         binding.lifecycleOwner=this
+        viewModel.getCreators()
 
     }
 }

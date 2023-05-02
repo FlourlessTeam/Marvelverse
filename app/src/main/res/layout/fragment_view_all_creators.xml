@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             android:orientation="vertical"
-            app:items="@{viewModel.creatorsData()}"
+            app:items="@{viewModel.creatorsData}"
             android:paddingHorizontal="8dp"
             app:spanCount="2"
             />

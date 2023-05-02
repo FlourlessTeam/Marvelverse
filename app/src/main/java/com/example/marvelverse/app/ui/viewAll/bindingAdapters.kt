@@ -11,30 +11,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 @SuppressLint("CheckResult")
 @BindingAdapter( value=["app:items"])
-fun setRecyclerStoriesItems(view:RecyclerView, items:Single<MutableList<Story>>?){
-    items?.
-    subscribeOn(Schedulers.io())?.
-    observeOn(AndroidSchedulers.mainThread())?.
-    subscribe({
-        val adapter=ViewAllStoriesAdapter()
+fun setRecyclerStoriesItems(view:RecyclerView, items:MutableList<Story>?){
+    val adapter=ViewAllStoriesAdapter()
          view.adapter= adapter
-        adapter.submitList(it)
-    },{
-
-    })
+         adapter.submitList(items)
 }
 
 @SuppressLint("CheckResult")
 @BindingAdapter( value=["app:items"])
-fun setRecyclerCreatorsItems(view:RecyclerView, items:Single<MutableList<Creator>>?){
-    items?.
-    subscribeOn(Schedulers.io())?.
-    observeOn(AndroidSchedulers.mainThread())?.
-    subscribe({
-        val adapter=ViewAllCreatorsAdapter()
-        view.adapter= adapter
-        adapter.submitList(it)
-    },{
-
-    })
+fun setRecyclerCreatorsItems(view:RecyclerView, items:MutableList<Creator>?){
+    val adapter=ViewAllCreatorsAdapter()
+    view.adapter= adapter
+    adapter.submitList(items)
 }
