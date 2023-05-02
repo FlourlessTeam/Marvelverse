@@ -10,7 +10,7 @@ import com.example.marvelverse.R
 import com.example.marvelverse.databinding.ItemInViewAllStoriesBinding
 import com.example.marvelverse.domain.entities.main.Story
 
-class ViewAllStoriesAdapter(private val list:Story):
+class ViewAllStoriesAdapter:
     ListAdapter<Story,ViewAllStoriesAdapter.ViewAllStoriesHolder>(StoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAllStoriesHolder {
