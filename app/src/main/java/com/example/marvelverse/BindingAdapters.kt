@@ -7,22 +7,31 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.marvelverse.app.ui.characters.CharactersAdapter
+import com.example.marvelverse.app.ui.series.SeriesAdapter
 import com.example.marvelverse.domain.entities.main.Character
+import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.wrappers.Thumbnail
 
-@BindingAdapter(value = ["imageUrl", "imageExtension"], requireAll = true)
-fun ImageView.bindImageUrl(imageUrl: String?, imageExtension: String?) {
-    if (imageUrl != null && imageExtension != null) {
-        val imageUrlSecure = imageUrl.replace("http","https")
-        val validUrl = "$imageUrlSecure.$imageExtension"
+@BindingAdapter(value = ["thumbnail"], requireAll = true)
+fun ImageView.bindImageUrl(thumbnail: Thumbnail?) {
+    thumbnail?.let {
+        val imageUrlSecure = thumbnail.path.replace("http", "https")
+        val validUrl = "$imageUrlSecure.${thumbnail.extension}"
         Glide.with(this)
             .load(validUrl)
             .into(this)
     }
 }
 
+
 @BindingAdapter("bindCharactersList")
 fun RecyclerView.bindCharactersList(characters: List<Character>?) {
     (adapter as CharactersAdapter).submitList(characters ?: emptyList())
+}
+
+@BindingAdapter("bindSeriesList")
+fun RecyclerView.bindSeriesList(series: List<Series>?) {
+    (adapter as SeriesAdapter).submitList(series ?: emptyList())
 }
 
 @BindingAdapter("showIfLoading")
