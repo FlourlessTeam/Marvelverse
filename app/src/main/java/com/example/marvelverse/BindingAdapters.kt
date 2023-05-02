@@ -25,14 +25,19 @@ fun ImageView.bindImageUrl(thumbnail: Thumbnail?) {
 
 
 @BindingAdapter("bindCharactersList")
-fun RecyclerView.bindCharactersList(characters: List<Character>?) {
-    (adapter as CharactersAdapter).submitList(characters ?: emptyList())
+fun <T> RecyclerView.bindCharactersList(dataState: DataState<T>?) {
+    dataState.let {
+        if(dataState is DataState.Success) {
+            (adapter as CharactersAdapter).submitList((dataState.data as List<Character>?) ?: emptyList())
+        }
+    }
 }
 
 @BindingAdapter("bindSeriesList")
-fun RecyclerView.bindSeriesList(series: List<Series>?) {
-    (adapter as SeriesAdapter).submitList(series ?: emptyList())
-}
+fun <T> RecyclerView.bindSeriesList(dataState: DataState<T>?) {
+    if(dataState is DataState.Success) {
+        (adapter as SeriesAdapter).submitList((dataState.data as List<Series>?) ?: emptyList())
+    }}
 
 @BindingAdapter("showIfLoading")
 fun <T> ProgressBar.showIfLoading(dataState: DataState<T>?) {
