@@ -30,4 +30,25 @@ object MarvelRepository {
     fun searchCreators(limit: Int? = null, title: String? = null) =
         marvelApiServices.getCreators(limit, title).map { it.data.results }
 
+    fun getRandomCharacters() =
+        marvelApiServices.getCharacters(30, null).map { it.data.results.shuffled().take(5) }
+
+    fun getRandomComics() =
+        marvelApiServices.getComics(30, null).map { it.data.results.shuffled().take(5) }
+
+
+    fun getRandomSeries() =
+        marvelApiServices.getSeries(30, null).map { it.data.results.shuffled().take(5) }
+
+
+    fun getRandomCreators() =
+        marvelApiServices.getCreators(30, null).map { it.data.results.shuffled().take(5) }
+
+    fun getRandomEvents() =
+        marvelApiServices.getEvents(30, null).map { it.data.results.shuffled().take(5) }
+
+    fun getRandomStories() =
+        marvelApiServices.getStories(30, null).map { it.data.results.shuffled().take(5) }
+
+
 }
