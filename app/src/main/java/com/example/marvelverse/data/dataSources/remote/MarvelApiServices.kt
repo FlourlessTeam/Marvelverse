@@ -10,43 +10,62 @@ import com.example.marvelverse.domain.entities.main.Story
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface MarvelApiServices {
 
     @GET("comics")
-    fun getComics(
+    fun fetchComics(
         @Query("limit") limit: Int?,
         @Query("titleStartsWith") title: String?
     ): Single<Response<Comic>>
 
 
     @GET("events")
-    fun getEvents(
+    fun fetchEvents(
         @Query("limit") limit: Int?,
         @Query("titleStartsWith") title: String?
     ): Single<Response<Event>>
 
     @GET("characters")
-    fun getCharacters(
+    fun fetchCharacters(
         @Query("limit") limit: Int?,
         @Query("titleStartsWith") title: String?
     ): Single<Response<Character>>
 
     @GET("stories")
-    fun getStories(
+    fun fetchStories(
         @Query("limit") limit: Int?,
         @Query("titleStartsWith") title: String?
     ): Single<Response<Story>>
 
     @GET("creators")
-    fun getCreators(
+    fun fetchCreators(
         @Query("limit") limit: Int?,
         @Query("titleStartsWith") title: String?
     ): Single<Response<Creator>>
 
     @GET("series")
-    fun getSeries(
+    fun fetchSeries(
         @Query("limit") limit: Int?,
         @Query("titleStartsWith") title: String?
     ): Single<Response<Series>>
+
+    @GET
+    fun fetchComicsByUrl(@Url url: String): Single<Response<Comic>>
+
+    @GET
+    fun fetchSeriesByUrl(@Url url: String): Single<Response<Series>>
+
+    @GET
+    fun fetchStoriesByUrl(@Url url: String): Single<Response<Story>>
+
+    @GET
+    fun fetchEventsByUrl(@Url url: String): Single<Response<Event>>
+
+    @GET
+    fun fetchCreatorsByUrl(@Url url: String): Single<Response<Creator>>
+
+    @GET
+    fun fetchCharactersByUrl(@Url url: String): Single<Response<Character>>
 }
