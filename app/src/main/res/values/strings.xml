@@ -7,4 +7,11 @@
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="about">About</string>
+    <string name="descrition_all">Norem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Norem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Norem ipsum dolor sit amet, consectetur</string>
+    <string name="comics">Comics</string>
+    <string name="characters">Characters</string>
+    <string name="creators">Creators</string>
+    <string name="stories">Stories</string>
+    <string name="events">Events</string>
+    <string name="description">Description</string>
 </resources>
