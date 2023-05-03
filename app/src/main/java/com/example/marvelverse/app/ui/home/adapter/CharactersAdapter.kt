@@ -8,9 +8,3 @@ import com.example.marvelverse.domain.entities.main.Character
 class CharactersAdapter(val characterList: List<Character>,private val listener: BaseInteractionListener): BaseAdapter<Character>(characterList,listener) {
   override val layoutID: Int= R.layout.item_character_card
 }
-interface OnCharacterClickListener: BaseInteractionListener {
-  fun onCharacterClick(character:Character)
-}
-interface OnViewAllCharactersClickListener: BaseInteractionListener {
-  fun onViewAllCharactersClick()
-}
