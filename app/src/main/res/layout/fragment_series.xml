@@ -5,10 +5,12 @@
     <data>
 <variable
     name="viewModel"
-    type="com.example.marvelverse.app.ui.series.ComicsViewModel" />
+    type="com.example.marvelverse.app.ui.series.SeriesViewModel" />
         <variable
             name="item"
             type="com.example.marvelverse.domain.entities.main.Series" />
+
+
     </data>
 
     <FrameLayout
@@ -49,6 +51,7 @@
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
                         android:scaleType="centerCrop"
+                        app:imageUrl="@{item.thumbnail.path+'.'+item.thumbnail.extension}"
                         app:roundPercent="0.1"
                         tools:src="@drawable/spider" />
 
@@ -96,18 +99,19 @@
                         android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/main_title"
                         android:textSize="16sp"
-                        android:text="@string/comics" />
+                        android:text="@string/characters" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/comics_recycler_view"
+                        android:id="@+id/series_characters"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:clipToPadding="false"
                         android:orientation="horizontal"
                         android:paddingHorizontal="16dp"
-                        android:clipToPadding="false"
-                        tools:listitem="@layout/item_home_card"
+                        app:items="@{viewModel.character}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        />
+                        tools:listitem="@layout/item_character_card" />
                     <TextView
                         android:id="@+id/text_characters"
                         android:layout_width="wrap_content"
@@ -117,15 +121,16 @@
                         android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/main_title"
                         android:textSize="16sp"
-                        android:text="@string/characters" />
+                        android:text="@string/comics" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/characters_recycler_view"
+                        android:id="@+id/series_comics"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:paddingHorizontal="16dp"
                         android:clipToPadding="false"
+                        app:items="@{viewModel.comics}"
                         tools:listitem="@layout/item_home_card"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                     <TextView
@@ -140,13 +145,14 @@
                         android:text="@string/events" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/events_recycler_view"
+                        android:id="@+id/series_events"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         tools:listitem="@layout/item_home_card"
                         android:paddingHorizontal="16dp"
                         android:clipToPadding="false"
+                        app:items="@{viewModel.event}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                       />
 
