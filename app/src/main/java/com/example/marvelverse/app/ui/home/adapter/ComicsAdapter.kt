@@ -5,12 +5,6 @@ import com.example.marvelverse.domain.entities.main.Comic
 import com.example.nestedrecyclerview.ui.base.BaseAdapter
 import com.example.nestedrecyclerview.ui.base.BaseInteractionListener
 
-class ComicsAdapter(val comicList: List<Comic>,private val listener: OnComicClickListener): BaseAdapter<Comic>(comicList,listener) {
+class ComicsAdapter(val comicList: List<Comic>,private val listener: BaseInteractionListener): BaseAdapter<Comic>(comicList,listener) {
   override val layoutID: Int= R.layout.item_comic_card
-}
-interface OnComicClickListener: BaseInteractionListener {
-  fun onComicClick(comic:Comic)
-}
-interface OnViewAllComicsClickListener: BaseInteractionListener {
-  fun onViewAllComicsClick()
 }
