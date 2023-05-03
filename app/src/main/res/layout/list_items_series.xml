@@ -2,8 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <data>
+
+        <variable
+            name="adapterRecycler"
+            type="com.example.marvelverse.app.ui.home.adapter.SeriesAdapter" />
+
+        <variable
+            name="listener"
+            type="com.example.marvelverse.app.ui.home.ParentInteractionListener" />
 
     </data>
 
@@ -18,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:gravity="center"
-            android:text="title"
+            android:text="Series"
             tools:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -32,6 +39,7 @@
             android:layout_marginEnd="16dp"
             android:gravity="center"
             android:text="Show All"
+            android:onClick="@{() -> listener.onViewAllSeriesClick()}"
             android:textColor="#474747"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView"
@@ -45,6 +53,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
+            android:adapter="@{adapterRecycler}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -6,10 +6,10 @@
     <data>
         <variable
             name="item"
-            type="com.example.marvelverse.domain.entities.main.Series" />
+            type="com.example.marvelverse.domain.entities.main.Story" />
         <variable
             name="listener"
-            type="com.example.marvelverse.app.ui.home.adapter.OnStoriesClickListener" />
+            type="com.example.marvelverse.app.ui.home.ParentInteractionListener" />
 
     </data>
 

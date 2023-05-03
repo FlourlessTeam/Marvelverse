@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.example.marvelverse.domain.entities.main.Event" />
+
         <variable
             name="listener"
-            type="com.example.marvelverse.app.ui.home.adapter.OnEventClickListener" />
+            type="com.example.marvelverse.app.ui.home.ParentInteractionListener" />
 
     </data>
 
@@ -18,8 +20,8 @@
         android:layout_width="125dp"
         android:layout_height="150dp"
         android:layout_marginEnd="@dimen/margin_small"
-        app:cardCornerRadius="12dp"
         android:onClick="@{() -> listener.onEventClick(item)}"
+        app:cardCornerRadius="12dp"
         app:cardElevation="0dp">
 
         <ImageView
@@ -27,10 +29,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/spider"
+            android:contentDescription="@string/home_card_image"
             android:foreground="@drawable/home_card_gradiant"
             android:scaleType="fitXY"
-            app:imageUrl="@{item.thumbnail.path}"
-            android:contentDescription="@string/home_card_image" />
+            app:imageUrl="@{item.thumbnail.path}" />
 
         <TextView
             android:id="@+id/homeCardName"
@@ -39,11 +41,11 @@
             android:layout_gravity="start|bottom"
             android:layout_marginHorizontal="@dimen/margin_small"
             android:layout_marginBottom="@dimen/margin_small"
-            android:maxLines="2"
             android:ellipsize="end"
             android:fontFamily="@font/poppins_medium"
-            android:textColor="@color/white"
+            android:maxLines="2"
             android:text="@{item.title}"
+            android:textColor="@color/white"
             android:textSize="10sp"
             tools:text="@string/fantastic_four_description" />
 
