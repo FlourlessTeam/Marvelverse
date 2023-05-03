@@ -5,19 +5,22 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.marvelverse.R
 import com.example.marvelverse.app.ui.home.HomeItem
+import com.example.marvelverse.app.ui.home.ParentInteractionListener
 import com.example.marvelverse.databinding.ListItemsCharacterBinding
 import com.example.marvelverse.databinding.ListItemsComicBinding
 import com.example.marvelverse.databinding.ListItemsEventBinding
 import com.example.marvelverse.databinding.ListItemsSeriesBinding
 import com.example.marvelverse.databinding.ListItemsStoriesBinding
 import com.example.marvelverse.domain.entities.main.Character
+import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.main.Story
 import com.example.nestedrecyclerview.ui.base.BaseInteractionListener
 import com.example.nestedrecyclerview.ui.base.BaseNestedRecyclerAdapter
 
-class HomeAdapter(private val listeneer:BaseInteractionListener) : BaseNestedRecyclerAdapter<HomeItem>() {
+class HomeAdapter(private val listener: ParentInteractionListener) : BaseNestedRecyclerAdapter<HomeItem>() {
     override fun sortItem(item: HomeItem) = item.rank
-
 
     override fun getTypeView(item: HomeItem): Int {
         return when (item) {
@@ -26,9 +29,6 @@ class HomeAdapter(private val listeneer:BaseInteractionListener) : BaseNestedRec
             is HomeItem.ComicsItem -> TYPE_COMIC
             is HomeItem.SeriesItem -> TYPE_SERIES
             is HomeItem.StoriesItem -> TYPE_STORIES
-            else -> {
-                throw IllegalArgumentException("Invalid type of data " + item)
-            }
         }
     }
 
@@ -45,7 +45,7 @@ class HomeAdapter(private val listeneer:BaseInteractionListener) : BaseNestedRec
                     parent,
                     false
                 )
-                EventsHolder(binding)
+                EventsHolder(binding,listener)
             }
 
             TYPE_CHARACTER -> {
@@ -55,7 +55,7 @@ class HomeAdapter(private val listeneer:BaseInteractionListener) : BaseNestedRec
                     parent,
                     false
                 )
-                CharactersHolder(binding, listeneer)
+                CharactersHolder(binding, listener)
 
             }
 
@@ -66,7 +66,7 @@ class HomeAdapter(private val listeneer:BaseInteractionListener) : BaseNestedRec
                     parent,
                     false
                 )
-                ComicsHolder(binding)
+                ComicsHolder(binding,listener)
             }
 
             TYPE_SERIES -> {
@@ -76,17 +76,21 @@ class HomeAdapter(private val listeneer:BaseInteractionListener) : BaseNestedRec
                     parent,
                     false
                 )
-                SeriesHolder(binding)
+                SeriesHolder(binding,listener)
             }
 
-            else -> {
+            TYPE_STORIES -> {
                 val binding = DataBindingUtil.inflate<ListItemsStoriesBinding>(
                     inflater,
                     viewType,
                     parent,
                     false
                 )
-                StoriesHolder(binding)
+                StoriesHolder(binding,listener)
+            }
+
+            else -> {
+                return null!!
             }
         }
     }
@@ -113,7 +117,6 @@ class HomeAdapter(private val listeneer:BaseInteractionListener) : BaseNestedRec
                 (holder as StoriesHolder).bind(item.storiesList)
             }
 
-            else -> {}
         }
     }
 
@@ -127,51 +130,51 @@ class HomeAdapter(private val listeneer:BaseInteractionListener) : BaseNestedRec
 
 }
 
-class EventsHolder(binding: ListItemsEventBinding) :
+class EventsHolder(binding: ListItemsEventBinding,private val interactionListener:BaseInteractionListener ) :
     BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
     override fun bind(item: Any?) {
         with(binding as ListItemsEventBinding) {
-
+            binding.adapterRecycler=EventAdapter(item as List<Event>,interactionListener)
             executePendingBindings()
         }
     }
 }
 
-class CharactersHolder(binding: ListItemsCharacterBinding,val listener:BaseInteractionListener ) :
+class CharactersHolder(binding: ListItemsCharacterBinding, private val interactionListener:BaseInteractionListener ) :
     BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
     override fun bind(item: Any?) {
         with(binding as ListItemsCharacterBinding) {
-            binding.adapterRecycler=CharactersAdapter(item as List<Character>,listener)
+            binding.adapterRecycler=CharactersAdapter(item as List<Character>,interactionListener)
             executePendingBindings()
         }
     }
 }
 
-class ComicsHolder(binding: ListItemsComicBinding) :
+class ComicsHolder(binding: ListItemsComicBinding,private val interactionListener:BaseInteractionListener ) :
     BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
     override fun bind(item: Any?) {
         with(binding as ListItemsComicBinding) {
-
+            binding.adapterRecycler=ComicsAdapter(item as List<Comic>,interactionListener)
             executePendingBindings()
         }
     }
 }
 
-class SeriesHolder(binding: ListItemsSeriesBinding) :
+class SeriesHolder(binding: ListItemsSeriesBinding,private val interactionListener:BaseInteractionListener ) :
     BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
     override fun bind(item: Any?) {
         with(binding as ListItemsSeriesBinding) {
-
+            binding.adapterRecycler=SeriesAdapter(item as List<Series>,interactionListener)
             executePendingBindings()
         }
     }
 }
 
-class StoriesHolder(binding: ListItemsStoriesBinding) :
+class StoriesHolder(binding: ListItemsStoriesBinding,private val interactionListener:BaseInteractionListener ) :
     BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
     override fun bind(item: Any?) {
         with(binding as ListItemsStoriesBinding) {
-
+            binding.adapterRecycler=StoriesAdapter(item as List<Story>,interactionListener)
             executePendingBindings()
         }
     }
