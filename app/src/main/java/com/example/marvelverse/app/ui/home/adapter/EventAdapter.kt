@@ -5,12 +5,6 @@ import com.example.marvelverse.domain.entities.main.Event
 import com.example.nestedrecyclerview.ui.base.BaseAdapter
 import com.example.nestedrecyclerview.ui.base.BaseInteractionListener
 
-class EventAdapter(val eventList: List<Event>, private val listener: OnEventClickListener): BaseAdapter<Event>(eventList,listener) {
+class EventAdapter(val eventList: List<Event>, private val listener: BaseInteractionListener): BaseAdapter<Event>(eventList,listener) {
   override val layoutID: Int= R.layout.item_event_card
-}
-interface OnEventClickListener: BaseInteractionListener {
-  fun onEventClick(event:Event)
-}
-interface OnViewAllEventsClickListener: BaseInteractionListener {
-  fun onViewAllEventsClick()
 }
