@@ -9,25 +9,44 @@ object MarvelRepository {
     }
 
     fun searchComics(limit: Int? = null, title: String? = null) =
-        marvelApiServices.getComics(limit, title).map { it.data.results }
+        marvelApiServices.fetchComics(limit, title).map { it.data.results }
 
     fun searchSeries(limit: Int? = null, title: String? = null) =
-        marvelApiServices.getSeries(limit, title).map { it.data.results }
+        marvelApiServices.fetchSeries(limit, title).map { it.data.results }
 
 
     fun searchCharacters(limit: Int? = null, title: String? = null) =
-        marvelApiServices.getCharacters(limit, title).map { it.data.results }
+        marvelApiServices.fetchCharacters(limit, title).map { it.data.results }
 
 
     fun searchEvents(limit: Int? = null, title: String? = null) =
-        marvelApiServices.getEvents(limit, title).map { it.data.results }
+        marvelApiServices.fetchEvents(limit, title).map { it.data.results }
 
 
     fun searchStories(limit: Int? = null, title: String? = null) =
-        marvelApiServices.getStories(limit, title).map { it.data.results }
+        marvelApiServices.fetchStories(limit, title).map { it.data.results }
 
 
     fun searchCreators(limit: Int? = null, title: String? = null) =
-        marvelApiServices.getCreators(limit, title).map { it.data.results }
+        marvelApiServices.fetchCreators(limit, title).map { it.data.results }
+
+    fun getComicsByUrl(url: String) =
+        marvelApiServices.fetchComicsByUrl(url).map { it.data.results }
+
+    fun getStoriesByUrl(url: String) =
+        marvelApiServices.fetchStoriesByUrl(url).map { it.data.results }
+
+    fun getSeriesByUrl(url: String) =
+        marvelApiServices.fetchSeriesByUrl(url).map { it.data.results }
+
+    fun getCharactersByUrl(url: String) =
+        marvelApiServices.fetchCharactersByUrl(url).map { it.data.results }
+
+    fun getCreatorsByUrl(url: String) =
+        marvelApiServices.fetchCreatorsByUrl(url).map { it.data.results }
+
+    fun getEventsByUrl(url: String) =
+        marvelApiServices.fetchEventsByUrl(url).map { it.data.results }
+
 
 }

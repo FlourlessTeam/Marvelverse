@@ -17,8 +17,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         //Todo add your Api Keys here
-        buildConfigField "String", "public_key", '"add your public key here"'
-        buildConfigField "String", "private_key", '"add your private key here"'
+        buildConfigField "String", "public_key", '""'
+        buildConfigField "String", "private_key", '""'
     }
     buildFeatures {
         dataBinding true
