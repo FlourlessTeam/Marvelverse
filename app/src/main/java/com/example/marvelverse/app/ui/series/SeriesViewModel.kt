@@ -10,7 +10,6 @@ import com.example.marvelverse.domain.entities.main.Series
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 private const val TAG = "seriesViewModel"
@@ -30,11 +29,11 @@ class SeriesViewModel : ViewModel(), SeriesAdapter.OnSeriesClickListener {
         MarvelRepository.searchSeries()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = {
+            .subscribe(
+                {
                     _series.postValue(DataState.Success(it))
                 },
-                onError = {
+                {
                     _series.postValue(DataState.Error(it))
                 }
             ).addTo(compositeDisposable)

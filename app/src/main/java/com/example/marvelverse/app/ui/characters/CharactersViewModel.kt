@@ -10,7 +10,6 @@ import com.example.marvelverse.domain.entities.main.Character
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 private const val TAG = "CharactersViewModel"
@@ -30,11 +29,11 @@ class CharactersViewModel : ViewModel(), CharactersAdapter.OnCharacterClickListe
         MarvelRepository.searchCharacters()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = {
+            .subscribe(
+                {
                     _characters.postValue(DataState.Success(it))
                 },
-                onError = {
+                {
                     _characters.postValue(DataState.Error(it))
                 }
             ).addTo(compositeDisposable)
