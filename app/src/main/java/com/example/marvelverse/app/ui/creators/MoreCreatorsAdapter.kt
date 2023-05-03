@@ -1,4 +1,4 @@
-package com.example.marvelverse.app.ui.viewAll
+package com.example.marvelverse.app.ui.creators
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +10,8 @@ import com.example.marvelverse.R
 import com.example.marvelverse.databinding.ItemInViewAllCreatorsBinding
 import com.example.marvelverse.domain.entities.main.Creator
 
-class ViewAllCreatorsAdapter :
-    ListAdapter<Creator, ViewAllCreatorsAdapter.ViewAllCreatorsHolder>(CreatorDiffCallback()) {
+class MoreCreatorsAdapter :
+    ListAdapter<Creator, MoreCreatorsAdapter.ViewAllCreatorsHolder>(CreatorDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAllCreatorsHolder {
         val view= LayoutInflater.from(parent.context).inflate(R.layout.item_in_view_all_creators,parent,false)

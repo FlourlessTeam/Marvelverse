@@ -1,4 +1,4 @@
-package com.example.marvelverse.app.ui.viewAll
+package com.example.marvelverse.app.ui.stories
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +10,8 @@ import com.example.marvelverse.R
 import com.example.marvelverse.databinding.ItemInViewAllStoriesBinding
 import com.example.marvelverse.domain.entities.main.Story
 
-class ViewAllStoriesAdapter:
-    ListAdapter<Story,ViewAllStoriesAdapter.ViewAllStoriesHolder>(StoryDiffCallback()) {
+class MoreStoriesAdapter:
+    ListAdapter<Story, MoreStoriesAdapter.ViewAllStoriesHolder>(StoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAllStoriesHolder {
         val view=LayoutInflater.from(parent.context).inflate(R.layout.item_in_view_all_stories,parent,false)
