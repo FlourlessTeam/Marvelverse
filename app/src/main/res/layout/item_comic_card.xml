@@ -29,7 +29,7 @@
             android:background="@drawable/spider"
             android:foreground="@drawable/home_card_gradiant"
             android:scaleType="fitXY"
-            app:imageUrl="@{item.thumbnail.path}"
+            app:imageUrl="@{item.thumbnail.path+'.'+item.thumbnail.extension}"
             android:contentDescription="@string/home_card_image" />
 
         <TextView

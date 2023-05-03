@@ -17,8 +17,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         //Todo add your Api Keys here
-        buildConfigField "String", "public_key", '""'
-        buildConfigField "String", "private_key", '""'
+        buildConfigField "String", "public_key", '"c62dcb6867edc2c34ae0bef1867c9f35"'
+        buildConfigField "String", "private_key", '"32deb763563f15031ab2169cf59dbd64579be078"'
     }
     buildFeatures {
         dataBinding true
@@ -68,4 +68,12 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    //SafeArgs
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 }
