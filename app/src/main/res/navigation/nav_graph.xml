@@ -11,11 +11,6 @@
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/creatorsFragment"
-        android:name="com.example.marvelverse.app.ui.creators.CreatorsFragment"
-        android:label="CreatorsFragment"
-        tools:layout="@layout/fragment_creators" />
-    <fragment
         android:id="@+id/eventsFragment"
         android:name="com.example.marvelverse.app.ui.events.EventsFragment"
         android:label="EventsFragment"
@@ -26,11 +21,6 @@
         android:label="SeriesFragment"
         tools:layout="@layout/fragment_series" />
     <fragment
-        android:id="@+id/storiesFragment"
-        android:name="com.example.marvelverse.app.ui.stories.StoriesFragment"
-        android:label="StoriesFragment"
-        tools:layout="@layout/fragment_stories" />
-    <fragment
         android:id="@+id/charactersFragment"
         android:name="com.example.marvelverse.app.ui.characters.CharactersFragment"
         android:label="fragment_characters"
@@ -40,6 +30,16 @@
         android:name="com.example.marvelverse.app.ui.comics.ComicsFragment"
         android:label="fragment_comics"
         tools:layout="@layout/fragment_comics" />
+    <fragment
+        android:id="@+id/moreCreatorsFragment"
+        android:name="com.example.marvelverse.app.ui.creators.MoreCreatorsFragment"
+        android:label="MoreCreatorsFragment"
+        tools:layout="@layout/fragment_more_creators" />
+    <fragment
+        android:id="@+id/moreStoriesFragment"
+        android:name="com.example.marvelverse.app.ui.stories.MoreStoriesFragment"
+        android:label="MoreStoriesFragment"
+        tools:layout="@layout/fragment_more_stories" />
 
 
 </navigation>
