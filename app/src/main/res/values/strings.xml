@@ -2,4 +2,7 @@
     <string name="app_name">Marvelverse</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="marvel_previews_2017">Marvel Previews (2017)</string>
+    <string name="text_body">Norem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Norem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Norem ipsum dolor sit amet, consectetur</string>
+    <string name="description">Description</string>
 </resources>

@@ -13,4 +13,18 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="CardImageStyle" parent="">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:backgroundTint">#FAFAFA</item>
+        <item name="android:background">#FAFAFA</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Material3.Corner.Large</item>
+    </style>
+    <style name="TextStyle.Title.Large" parent="">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#DE000000</item>
+    </style>
 </resources>
