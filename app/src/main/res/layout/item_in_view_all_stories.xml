@@ -7,6 +7,9 @@
         <variable
             name="item"
             type="com.example.marvelverse.domain.entities.main.Story" />
+        <variable
+            name="listener"
+            type="com.example.marvelverse.app.ui.stories.MoreStoriesListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -17,12 +20,13 @@
         android:layout_marginTop="8dp"
         android:clickable="true"
         app:cardCornerRadius="8dp"
-        app:cardElevation="0dp">
+        app:cardElevation="0dp"
+        android:onClick="@{() -> listener.onClick(item)">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#DEF2F6">
+            android:background="#F1F1F1F1">
 
             <TextView
                 android:id="@+id/text_title"

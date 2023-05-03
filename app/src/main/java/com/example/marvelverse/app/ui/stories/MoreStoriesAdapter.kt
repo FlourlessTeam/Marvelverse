@@ -10,7 +10,7 @@ import com.example.marvelverse.R
 import com.example.marvelverse.databinding.ItemInViewAllStoriesBinding
 import com.example.marvelverse.domain.entities.main.Story
 
-class MoreStoriesAdapter:
+class MoreStoriesAdapter(private val listener: MoreStoriesListener):
     ListAdapter<Story, MoreStoriesAdapter.ViewAllStoriesHolder>(StoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAllStoriesHolder {
@@ -21,6 +21,7 @@ class MoreStoriesAdapter:
     override fun onBindViewHolder(holder: ViewAllStoriesHolder, position: Int) {
         val item = getItem(position)
         holder.binding.item=item
+        holder.binding.listener=listener
 
     }
 
@@ -38,4 +39,8 @@ class MoreStoriesAdapter:
         }
     }
 
+}
+
+interface MoreStoriesListener{
+    fun onClick(story: Story)
 }
