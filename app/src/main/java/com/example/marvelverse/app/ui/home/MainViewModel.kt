@@ -25,8 +25,16 @@ class MainViewModel : ViewModel() {
 
     val errorMessage:MutableLiveData<String> = MutableLiveData()
 
+    init {
+        getRandomCharacters()
+        getRandomComics()
+        getRandomStories()
+        getRandomEvents()
+        getRandomCreators()
+        getRandomSeries()
+    }
     @SuppressLint("CheckResult")
-    fun getCharacters() {
+    fun getRandomCharacters() {
         MarvelRepository.getRandomCharacters()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -38,7 +46,7 @@ class MainViewModel : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun getComics() {
+    fun getRandomComics() {
         MarvelRepository.getRandomComics()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -50,7 +58,7 @@ class MainViewModel : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun getStories() {
+    fun getRandomStories() {
         MarvelRepository.getRandomStories()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -62,7 +70,7 @@ class MainViewModel : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun getEvents() {
+    fun getRandomEvents() {
         MarvelRepository.getRandomEvents()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -74,7 +82,7 @@ class MainViewModel : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun getCreators() {
+    fun getRandomCreators() {
         MarvelRepository.getRandomCreators()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -86,7 +94,7 @@ class MainViewModel : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun getSeries() {
+    fun getRandomSeries() {
         MarvelRepository.getRandomSeries()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
