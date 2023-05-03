@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelverse.R
 import com.example.marvelverse.databinding.ItemInViewAllCreatorsBinding
 import com.example.marvelverse.domain.entities.main.Creator
+import com.example.marvelverse.domain.entities.main.Story
 
-class MoreCreatorsAdapter :
+class MoreCreatorsAdapter(private val listener: MoreCreatorsListener) :
     ListAdapter<Creator, MoreCreatorsAdapter.ViewAllCreatorsHolder>(CreatorDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAllCreatorsHolder {
@@ -22,7 +23,7 @@ class MoreCreatorsAdapter :
     override fun onBindViewHolder(holder: ViewAllCreatorsHolder, position: Int) {
         val item = getItem(position)
         holder.binding.item=item
-
+        holder.binding.listener=listener
     }
 
     class ViewAllCreatorsHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -39,4 +40,8 @@ class MoreCreatorsAdapter :
         }
     }
 
+}
+
+interface MoreCreatorsListener{
+    fun onClick(creator: Creator)
 }
