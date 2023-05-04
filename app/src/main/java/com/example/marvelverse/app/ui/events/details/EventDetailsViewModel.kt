@@ -22,7 +22,7 @@ class EventDetailsViewModel : ViewModel(), CharacterInteractionListener, ComicIn
 	private val _comics: MutableLiveData<List<Comic>> = MutableLiveData()
 	private val _series: MutableLiveData<List<Series>> = MutableLiveData()
 
-	private val _detailsEvents: MutableLiveData<DetailsEvent> = MutableLiveData()
+	private val _eventDetailsEvents: MutableLiveData<EventDetailsEvents> = MutableLiveData()
 
 	val comics: LiveData<List<Comic>>
 		get() = _comics
@@ -31,8 +31,8 @@ class EventDetailsViewModel : ViewModel(), CharacterInteractionListener, ComicIn
 	val character: LiveData<List<Character>>
 		get() = _character
 
-	val detailsEvents: LiveData<DetailsEvent>
-		get() = _detailsEvents
+	val eventDetailsEvents: LiveData<EventDetailsEvents>
+		get() = _eventDetailsEvents
 
 
 	fun getCharacters(url: String) {
@@ -73,14 +73,14 @@ class EventDetailsViewModel : ViewModel(), CharacterInteractionListener, ComicIn
 	}
 
 	override fun onCharacterClick(character: Character) {
-		_detailsEvents.postValue(DetailsEvent.ClickCharacterEvent(character))
+		_eventDetailsEvents.postValue(EventDetailsEvents.ClickCharacterEvent(character))
 	}
 
 	override fun onComicClick(comic: Comic) {
-		_detailsEvents.postValue(DetailsEvent.ClickComicEvent(comic))
+		_eventDetailsEvents.postValue(EventDetailsEvents.ClickComicEvent(comic))
 	}
 
 	override fun onSeriesClick(series: Series) {
-		_detailsEvents.postValue(DetailsEvent.ClickSeriesEvent(series))
+		_eventDetailsEvents.postValue(EventDetailsEvents.ClickSeriesEvent(series))
 	}
 }
