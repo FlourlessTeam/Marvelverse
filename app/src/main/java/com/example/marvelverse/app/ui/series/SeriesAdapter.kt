@@ -24,9 +24,7 @@ class SeriesAdapter(private val clickListener: ClickListener) : BaseRecyclerAdap
     }
     override fun BaseViewHolder<Series, ItemSeriesBinding>.bind(
         marvelData: Series,
-        onViewClicked: (Series) -> Unit
-    ) {
-        binding.series = marvelData
-        binding.clickListener=clickListener
-    }
+            onViewClicked: (Series) -> Unit
+    ) { binding.series = marvelData
+        binding.clickListener=clickListener }
 }
