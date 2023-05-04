@@ -135,6 +135,7 @@ class EventsHolder(binding: ListItemsEventBinding,private val interactionListene
     override fun bind(item: Any?) {
         with(binding as ListItemsEventBinding) {
             binding.adapterRecycler=EventAdapter(item as List<Event>,interactionListener)
+            binding.listener=interactionListener as ParentInteractionListener
             executePendingBindings()
         }
     }
@@ -145,6 +146,7 @@ class CharactersHolder(binding: ListItemsCharacterBinding, private val interacti
     override fun bind(item: Any?) {
         with(binding as ListItemsCharacterBinding) {
             binding.adapterRecycler=CharactersAdapter(item as List<Character>,interactionListener)
+            binding.listener=interactionListener as ParentInteractionListener
             executePendingBindings()
         }
     }
@@ -155,6 +157,7 @@ class ComicsHolder(binding: ListItemsComicBinding,private val interactionListene
     override fun bind(item: Any?) {
         with(binding as ListItemsComicBinding) {
             binding.adapterRecycler=ComicsAdapter(item as List<Comic>,interactionListener)
+            binding.listener=interactionListener as ParentInteractionListener
             executePendingBindings()
         }
     }
@@ -165,6 +168,7 @@ class SeriesHolder(binding: ListItemsSeriesBinding,private val interactionListen
     override fun bind(item: Any?) {
         with(binding as ListItemsSeriesBinding) {
             binding.adapterRecycler=SeriesAdapter(item as List<Series>,interactionListener)
+            binding.listener=interactionListener as ParentInteractionListener
             executePendingBindings()
         }
     }
@@ -175,6 +179,7 @@ class StoriesHolder(binding: ListItemsStoriesBinding,private val interactionList
     override fun bind(item: Any?) {
         with(binding as ListItemsStoriesBinding) {
             binding.adapterRecycler=StoriesAdapter(item as List<Story>,interactionListener)
+            binding.listener=interactionListener as ParentInteractionListener
             executePendingBindings()
         }
     }
