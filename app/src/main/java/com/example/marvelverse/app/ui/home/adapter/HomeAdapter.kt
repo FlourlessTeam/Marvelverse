@@ -19,6 +19,8 @@ import com.example.marvelverse.domain.entities.main.Story
 import com.example.nestedrecyclerview.ui.base.BaseInteractionListener
 import com.example.nestedrecyclerview.ui.base.BaseNestedRecyclerAdapter
 
+
+
 class HomeAdapter(private val listener: ParentInteractionListener) : BaseNestedRecyclerAdapter<HomeItem>() {
     override fun sortItem(item: HomeItem) = item.rank
 
@@ -134,7 +136,9 @@ class EventsHolder(binding: ListItemsEventBinding,private val interactionListene
     BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
     override fun bind(item: Any?) {
         with(binding as ListItemsEventBinding) {
-            binding.adapterRecycler=EventAdapter(item as List<Event>,interactionListener)
+            val adapterRecycler= EventAdapter(interactionListener)
+            adapterRecycler.setItems(item as List<Event>)
+            binding.adapterRecycler=adapterRecycler
             binding.listener=interactionListener as ParentInteractionListener
             executePendingBindings()
         }
@@ -145,7 +149,9 @@ class CharactersHolder(binding: ListItemsCharacterBinding, private val interacti
     BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
     override fun bind(item: Any?) {
         with(binding as ListItemsCharacterBinding) {
-            binding.adapterRecycler=CharactersAdapter(item as List<Character>,interactionListener)
+            val adapterRecycler= CharactersAdapter(interactionListener)
+            adapterRecycler.setItems(item as List<Character>)
+            binding.adapterRecycler=adapterRecycler
             binding.listener=interactionListener as ParentInteractionListener
             executePendingBindings()
         }
@@ -156,7 +162,9 @@ class ComicsHolder(binding: ListItemsComicBinding,private val interactionListene
     BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
     override fun bind(item: Any?) {
         with(binding as ListItemsComicBinding) {
-            binding.adapterRecycler=ComicsAdapter(item as List<Comic>,interactionListener)
+            val adapterRecycler= ComicsAdapter(interactionListener)
+            adapterRecycler.setItems(item as List<Comic>)
+            binding.adapterRecycler=adapterRecycler
             binding.listener=interactionListener as ParentInteractionListener
             executePendingBindings()
         }
@@ -167,7 +175,9 @@ class SeriesHolder(binding: ListItemsSeriesBinding,private val interactionListen
     BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
     override fun bind(item: Any?) {
         with(binding as ListItemsSeriesBinding) {
-            binding.adapterRecycler=SeriesAdapter(item as List<Series>,interactionListener)
+            val adapterRecycler= SeriesAdapter(interactionListener)
+            adapterRecycler.setItems(item as List<Series>)
+            binding.adapterRecycler=adapterRecycler
             binding.listener=interactionListener as ParentInteractionListener
             executePendingBindings()
         }
@@ -178,7 +188,9 @@ class StoriesHolder(binding: ListItemsStoriesBinding,private val interactionList
     BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
     override fun bind(item: Any?) {
         with(binding as ListItemsStoriesBinding) {
-            binding.adapterRecycler=StoriesAdapter(item as List<Story>,interactionListener)
+            val adapterRecycler= StoriesAdapter(interactionListener)
+            adapterRecycler.setItems(item as List<Story>)
+            binding.adapterRecycler=adapterRecycler
             binding.listener=interactionListener as ParentInteractionListener
             executePendingBindings()
         }
