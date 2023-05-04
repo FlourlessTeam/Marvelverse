@@ -22,12 +22,18 @@ class EventDetailsViewModel : ViewModel(), CharacterInteractionListener, ComicIn
 	private val _comics: MutableLiveData<List<Comic>> = MutableLiveData()
 	private val _series: MutableLiveData<List<Series>> = MutableLiveData()
 
+	private val _detailsEvents: MutableLiveData<DetailsEvent> = MutableLiveData()
+
 	val comics: LiveData<List<Comic>>
 		get() = _comics
 	val series: LiveData<List<Series>>
 		get() = _series
 	val character: LiveData<List<Character>>
 		get() = _character
+
+	val detailsEvents: LiveData<DetailsEvent>
+		get() = _detailsEvents
+
 
 	fun getCharacters(url: String) {
 		val single = MarvelRepository.getCharactersByUrl(url).subscribeOn(Schedulers.io())
@@ -67,11 +73,14 @@ class EventDetailsViewModel : ViewModel(), CharacterInteractionListener, ComicIn
 	}
 
 	override fun onCharacterClick(character: Character) {
+		_detailsEvents.postValue(DetailsEvent.ClickCharacterEvent(character))
 	}
 
 	override fun onComicClick(comic: Comic) {
+		_detailsEvents.postValue(DetailsEvent.ClickComicEvent(comic))
 	}
 
 	override fun onSeriesClick(series: Series) {
+		_detailsEvents.postValue(DetailsEvent.ClickSeriesEvent(series))
 	}
 }
