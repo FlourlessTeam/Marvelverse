@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:gravity="center"
-            android:text="title"
+            android:text="Characters"
             tools:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -47,7 +47,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_recent_food"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingHorizontal="16dp"
