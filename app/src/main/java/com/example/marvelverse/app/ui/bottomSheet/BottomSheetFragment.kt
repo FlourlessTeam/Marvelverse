@@ -32,9 +32,8 @@ class BottomSheetFragment(private val bottomSheetListener: BottomSheetListener) 
         }
 
     }
-
     private fun buttonClicked() {
-        val selectedSearchFilter = when (binding.chipGroupIngredients.checkedChipId) {
+        val selectedSearchFilter = when (binding.chipGroupSearchOption.checkedChipId) {
             binding.chipCharacter.id -> SearchFilter.Character
             binding.chipComics.id -> SearchFilter.Comic
             binding.chipCreator.id -> SearchFilter.Creator

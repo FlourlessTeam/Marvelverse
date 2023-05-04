@@ -39,7 +39,7 @@
             android:scrollbars="none">
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_ingredients"
+                android:id="@+id/chip_group_search_option"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:singleSelection="true">

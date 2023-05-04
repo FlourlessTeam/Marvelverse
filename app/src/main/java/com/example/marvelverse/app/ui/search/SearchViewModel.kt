@@ -1,6 +1,7 @@
 package com.example.marvelverse.app.ui.search
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,16 +9,28 @@ import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Creator
 import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.wrappers.Response
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+
+
+enum class SearchFilter{
+    Character,
+    Comic,
+    Event,
+    Creator
+}
 
 @SuppressLint("CheckResult")
 class SearchViewModel : ViewModel() {
 
-
     private val repositry = MarvelRepository
+
+    var searchFilterOption:SearchFilter = SearchFilter.Character
+
+    private val compositeDisposable = CompositeDisposable()
 
     private val _comices = MutableLiveData<List<Comic>>()
     val comices: LiveData<List<Comic>>
@@ -37,33 +50,40 @@ class SearchViewModel : ViewModel() {
         get() = _event
 
     fun comicSearch(limit: Int?, title: String?) {
-        repositry.searchComics(limit, title)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onComicsSearchSuccess, ::onSearchError)
+        compositeDisposable.add(
+            repositry.searchComics(limit, title)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(::onComicsSearchSuccess, ::onSearchError)
+        )
     }
 
     fun characterSearch(limit: Int?, title: String?) {
+        compositeDisposable.add(
         repositry.searchCharacters(limit, title)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onCharacterSearchSuccess, ::onSearchError)
+        )
     }
 
     fun creatorSearch(limit: Int?, title: String?) {
+        compositeDisposable.add(
         repositry.searchCreators(limit, title)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onCreatorSearchSuccess, ::onSearchError)
+        )
     }
 
     fun eventSearch(limit: Int?, title: String?) {
+        compositeDisposable.add(
         repositry.searchEvents(limit, title)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onEventSearchSuccess, ::onSearchError)
+        )
     }
-
 
     private fun onComicsSearchSuccess(comics: List<Comic>) {
         _comices.postValue(comics)
@@ -78,7 +98,12 @@ class SearchViewModel : ViewModel() {
         _event.postValue(events)
     }
 
-    private fun onSearchError(throwable: Throwable) {}
+    private fun onSearchError(throwable: Throwable) {
+        Log.d("TAG" , throwable.message.toString())
+    }
 
-
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+    }
 }
