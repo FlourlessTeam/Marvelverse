@@ -5,6 +5,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
+import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
+import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
@@ -12,7 +16,7 @@ import com.example.marvelverse.domain.entities.main.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class SeriesViewModel():ViewModel() {
+class SeriesViewModel():ViewModel(),ComicInteractionListener,EventInteractionListener,CharacterInteractionListener {
     private val _character: MutableLiveData<List<Character>?> = MutableLiveData()
     private val _comics: MutableLiveData<List<Comic>?> = MutableLiveData()
     private val _event: MutableLiveData<List<Event>?> = MutableLiveData()
@@ -56,5 +60,17 @@ class SeriesViewModel():ViewModel() {
             },{
 
             })
+    }
+
+    override fun onCharacterClick(character: Character) {
+
+    }
+
+    override fun onComicClick(comic: Comic) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onEventClick(event: Event) {
+        TODO("Not yet implemented")
     }
 }
