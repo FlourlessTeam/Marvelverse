@@ -9,9 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.abstracts.BaseRecyclerAdapter
 import com.example.marvelverse.app.ui.characters.CharactersAdapter
-import com.example.marvelverse.app.ui.creators.MoreCreatorsAdapter
 import com.example.marvelverse.app.ui.series.SeriesAdapter
-import com.example.marvelverse.app.ui.stories.MoreStoriesAdapter
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Creator
 import com.example.marvelverse.domain.entities.main.Series
@@ -21,16 +19,16 @@ import com.example.marvelverse.domain.entities.wrappers.Thumbnail
 
 @BindingAdapter(value = ["app:items"])
 fun setRecyclerStoriesItems(view: RecyclerView, items: MutableList<Story>?) {
-    val adapter = MoreStoriesAdapter()
-    view.adapter = adapter
-    adapter.submitList(items)
+//    val adapter = MoreStoriesAdapter()
+//    view.adapter = adapter
+//    adapter.submitList(items)
 }
 
 @BindingAdapter(value = ["app:items"])
 fun setRecyclerCreatorsItems(view: RecyclerView, items: MutableList<Creator>?) {
-    val adapter = MoreCreatorsAdapter()
-    view.adapter = adapter
-    adapter.submitList(items)
+//    val adapter = MoreCreatorsAdapter()
+//    view.adapter = adapter
+//    adapter.submitList(items)
 }
 
 
