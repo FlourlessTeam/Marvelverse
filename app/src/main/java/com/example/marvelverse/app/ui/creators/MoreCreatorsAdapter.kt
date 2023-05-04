@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelverse.R
 import com.example.marvelverse.databinding.ItemInViewAllCreatorsBinding
 import com.example.marvelverse.domain.entities.main.Creator
-import com.example.marvelverse.domain.entities.main.Story
 
 class MoreCreatorsAdapter(private val listener: MoreCreatorsListener) :
     ListAdapter<Creator, MoreCreatorsAdapter.ViewAllCreatorsHolder>(CreatorDiffCallback()) {
