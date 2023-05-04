@@ -20,16 +20,22 @@ import com.example.marvelverse.domain.entities.wrappers.Thumbnail
 
 @BindingAdapter( value=["app:items"])
 fun setRecyclerStoriesItems(view:RecyclerView, items:MutableList<Story>?){
-    val adapter= MoreStoriesAdapter()
-         view.adapter= adapter
-         adapter.submitList(items)
+    if(items!=null){
+        (view.adapter as MoreStoriesAdapter).submitList(items)
+    }
+    else{
+        (view.adapter as MoreStoriesAdapter).submitList(emptyList())
+    }
 }
 
 @BindingAdapter( value=["app:items"])
 fun setRecyclerCreatorsItems(view:RecyclerView, items:MutableList<Creator>?){
-    val adapter= MoreCreatorsAdapter()
-    view.adapter= adapter
-    adapter.submitList(items)
+    if(items!=null){
+        (view.adapter as MoreCreatorsAdapter).submitList(items)
+    }
+    else{
+        (view.adapter as MoreCreatorsAdapter).submitList(emptyList())
+    }
 }
 
 @BindingAdapter(value = ["thumbnail"], requireAll = true)
