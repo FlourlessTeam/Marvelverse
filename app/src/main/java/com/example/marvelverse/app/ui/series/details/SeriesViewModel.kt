@@ -1,11 +1,10 @@
-package com.example.marvelverse.app.ui.series
+package com.example.marvelverse.app.ui.series.details
 
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
