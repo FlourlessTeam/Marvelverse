@@ -6,5 +6,5 @@ import com.example.nestedrecyclerview.ui.base.BaseAdapter
 import com.example.nestedrecyclerview.ui.base.BaseInteractionListener
 
 class EventAdapter(val eventList: List<Event>, private val listener: BaseInteractionListener): BaseAdapter<Event>(eventList,listener) {
-  override val layoutID: Int= R.layout.item_event_card
+  override val layoutID: Int= R.layout.item_home_event_card
 }

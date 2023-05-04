@@ -1,6 +1,7 @@
 package com.example.marvelverse.app.ui.home
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
@@ -14,67 +15,80 @@ import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
 import com.example.marvelverse.domain.entities.main.Story
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainViewModel : ViewModel(), ParentInteractionListener,
-    CharacterInteractionListener, EventInteractionListener, ComicInteractionListener,SeriesInteractionListener{
+    CharacterInteractionListener, EventInteractionListener, ComicInteractionListener,
+    SeriesInteractionListener {
+    val disposable = CompositeDisposable()
+    private val _homeItems: MutableLiveData<List<HomeItem>> = MutableLiveData()
+    val homeItems: LiveData<List<HomeItem>> = _homeItems
 
-    val homeItems: MutableLiveData<List<HomeItem>> = MutableLiveData()
-    val errorMessage: MutableLiveData<String> = MutableLiveData()
-    val hoveEvents: MutableLiveData<HomeEvent> = MutableLiveData()
+
+    private val _errorMessage: MutableLiveData<String> = MutableLiveData()
+    val errorMessage: LiveData<String> = _errorMessage
+
+    private val _homeEvents: MutableLiveData<HomeEvent> = MutableLiveData()
+    val homeEvents: LiveData<HomeEvent> = _homeEvents
 
     init {
         getDataForHomeItems()
     }
+
     @SuppressLint("CheckResult")
     fun getDataForHomeItems() {
-        MarvelRepository.fetchHomeItems()
+       disposable.add( MarvelRepository.fetchHomeItems()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ homeItems ->
-                this.homeItems.value = homeItems
+                _homeItems.postValue(homeItems)
             }, { error ->
-                errorMessage.value = error.message
-            })
+                _errorMessage.postValue(error.message)
+            }))
     }
 
     override fun onCharacterClick(character: Character) {
-        hoveEvents.value = (HomeEvent.ClickCharacterEvent(character))
+        _homeEvents.postValue(HomeEvent.ClickCharacterEvent(character))
     }
 
     override fun onEventClick(event: Event) {
-        hoveEvents.value = (HomeEvent.ClickEventEvent(event))
+        _homeEvents.postValue(HomeEvent.ClickEventEvent(event))
     }
 
     override fun onComicClick(comic: Comic) {
-        hoveEvents.value = (HomeEvent.ClickComicEvent(comic))
+        _homeEvents.postValue(HomeEvent.ClickComicEvent(comic))
     }
 
     override fun onStoriesClick(stories: Story) {
-        hoveEvents.value = (HomeEvent.ClickStoryEvent(stories))
+        _homeEvents.postValue(HomeEvent.ClickStoryEvent(stories))
     }
 
     override fun onSeriesClick(series: Series) {
-        hoveEvents.value = (HomeEvent.ClickSeriesEvent(series))
+        _homeEvents.postValue(HomeEvent.ClickSeriesEvent(series))
     }
 
     override fun onViewAllCharactersClick() {
-        hoveEvents.value = (HomeEvent.ClickSeeAllCharactersEvent)
+        _homeEvents.postValue(HomeEvent.ClickSeeAllCharactersEvent)
     }
 
     override fun onViewAllEventsClick() {
-        hoveEvents.value = (HomeEvent.ClickSeeAllEventsEvent)
+        _homeEvents.postValue (HomeEvent.ClickSeeAllEventsEvent)
     }
 
     override fun onViewAllComicsClick() {
-        hoveEvents.value = (HomeEvent.ClickSeeAllComicsEvent)
+        _homeEvents.postValue(HomeEvent.ClickSeeAllComicsEvent)
     }
 
     override fun onViewAllStoriesClick() {
-        hoveEvents.value = (HomeEvent.ClickSeeAllStoriesEvent)
+        _homeEvents.postValue(HomeEvent.ClickSeeAllStoriesEvent)
     }
 
     override fun onViewAllSeriesClick() {
-        hoveEvents.value = (HomeEvent.ClickSeeAllSeriesEvent)
+        _homeEvents.postValue(HomeEvent.ClickSeeAllSeriesEvent)
+    }
+    override fun onCleared() {
+        super.onCleared()
+        disposable.dispose()
     }
 }

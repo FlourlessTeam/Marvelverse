@@ -33,7 +33,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun setupObservers() {
-        viewModel.hoveEvents.observe(viewLifecycleOwner, Observer { event ->
+        viewModel.homeEvents.observe(viewLifecycleOwner, Observer { event ->
             event?.let {
                 handleEvent(event)
             }
@@ -89,10 +89,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun handleSeeAllStoriesClick() {
         Log.d("HomeFragment", "ClickSeeAllStoriesEvent")
-    }
-
-    private fun han() {
-        Log.d("HomeFragment", "ClickSeriesEvent")
     }
 
     private fun handleSeeAllCharactersClick() {

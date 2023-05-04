@@ -1,11 +1,17 @@
 package com.example.marvelverse.app.ui.home
 
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.marvelverse.app.ui.home.adapter.HomeAdapter
+import com.example.marvelverse.domain.entities.main.Character
+import com.example.marvelverse.domain.entities.main.Comic
+import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.main.Story
 import com.example.nestedrecyclerview.ui.base.BaseAdapter
 import com.example.nestedrecyclerview.ui.base.BaseNestedRecyclerAdapter
 
