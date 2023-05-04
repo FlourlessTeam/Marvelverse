@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MoreStoriesViewModel : ViewModel() {
+class MoreStoriesViewModel : ViewModel(),MoreStoriesListener {
     private val repository = MarvelRepository
     private val _storiesData = MutableLiveData<MutableList<Story>>()
     val storiesData: LiveData<MutableList<Story>>
@@ -26,5 +26,9 @@ class MoreStoriesViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+    }
+
+    override fun onClick(story: Story) {
+       //
     }
 }
