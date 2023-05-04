@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.example.marvelverse.app.ui.comics.ComicsViewModel" />
     </data>
 
 
@@ -30,7 +32,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_bold"
             android:textColor="@color/main_title"
-            android:text="Marvel Previews (2017)"
+           tools:text="Marvel Previews (2017)"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -49,7 +51,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/text_body"/>
+            tools:text="@string/text_body"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +59,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_bold"
             android:textColor="@color/main_title"
-            android:text="title"
+            android:text="Characters"
             />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/title_recycler"
@@ -76,7 +78,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_bold"
             android:textColor="@color/main_title"
-            android:text="title"/>
+            android:text="Events"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/title2_recycler"
             android:layout_height="wrap_content"
