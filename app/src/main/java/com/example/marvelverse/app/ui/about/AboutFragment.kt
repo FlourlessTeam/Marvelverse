@@ -12,15 +12,11 @@ import com.example.marvelverse.databinding.FragmentCharactersBinding
 class AboutFragment:
     BaseFragment<AboutScreenBinding>(AboutScreenBinding::inflate) {
 
-    lateinit var about: AboutAdapter
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel: AboutViewModel by viewModels()
-        viewModel.currentItem.observe(viewLifecycleOwner, Observer {
-            Log.i("noor", it.toString())
-            about = AboutAdapter(it)
-        })
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
     }
 
 }
