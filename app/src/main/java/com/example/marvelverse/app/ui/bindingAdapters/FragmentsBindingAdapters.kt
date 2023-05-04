@@ -32,8 +32,7 @@ fun setRecyclerCreatorsItems(view:RecyclerView, items:MutableList<Creator>?){
 @BindingAdapter( value=["app:ImageUrl"])
 fun setImageFromUrl(view:ImageView, url:Thumbnail?) {
     url?.let {
-        val imageUrlSecure = url.path
-        val validUrl = "$imageUrlSecure.${url.extension}"
+        val validUrl = "$url.path.${url.extension}"
         Glide.with(view)
             .load(validUrl)
             .into(view)

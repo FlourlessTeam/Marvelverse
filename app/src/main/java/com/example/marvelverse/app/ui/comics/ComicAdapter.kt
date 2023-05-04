@@ -14,12 +14,13 @@ class ComicAdapter: ListAdapter<Comic, ComicAdapter.ViewAllComicAdapter>(EventDi
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ComicAdapter.ViewAllComicAdapter {
+    ): ViewAllComicAdapter {
         val view= LayoutInflater.from(parent.context).inflate(R.layout.item_comic,parent,false)
-        return  ComicAdapter.ViewAllComicAdapter(view)
+        return  ViewAllComicAdapter(view)
     }
+
     override fun onBindViewHolder(
-        holder:  ComicAdapter.ViewAllComicAdapter,
+        holder:  ViewAllComicAdapter,
         position: Int) {
         val currentList = getItem(position)
         holder.binding.item = currentList

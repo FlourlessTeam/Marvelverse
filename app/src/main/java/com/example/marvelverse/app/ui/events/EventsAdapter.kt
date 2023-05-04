@@ -14,13 +14,13 @@ class EventsAdapter: ListAdapter<Event, EventsAdapter.ViewAllEventHolder>(EventD
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): EventsAdapter.ViewAllEventHolder {
+    ): ViewAllEventHolder {
 
         val view= LayoutInflater.from(parent.context).inflate(R.layout.item_event,parent,false)
-        return EventsAdapter.ViewAllEventHolder(view)
+        return ViewAllEventHolder(view)
     }
     override fun onBindViewHolder(
-        holder: EventsAdapter.ViewAllEventHolder,
+        holder: ViewAllEventHolder,
         position: Int) {
         val currentList = getItem(position)
         holder.binding.item = currentList
