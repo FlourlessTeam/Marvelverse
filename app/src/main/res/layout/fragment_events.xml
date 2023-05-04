@@ -9,11 +9,6 @@
                 type="com.example.marvelverse.app.ui.events.EventsViewModel" />
     </data>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".app.ui.events.EventsFragment">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/comic_recycler_view"
             android:layout_width="match_parent"
@@ -26,5 +21,4 @@
             tools:listitem="@layout/item_comic"/>
 
 
-    </FrameLayout>
 </layout>
