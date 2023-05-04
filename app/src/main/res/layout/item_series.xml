@@ -6,8 +6,8 @@
             type="com.example.marvelverse.domain.entities.main.Series" />
 
         <variable
-            name="onSeriesClickListener"
-            type="com.example.marvelverse.app.ui.series.SeriesAdapter.OnSeriesClickListener" />
+            name="clickListener"
+            type="com.example.marvelverse.app.ui.series.SeriesAdapter.ClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,7 +17,7 @@
         android:layout_margin="8dp"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> onSeriesClickListener.onClick(series)}"
+        android:onClick="@{() -> clickListener.onClick(series)}"
         app:cardCornerRadius="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

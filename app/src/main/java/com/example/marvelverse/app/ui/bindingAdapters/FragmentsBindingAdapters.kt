@@ -36,7 +36,7 @@ fun <T, BA : BaseRecyclerAdapter<T, *>> RecyclerView.bindList(dataState: DataSta
     val myAdapter = adapter as BA
     dataState.let {
         if (dataState is DataState.Success) {
-            myAdapter.submitList((dataState.data.toMutableList()))
+            myAdapter.submitList(dataState.data)
         }
     }
 
@@ -55,7 +55,7 @@ fun ImageView.bindImageUrl(thumbnail: Thumbnail) {
 
 
 @BindingAdapter("bindCharactersList")
-fun  RecyclerView.bindCharactersList(dataState: DataState<Character>?) {
+fun RecyclerView.bindCharactersList(dataState: DataState<Character>?) {
     dataState.let {
         if (dataState is DataState.Success) {
             (adapter as CharactersAdapter).submitList(dataState.data)
@@ -64,8 +64,10 @@ fun  RecyclerView.bindCharactersList(dataState: DataState<Character>?) {
 }
 
 @BindingAdapter("bindSeriesList")
-fun  RecyclerView.bindSeriesList(dataState: DataState<Series>?) {
-    if (dataState is DataState.Success) { (adapter as SeriesAdapter).submitList(dataState.data ) }
+fun RecyclerView.bindSeriesList(dataState: DataState<Series>?) {
+    if (dataState is DataState.Success) {
+        (adapter as SeriesAdapter).submitList(dataState.data)
+    }
 }
 
 @BindingAdapter("showIfLoading")

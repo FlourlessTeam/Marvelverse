@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 private const val TAG = "seriesViewModel"
 
-class SeriesViewModel : ViewModel(), SeriesAdapter.OnSeriesClickListener {
+class SeriesViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
     private var _series = MutableLiveData<DataState<Series>>()
@@ -51,7 +51,7 @@ class SeriesViewModel : ViewModel(), SeriesAdapter.OnSeriesClickListener {
         compositeDisposable.clear()
     }
 
-    override fun onClick(series: Series) {
+    fun onClick(series: Series) {
         Log.d(TAG, "onClick: ${series.title}")
     }
 }
