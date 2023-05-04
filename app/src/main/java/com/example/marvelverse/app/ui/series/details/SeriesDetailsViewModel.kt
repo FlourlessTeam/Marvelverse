@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelverse.DataState
+import com.example.marvelverse.app.ui.events.details.DetailsEvent
 import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
@@ -20,13 +21,16 @@ class SeriesDetailsViewModel():ViewModel(),ComicInteractionListener,EventInterac
     private val _comicsState: MutableLiveData<DataState<Comic>> = MutableLiveData()
     private val _eventsState: MutableLiveData<DataState<Event>> = MutableLiveData()
     private val disposables = CompositeDisposable()
+    private val _detailsSeries: MutableLiveData<DetailsSeries> = MutableLiveData()
+
     val charactersState: LiveData<DataState<Character>>
         get() = _charactersState
     val comicsState: LiveData<DataState<Comic>>
         get() = _comicsState
     val eventsState: LiveData<DataState<Event>>
         get() = _eventsState
-
+    val detailsSeries: LiveData<DetailsSeries>
+        get() = _detailsSeries
     fun getCharacters(url: String) {
         _charactersState.postValue(DataState.Loading)
 
@@ -88,14 +92,14 @@ class SeriesDetailsViewModel():ViewModel(),ComicInteractionListener,EventInterac
     }
 
     override fun onCharacterClick(character: Character) {
-        // Handle character click
+        _detailsSeries.postValue(DetailsSeries.ClickCharacterSeries(character))
     }
 
     override fun onComicClick(comic: Comic) {
-        // Handle comic click
+        _detailsSeries.postValue(DetailsSeries.ClickComicSeries(comic))
     }
 
     override fun onEventClick(event: Event) {
-        // Handle event click
+        _detailsSeries.postValue(DetailsSeries.ClickEventSeries(event))
     }
 }
