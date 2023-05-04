@@ -1,42 +1,16 @@
 package com.example.marvelverse.app.ui.characters
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import com.example.marvelverse.app.ui.abstracts.BaseRecyclerAdapter
 import com.example.marvelverse.databinding.ItemCharacterBinding
 import com.example.marvelverse.domain.entities.main.Character
 
 class CharactersAdapter(private val onCharacterClickListener: OnCharacterClickListener) :
-    ListAdapter<Character, CharactersAdapter.ViewHolder>(CharactersDiffUtil()) {
-    class ViewHolder(private val binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.root) {
-        companion object {
-            fun from(parent: ViewGroup): ViewHolder {
-                return ViewHolder(
-                    ItemCharacterBinding
-                        .inflate(
-                            LayoutInflater.from(parent.context),
-                            parent,
-                            false
-                        )
-                )
-            }
-        }
+    BaseRecyclerAdapter<Character, ItemCharacterBinding>(
+        CharactersDiffUtil(),
+        ItemCharacterBinding::inflate,
+        {}) {
 
-        fun bind(character: Character, onCharacterClickListener: OnCharacterClickListener) {
-            binding.character = character
-            binding.onCharacterClickListener = onCharacterClickListener
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), onCharacterClickListener)
-    }
 
     interface OnCharacterClickListener {
         fun onClick(character: Character)
@@ -51,6 +25,14 @@ class CharactersAdapter(private val onCharacterClickListener: OnCharacterClickLi
             return oldItem == newItem
         }
 
+    }
+
+    override fun BaseViewHolder<Character, ItemCharacterBinding>.bind(
+        marvelData: Character,
+        onViewClicked: (Character) -> Unit
+    ) {
+        binding.character = marvelData
+        binding.onCharacterClickListener = onCharacterClickListener
     }
 
 }
