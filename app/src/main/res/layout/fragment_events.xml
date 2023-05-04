@@ -11,10 +11,6 @@
         <variable
             name="item"
             type="com.example.marvelverse.domain.entities.main.Event" />
-        
-        <variable
-            name="characterAdapter"
-            type="com.example.marvelverse.app.ui.home.adapter.CharactersAdapter" />
     </data>
 
     <LinearLayout
@@ -108,7 +104,6 @@
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
-                    android:adapter="@{characterAdapter}"
                     app:items="@{viewModel.character}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_character_card" />
