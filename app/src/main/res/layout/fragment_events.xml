@@ -23,15 +23,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:navigationIcon="@drawable/baseline_arrow_back_24"
-            android:title="Details"
-            android:background="@color/white"/>
+            android:title="Details"/>
 
         <ScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
-            tools:context=".app.ui.events.EventsFragment">
+            tools:context=".app.ui.comics.events.EventsFragment">
 
             <LinearLayout
                 android:id="@+id/linear_layout"
