@@ -43,11 +43,11 @@ class EventDetailsFragment :
 	}
 
 	private fun observeEvents() {
-		viewModel.detailsEvents.observe(viewLifecycleOwner, Observer { clickEvent ->
+		viewModel.eventDetailsEvents.observe(viewLifecycleOwner, Observer { clickEvent ->
 			when (clickEvent) {
-				is DetailsEvent.ClickCharacterEvent -> handleCharacterClick(clickEvent.character)
-				is DetailsEvent.ClickComicEvent -> handleComicClick(clickEvent.comic)
-				is DetailsEvent.ClickSeriesEvent -> handleSeriesClick(clickEvent.series)
+				is EventDetailsEvents.ClickCharacterEvent -> handleCharacterClick(clickEvent.character)
+				is EventDetailsEvents.ClickComicEvent -> handleComicClick(clickEvent.comic)
+				is EventDetailsEvents.ClickSeriesEvent -> handleSeriesClick(clickEvent.series)
 			}
 		})
 	}
