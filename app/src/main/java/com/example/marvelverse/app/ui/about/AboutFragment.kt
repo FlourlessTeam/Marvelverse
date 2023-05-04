@@ -1,21 +1,25 @@
-package com.example.marvelverse.app.ui.home
+package com.example.marvelverse.app.ui.about
 
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.example.marvelverse.app.ui.about.AboutViewModel
 import com.example.marvelverse.app.ui.abstracts.BaseFragment
-import com.example.marvelverse.databinding.FragmentHomeBinding
+import com.example.marvelverse.databinding.AboutScreenBinding
+import com.example.marvelverse.databinding.FragmentCharactersBinding
 
+class AboutFragment:
+    BaseFragment<AboutScreenBinding>(AboutScreenBinding::inflate) {
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
+    lateinit var about: AboutAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel: AboutViewModel by viewModels()
         viewModel.currentItem.observe(viewLifecycleOwner, Observer {
             Log.i("noor", it.toString())
+            about = AboutAdapter(it)
         })
     }
 

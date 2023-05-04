@@ -1,12 +1,15 @@
 package com.example.marvelverse.data.repositories
 
 import com.example.marvelverse.data.dataSources.remote.RetrofitClient
+import com.example.marvelverse.data.local.FakeLocalData
 
 
 object MarvelRepository {
     private val marvelApiServices by lazy {
         RetrofitClient.marvelApiServices
     }
+
+    private val api = FakeLocalData()
 
     fun searchComics(limit: Int? = null, title: String? = null) =
         marvelApiServices.fetchComics(limit, title).map { it.data.results }
@@ -47,6 +50,8 @@ object MarvelRepository {
 
     fun getEventsByUrl(url: String) =
         marvelApiServices.fetchEventsByUrl(url).map { it.data.results }
+
+    fun getItems() = api.getAboutItems()
 
 
 }
