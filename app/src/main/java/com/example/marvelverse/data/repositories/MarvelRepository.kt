@@ -1,6 +1,13 @@
 package com.example.marvelverse.data.repositories
 
+import com.example.marvelverse.app.ui.home.HomeItem
 import com.example.marvelverse.data.dataSources.remote.RetrofitClient
+import com.example.marvelverse.domain.entities.main.Comic
+import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.main.Story
+import com.example.marvelverse.domain.entities.main.Character
+import io.reactivex.rxjava3.core.Single
 
 
 object MarvelRepository {
@@ -47,6 +54,41 @@ object MarvelRepository {
 
     fun getEventsByUrl(url: String) =
         marvelApiServices.fetchEventsByUrl(url).map { it.data.results }
+
+
+    fun getRandomCharacters() =
+        marvelApiServices.fetchCharacters(50, null).map { it.data.results.shuffled().take(10) }
+
+    fun getRandomComics() =
+        marvelApiServices.fetchComics(30, null).map { it.data.results.shuffled().take(5) }
+
+
+    fun getRandomSeries() =
+        marvelApiServices.fetchSeries(30, null).map { it.data.results.shuffled().take(5) }
+
+
+    fun getRandomEvents() =
+        marvelApiServices.fetchEvents(30, null).map { it.data.results.shuffled().take(5) }
+
+    fun getRandomStories() =
+        marvelApiServices.fetchStories(30, null).map { it.data.results.shuffled().take(5) }
+
+    fun fetchHomeItems() =
+        Single.zip(
+            getRandomCharacters(),
+            getRandomComics(),
+            getRandomStories(),
+            getRandomEvents(),
+            getRandomSeries()
+        ) { characters: List<Character>, comics: List<Comic>, stories: List<Story>, events: List<Event>, series: List<Series> ->
+            listOf(
+                HomeItem.CharactersItem(characters),
+                HomeItem.ComicsItem(comics),
+                HomeItem.StoriesItem(stories),
+                HomeItem.EventsItem(events),
+                HomeItem.SeriesItem(series)
+            )
+        }
 
 
 }
