@@ -3,111 +3,100 @@ package com.example.marvelverse.app.ui.home
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.marvelverse.app.ui.abstracts.BaseFragment
-import com.example.marvelverse.app.ui.home.adapter.CharactersAdapter
-import com.example.marvelverse.app.ui.home.adapter.ComicsAdapter
-import com.example.marvelverse.app.ui.home.adapter.EventAdapter
 import com.example.marvelverse.app.ui.home.adapter.HomeAdapter
-import com.example.marvelverse.app.ui.home.adapter.SeriesAdapter
 import com.example.marvelverse.databinding.FragmentHomeBinding
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.main.Series
 import com.example.marvelverse.domain.entities.main.Character
+import com.example.marvelverse.domain.entities.main.Series
 import com.example.marvelverse.domain.entities.main.Story
-import com.example.nestedrecyclerview.ui.base.BaseInteractionListener
 
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
-    ParentInteractionListener {
-    val viewModel:MainViewModel by viewModels()
-    lateinit var adapter: HomeAdapter
+    private val viewModel: MainViewModel by viewModels()
+    private lateinit var adapter: HomeAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter= HomeAdapter(this)
-        binding.recyclerView.adapter=adapter
-        binding.lifecycleOwner=this
-        val nestedItem= mutableListOf<HomeItem>()
-//        val characterItem= mutableListOf<Character>()
-        val eventItem= mutableListOf<Event>()
+        setupRecyclerView()
+        setupObservers()
+    }
 
-//        viewModel.characters.observe(viewLifecycleOwner) {
-//            characterItem.addAll(it)
-//            (binding.recyclerView.adapter as HomeAdapter).apply {
-//                nestedItem.add(HomeItem.CharactersItem(characterItem))
-//                nestedItem.add(HomeItem.CharactersItem(characterItem))
-//                nestedItem.add(HomeItem.CharactersItem(characterItem))
-//                nestedItem.add(HomeItem.CharactersItem(characterItem))
-//                this.addNestedItem(nestedItem)
-//            }
-//
-//        }
-//        viewModel.events.observe(viewLifecycleOwner) {
-//            eventItem.addAll(it)
-//            Log.d("cddddd", "ddd: ${eventItem.size}")
-//            (binding.recyclerView.adapter as HomeAdapter).apply {
-//                nestedItem.add(HomeItem.EventsItem(eventItem))
-//                nestedItem.add(HomeItem.EventsItem(eventItem))
-//                nestedItem.add(HomeItem.EventsItem(eventItem))
-//                nestedItem.add(HomeItem.EventsItem(eventItem))
-//                this.addNestedItem(nestedItem)
-//            }
-//        }
-        viewModel.homeItems.observe(viewLifecycleOwner){
-            Log.d("cddddd", "ddd: ${it.size}")
-            adapter.addNestedItem(it as MutableList<HomeItem>)
+    private fun setupRecyclerView() {
+        adapter = HomeAdapter(viewModel)
+        binding.recyclerView.adapter = adapter
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+    }
+
+    private fun setupObservers() {
+        viewModel.hoveEvents.observe(viewLifecycleOwner, Observer { event ->
+            event?.let {
+                handleEvent(event)
+            }
+        })
+    }
+
+    private fun handleEvent(event: HomeEvent) {
+        when (event) {
+            is HomeEvent.ClickCharacterEvent -> handleCharacterClick(event.character)
+            is HomeEvent.ClickComicEvent -> handleComicClick(event.comic)
+            is HomeEvent.ClickEventEvent -> handleEventClick(event.event)
+            is HomeEvent.ClickSeriesEvent -> handleSeriesClick(event.series)
+            is HomeEvent.ClickStoryEvent -> handleStoryClick(event.story)
+            HomeEvent.ClickSeeAllComicsEvent -> handleSeeAllComicsClick()
+            HomeEvent.ClickSeeAllEventsEvent -> handleSeeAllEventsClick()
+            HomeEvent.ClickSeeAllSeriesEvent -> handleSeeAllSeriesClick()
+            HomeEvent.ClickSeeAllStoriesEvent -> handleSeeAllStoriesClick()
+            HomeEvent.ClickSeeAllCharactersEvent -> handleSeeAllCharactersClick()
         }
+    }
 
-//        Log.d("cddddd", "onViewCreated: ${characterItem.size}")
+    private fun handleStoryClick(story: Story) {
+        Log.d("HomeFragment", "ClickStoryEvent $story")
 
     }
 
-    override fun onCharacterClick(character: Character) {
-        Toast.makeText(requireContext(),character.name,Toast.LENGTH_SHORT).show()
+    private fun handleCharacterClick(character: Character) {
+        Log.d("HomeFragment", "ClickCharacterEvent $character")
     }
 
-    override fun onEventClick(event: Event) {
-        TODO("Not yet implemented")
+    private fun handleComicClick(comic: Comic) {
+        Log.d("HomeFragment", "ClickComicEvent $comic")
     }
 
-    override fun onComicClick(comic: Comic) {
-        TODO("Not yet implemented")
+    private fun handleEventClick(event: Event) {
+        Log.d("HomeFragment", "ClickEventEvent $event")
+    }
+    private fun handleSeriesClick(series: Series) {
+        Log.d("HomeFragment", "ClickSeriesEvent $series")
     }
 
-    override fun onStoriesClick(stories: Story) {
-        TODO("Not yet implemented")
+    private fun handleSeeAllComicsClick() {
+        Log.d("HomeFragment", "ClickSeeAllComicsEvent")
     }
 
-    override fun onSeriesClick(series: Series) {
-        TODO("Not yet implemented")
+    private fun handleSeeAllEventsClick() {
+        Log.d("HomeFragment", "ClickSeeAllEventsEvent")
     }
 
-    override fun onViewAllCharactersClick() {
-        TODO("Not yet implemented")
+    private fun handleSeeAllSeriesClick() {
+        Log.d("HomeFragment", "ClickSeeAllSeriesEvent")
     }
 
-    override fun onViewAllEventsClick() {
-        TODO("Not yet implemented")
+    private fun handleSeeAllStoriesClick() {
+        Log.d("HomeFragment", "ClickSeeAllStoriesEvent")
     }
 
-    override fun onViewAllComicsClick() {
-        TODO("Not yet implemented")
+    private fun han() {
+        Log.d("HomeFragment", "ClickSeriesEvent")
     }
 
-    override fun onViewAllStoriesClick() {
-        TODO("Not yet implemented")
+    private fun handleSeeAllCharactersClick() {
+        Log.d("HomeFragment", "ClickSeeAllCharactersEvent")
     }
-
-    override fun onViewAllSeriesClick() {
-        TODO("Not yet implemented")
-    }
-
-
-//    override fun onCharacterClick(character: Character) {
-//        Toast.makeText(requireContext(),character.name,Toast.LENGTH_SHORT).show()
-//    }
-
-
 }
+
