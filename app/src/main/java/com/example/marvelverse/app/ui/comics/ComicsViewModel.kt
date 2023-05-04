@@ -21,11 +21,7 @@ class ComicsViewModel : ViewModel() {
     private var _event= MutableLiveData<DataState<Event>>()
     val character: LiveData<DataState<Character>> get() = _character
     val event: LiveData<DataState<Event>> get() =_event
-//    init {
-//      getCharacter()
-//    }
-
-    private fun getCharacter(url:String) {
+    fun getCharacter(url:String) {
         _character.postValue(DataState.Loading)
         MarvelRepository.getCharactersByUrl(url)
             .subscribeOn(Schedulers.io())
@@ -38,7 +34,7 @@ class ComicsViewModel : ViewModel() {
                     _character.postValue(DataState.Error(it))
                 }).addTo(compositeDisposable)
     }
-    private fun getEvent(url:String) {
+    fun getEvent(url:String) {
         _event.postValue(DataState.Loading)
         MarvelRepository.getEventsByUrl(url)
             .subscribeOn(Schedulers.io())
@@ -52,7 +48,7 @@ class ComicsViewModel : ViewModel() {
                 }).addTo(compositeDisposable)
     }
 
-    private fun Disposable.addTo(compositeDisposable: CompositeDisposable) {
+   private fun Disposable.addTo(compositeDisposable: CompositeDisposable) {
         compositeDisposable.add(this)
     }
 
