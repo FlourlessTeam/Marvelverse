@@ -17,8 +17,8 @@ private const val TAG = "seriesViewModel"
 class SeriesViewModel : ViewModel(), SeriesAdapter.OnSeriesClickListener {
     private val compositeDisposable = CompositeDisposable()
 
-    private var _series = MutableLiveData<DataState<List<Series>>>()
-    val series: LiveData<DataState<List<Series>>> get() = _series
+    private var _series = MutableLiveData<DataState<Series>>()
+    val series: LiveData<DataState<Series>> get() = _series
 
     init {
         getSeries()
@@ -32,11 +32,13 @@ class SeriesViewModel : ViewModel(), SeriesAdapter.OnSeriesClickListener {
             .subscribe(
                 {
                     _series.postValue(DataState.Success(it))
+                    Log.d("xxxx", it.toString())
                 },
                 {
                     _series.postValue(DataState.Error(it))
-                }
-            ).addTo(compositeDisposable)
+                    Log.d("xxxx", it.toString()+"Wwwwwww")
+                })
+            .addTo(compositeDisposable)
     }
 
 

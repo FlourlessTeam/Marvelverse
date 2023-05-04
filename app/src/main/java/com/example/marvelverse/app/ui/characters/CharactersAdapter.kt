@@ -29,15 +29,19 @@ class CharactersAdapter(private val onCharacterClickListener: OnCharacterClickLi
             binding.onCharacterClickListener = onCharacterClickListener
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position), onCharacterClickListener)
     }
+
     interface OnCharacterClickListener {
         fun onClick(character: Character)
     }
+
     private class CharactersDiffUtil : DiffUtil.ItemCallback<Character>() {
         override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean {
             return oldItem.id == newItem.id
@@ -48,4 +52,5 @@ class CharactersAdapter(private val onCharacterClickListener: OnCharacterClickLi
         }
 
     }
+
 }

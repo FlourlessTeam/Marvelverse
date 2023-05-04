@@ -27,7 +27,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:spanCount="2"
             tools:listitem="@layout/item_character" />
-
         <ImageView
             showIfError="@{viewModel.characters}"
             android:layout_width="wrap_content"
@@ -39,7 +38,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="error icon" />
-
         <ProgressBar
             showIfLoading="@{viewModel.characters}"
             android:layout_width="wrap_content"
