@@ -17,6 +17,8 @@ class MoreStoriesFragment : BaseFragment<FragmentMoreStoriesBinding>
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         viewModel.getStories()
+        val adapter=MoreStoriesAdapter(viewModel)
+        binding.storiesRecyclerView.adapter=adapter
 
     }
 
