@@ -18,7 +18,7 @@
             bindEventList="@{viewModel.event}"
             android:paddingHorizontal="8dp"
             app:spanCount="2"
-            tools:listitem="@layout/item_event_card"/>
+            tools:listitem="@layout/item_event"/>
 
 
 </layout>

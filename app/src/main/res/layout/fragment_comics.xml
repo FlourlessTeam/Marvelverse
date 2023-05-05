@@ -19,6 +19,6 @@
             bindComicList="@{viewModel.comic}"
             android:paddingHorizontal="8dp"
             app:spanCount="2"
-            tools:listitem="@layout/item_comic_card"/>
+            tools:listitem="@layout/item_comic"/>
 
 </layout>

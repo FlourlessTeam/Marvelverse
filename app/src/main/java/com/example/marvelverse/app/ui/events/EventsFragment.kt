@@ -31,9 +31,9 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
         }
     }
     fun navigateToDetails(event: Event) {
-        Log.d("ComicFragment", "ClickComicEvent $event")
+        Log.d("EventFragment", "ClickEventsEvent $event")
     }
     fun BackToHome() {
-        Log.d("ComicFragment", "BackToHome")
+        Log.d("EventFragment", "BackToHome")
     }
 }
