@@ -10,15 +10,15 @@
     </data>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/comic_recycler_view"
+            android:id="@+id/event_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             android:orientation="vertical"
-            app:items="@{viewModel.eventData}"
+            bindEventList="@{viewModel.event}"
             android:paddingHorizontal="8dp"
             app:spanCount="2"
-            tools:listitem="@layout/item_comic"/>
+            tools:listitem="@layout/item_event_card"/>
 
 
 </layout>
