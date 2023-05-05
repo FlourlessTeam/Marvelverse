@@ -7,40 +7,51 @@
         <variable
             name="item"
             type="com.example.marvelverse.domain.entities.main.Creator" />
+        <variable
+            name="listener"
+            type="com.example.marvelverse.app.ui.creators.MoreCreatorsListener" />
 
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:clickable="true">
+        android:clickable="true"
+        android:onClick="@{() -> listener.onClick(item)}">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#DEF2F6">
+            android:background="#F1F1F1F1"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/image_creator"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                app:round="12dp"
+                thumbnail="@{item.thumbnail}"
+                tools:src="@drawable/character" />
 
             <TextView
-                android:id="@+id/text_title"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="75dp"
+                android:id="@+id/text_fullName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@{item.fullName}"
+                tools:text="fullName"
                 android:ellipsize="end"
                 android:lines="3"
+                android:gravity="center_vertical"
                 android:paddingHorizontal="16dp"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="20sp"
+               />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 </layout>
