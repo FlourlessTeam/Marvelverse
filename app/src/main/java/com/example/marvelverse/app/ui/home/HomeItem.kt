@@ -10,6 +10,5 @@ sealed class HomeItem(val rank:Int) {
     class EventsItem(val eventList: List<Event>): HomeItem(0)
     class ComicsItem(val comicsList: List<Comic>): HomeItem(1)
     class SeriesItem(val seriesList: List<Series>): HomeItem(2)
-    class StoriesItem(val storiesList: List<Story>): HomeItem(3)
-    class CharactersItem(val charactersList: List<Character>): HomeItem(4)
+    class CharactersItem(val charactersList: List<Character>): HomeItem(3)
 }
