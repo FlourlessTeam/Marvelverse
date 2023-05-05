@@ -14,11 +14,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 private const val TAG = "seriesViewModel"
 
-class SeriesViewModel : ViewModel(), SeriesAdapter.OnSeriesClickListener {
+class SeriesViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
-    private var _series = MutableLiveData<DataState<List<Series>>>()
-    val series: LiveData<DataState<List<Series>>> get() = _series
+    private var _series = MutableLiveData<DataState<Series>>()
+    val series: LiveData<DataState<Series>> get() = _series
 
     init {
         getSeries()
@@ -32,11 +32,13 @@ class SeriesViewModel : ViewModel(), SeriesAdapter.OnSeriesClickListener {
             .subscribe(
                 {
                     _series.postValue(DataState.Success(it))
+                    Log.d("xxxx", it.toString())
                 },
                 {
                     _series.postValue(DataState.Error(it))
-                }
-            ).addTo(compositeDisposable)
+                    Log.d("xxxx", it.toString()+"Wwwwwww")
+                })
+            .addTo(compositeDisposable)
     }
 
 
@@ -49,7 +51,7 @@ class SeriesViewModel : ViewModel(), SeriesAdapter.OnSeriesClickListener {
         compositeDisposable.clear()
     }
 
-    override fun onClick(series: Series) {
+    fun onClick(series: Series) {
         Log.d(TAG, "onClick: ${series.title}")
     }
 }

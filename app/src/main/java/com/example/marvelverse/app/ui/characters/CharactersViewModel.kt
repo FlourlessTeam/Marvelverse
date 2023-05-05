@@ -17,8 +17,8 @@ private const val TAG = "CharactersViewModel"
 class CharactersViewModel : ViewModel(), CharactersAdapter.OnCharacterClickListener {
     private val compositeDisposable = CompositeDisposable()
 
-    private var _characters = MutableLiveData<DataState<List<Character>>>()
-    val characters: LiveData<DataState<List<Character>>> get() = _characters
+    private var _characters = MutableLiveData<DataState<Character>>()
+    val characters: LiveData<DataState<Character>> get() = _characters
 
     init {
         getCharacters()
