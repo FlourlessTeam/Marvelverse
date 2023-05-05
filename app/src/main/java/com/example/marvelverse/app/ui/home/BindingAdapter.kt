@@ -1,19 +1,13 @@
 package com.example.marvelverse.app.ui.home
 
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.home.adapter.HomeAdapter
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.main.Series
-import com.example.marvelverse.domain.entities.main.Story
 import com.example.nestedrecyclerview.ui.base.BaseAdapter
-import com.example.nestedrecyclerview.ui.base.BaseNestedRecyclerAdapter
 
 @BindingAdapter(value = ["app:imageUrl"])
 fun setImageUrl(imageView: ImageView, url: String?) {
@@ -25,12 +19,16 @@ fun setImageUrl(imageView: ImageView, url: String?) {
 
     }
 }
+
 @BindingAdapter(value = ["app:items"])
-fun <T>bindRecyclerView(recyclerView: RecyclerView, items: List<T>?) {
-    items?.let {
-        (recyclerView.adapter as BaseAdapter<T>).setItems(items)
+fun <T> bindRecyclerView(recyclerView: RecyclerView, dataState: DataState<T>?) {
+    dataState?.let {
+        if (dataState is DataState.Success) {
+            (recyclerView.adapter as BaseAdapter<T>).setItems(dataState.data)
+        }
     }
 }
+
 @BindingAdapter(value = ["app:nestedItems"])
 fun bindNestedRecyclerView(recyclerView: RecyclerView, items: List<HomeItem>?) {
     items?.let {
