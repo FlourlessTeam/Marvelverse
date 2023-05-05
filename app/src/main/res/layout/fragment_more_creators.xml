@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="@color/white"
+            app:navigationIcon="@drawable/back_icon"
            app:title="Creators"/>
 
         <androidx.recyclerview.widget.RecyclerView
