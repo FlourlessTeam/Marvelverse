@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 
@@ -17,8 +18,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         //Todo add your Api Keys here
-        buildConfigField "String", "public_key", '""'
-        buildConfigField "String", "private_key", '""'
+        buildConfigField "String", "public_key", '"4af2f3af478a5ca944259f72d0b5565c"'
+        buildConfigField "String", "private_key", '"32b03f302eff2def1086558620b3657a1ab873fa"'
     }
     buildFeatures {
         dataBinding true
@@ -48,6 +49,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+
     //RX
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
     implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
@@ -60,6 +62,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
     //noinspection KaptUsageInsteadOfKsp
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.14.0'
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
 
     //Hashing
     implementation 'xerces:xercesImpl:2.12.2'
