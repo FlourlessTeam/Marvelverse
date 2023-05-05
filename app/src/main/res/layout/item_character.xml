@@ -2,14 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
-            name="character"
+            name="item"
             type="com.example.marvelverse.domain.entities.main.Character" />
-
         <variable
-            name="onCharacterClickListener"
-            type="com.example.marvelverse.app.ui.characters.CharactersAdapter.OnCharacterClickListener" />
+            name="listener"
+            type="com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -19,7 +18,7 @@
         android:layout_margin="8dp"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> onCharacterClickListener.onClick(character)}"
+        android:onClick="@{() -> listener.onCharacterClick(item)}"
         app:cardCornerRadius="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +27,7 @@
 
             <ImageView
                 android:id="@+id/iv_char"
-                thumbnail="@{character.thumbnail}"
+                thumbnail="@{item.thumbnail}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:contentDescription="character cover"
@@ -58,7 +57,7 @@
                 android:alpha=".8"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@{character.name}"
+                android:text="@{item.name}"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
