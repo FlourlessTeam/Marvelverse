@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="onViewAllEventClick"
+            type="com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener" />
+
+
+        <variable
+                name="item"
+                type="com.example.marvelverse.domain.entities.main.Event" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cuisineCard"
+        android:layout_width="180dp"
+        android:layout_height="150dp"
+        android:onClick="@{() -> onViewAllEventClick.onEventClick(item)}"
+        android:layout_margin="@dimen/margin_small"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp">
+
+        <ImageView
+            android:id="@+id/homeCardImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            thumbnail="@{item.thumbnail}"
+            android:foreground="@drawable/home_card_gradiant"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/home_card_image" />
+
+        <TextView
+            android:id="@+id/homeCardName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginHorizontal="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            tools:text="@{item.title}"
+            tools:ignore="SmallSp" />
+
+    </androidx.cardview.widget.CardView>
+</layout>

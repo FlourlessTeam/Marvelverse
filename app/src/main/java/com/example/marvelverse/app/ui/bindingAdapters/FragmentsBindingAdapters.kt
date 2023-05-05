@@ -9,9 +9,13 @@ import com.bumptech.glide.Glide
 import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.abstracts.BaseRecyclerAdapter
 import com.example.marvelverse.app.ui.characters.CharactersAdapter
+import com.example.marvelverse.app.ui.comics.ComicAdapter
+import com.example.marvelverse.app.ui.events.EventsAdapter
 import com.example.marvelverse.app.ui.series.SeriesAdapter
 import com.example.marvelverse.domain.entities.main.Character
+import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Creator
+import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
 import com.example.marvelverse.domain.entities.main.Story
 import com.example.marvelverse.domain.entities.wrappers.Thumbnail
@@ -39,7 +43,6 @@ fun <T, BA : BaseRecyclerAdapter<T, *>> RecyclerView.bindList(dataState: DataSta
             myAdapter.submitList(dataState.data)
         }
     }
-
 }
 
 @BindingAdapter(value = ["thumbnail"])
@@ -91,5 +94,18 @@ fun <T> ImageView.showIfError(dataState: DataState<T>?) {
         } else {
             View.GONE
         }
+    }
+}
+@BindingAdapter("bindComicList")
+fun RecyclerView.bindComicList(dataState: DataState<Comic>?) {
+    if (dataState is DataState.Success) {
+        (adapter as ComicAdapter).submitList(dataState.data)
+    }
+}
+
+@BindingAdapter("bindEventList")
+fun RecyclerView.bindEventList(dataState: DataState<Event>?) {
+    if (dataState is DataState.Success) {
+        (adapter as EventsAdapter).submitList(dataState.data)
     }
 }
