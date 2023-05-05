@@ -57,6 +57,7 @@
             android:layout_height="0dp"
             android:paddingVertical="8dp"
             app:setUpRecyclerByData="@{viewModel}"
+            app:showWhenSuccess="@{viewModel}"
             android:clipToPadding="false"
             tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -67,6 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            app:showWhenLoading="@{viewModel}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appbar" />
 

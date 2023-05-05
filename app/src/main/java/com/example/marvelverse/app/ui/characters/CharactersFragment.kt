@@ -17,6 +17,7 @@ class CharactersFragment :
         binding.rvCharacters.adapter = adapter
         binding.viewModel = charactersViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
         charactersViewModel.characterEvent.observe(viewLifecycleOwner) {
             it?.let {
                 handleEvent(it)
