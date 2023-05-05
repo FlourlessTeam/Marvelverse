@@ -57,34 +57,31 @@ object MarvelRepository {
 
 
     fun getRandomCharacters() =
-        marvelApiServices.fetchCharacters(50, null).map { it.data.results.shuffled().take(10) }
+        marvelApiServices.fetchCharacters(80, null).map { it.data.results.shuffled().take(20) }
 
     fun getRandomComics() =
-        marvelApiServices.fetchComics(30, null).map { it.data.results.shuffled().take(5) }
+        marvelApiServices.fetchComics(50, null).map { it.data.results.shuffled().take(10) }
 
 
     fun getRandomSeries() =
-        marvelApiServices.fetchSeries(30, null).map { it.data.results.shuffled().take(5) }
+        marvelApiServices.fetchSeries(50, null).map { it.data.results.shuffled().take(10) }
 
 
     fun getRandomEvents() =
-        marvelApiServices.fetchEvents(30, null).map { it.data.results.shuffled().take(5) }
+        marvelApiServices.fetchEvents(50, null).map { it.data.results.shuffled().take(10) }
 
-    fun getRandomStories() =
-        marvelApiServices.fetchStories(30, null).map { it.data.results.shuffled().take(5) }
+
 
     fun fetchHomeItems() =
         Single.zip(
             getRandomCharacters(),
             getRandomComics(),
-            getRandomStories(),
             getRandomEvents(),
             getRandomSeries()
-        ) { characters: List<Character>, comics: List<Comic>, stories: List<Story>, events: List<Event>, series: List<Series> ->
+        ) { characters: List<Character>, comics: List<Comic>,events: List<Event>, series: List<Series> ->
             listOf(
                 HomeItem.CharactersItem(characters),
                 HomeItem.ComicsItem(comics),
-                HomeItem.StoriesItem(stories),
                 HomeItem.EventsItem(events),
                 HomeItem.SeriesItem(series)
             )
