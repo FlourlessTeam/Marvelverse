@@ -9,13 +9,12 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MoreCreatorsViewModel : ViewModel() {
+class MoreCreatorsViewModel : ViewModel(), MoreCreatorsListener {
     private val repository = MarvelRepository
     private val _creatorsData = MutableLiveData<MutableList<Creator>>()
     val creatorsData: LiveData<MutableList<Creator>>
         get() = _creatorsData
     private val compositeDisposable = CompositeDisposable()
-
 
     fun getCreators() {
         val disposable = repository.searchCreators()
@@ -28,6 +27,10 @@ class MoreCreatorsViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+    }
+
+    override fun onClick(creator: Creator) {
+
     }
 
 }
