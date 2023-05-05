@@ -44,6 +44,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/baseline_filter_alt_24"
+                app:showBottomSheet="@{viewModel}"
                 android:background="@drawable/search_view_background"
                 android:contentDescription="@string/filter" />
 

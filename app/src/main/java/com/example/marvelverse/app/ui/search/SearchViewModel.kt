@@ -2,9 +2,12 @@ package com.example.marvelverse.app.ui.search
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.ListAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
+import com.example.marvelverse.app.ui.creators.MoreCreatorsAdapter
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Creator
@@ -24,11 +27,11 @@ enum class SearchFilter{
 }
 
 @SuppressLint("CheckResult")
-class SearchViewModel : ViewModel() {
+class SearchViewModel : ViewModel() , BottomSheetListener {
 
     private val repositry = MarvelRepository
 
-    var searchFilterOption:SearchFilter = SearchFilter.Character
+    var searchFilterOption:MutableLiveData<SearchFilter> = MutableLiveData<SearchFilter>(SearchFilter.Character)
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -105,5 +108,9 @@ class SearchViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+    }
+
+    override fun onSearchFilterOptionSelected(searchFilter: SearchFilter) {
+        this.searchFilterOption.postValue(searchFilter)
     }
 }
