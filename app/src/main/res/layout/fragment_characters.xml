@@ -17,7 +17,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_characters"
-            app:items="@{viewModel.characters}"
+            bindFragmentList="@{viewModel.characters}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -27,17 +27,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:spanCount="2"
             tools:listitem="@layout/item_character" />
+
         <ImageView
             showIfError="@{viewModel.characters}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/error_icon"
             android:src="@drawable/baseline_error_24"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="error icon" />
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ProgressBar
             showIfLoading="@{viewModel.characters}"
             android:layout_width="wrap_content"
