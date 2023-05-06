@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelverse.databinding.ItemCardAboutBinding
 
-class AboutAdapter(private val histories: List<String>) :
+class AboutAdapter(var histories: List<String>) :
     RecyclerView.Adapter<AboutAdapter.HistoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
