@@ -11,11 +11,8 @@ import com.example.marvelverse.app.ui.home.adapter.SeriesAdapter
 import com.example.marvelverse.databinding.FragmentEventDetailsBinding
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
-import com.example.marvelverse.domain.entities.wrappers.InfoWrapper
-import com.example.marvelverse.domain.entities.wrappers.RelatedSeries
-import com.example.marvelverse.domain.entities.wrappers.Thumbnail
+
 
 
 class EventDetailsFragment :
