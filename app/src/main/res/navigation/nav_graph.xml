@@ -12,16 +12,22 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_seriesFragment"
-            app:destination="@id/seriesFragment" />
+            app:destination="@id/seriesFragment"
+            app:popUpTo="@id/homeFragment" />
         <action
             android:id="@+id/action_homeFragment_to_charactersFragment"
-            app:destination="@id/charactersFragment" />
+            app:destination="@id/charactersFragment"
+            app:popUpTo="@id/homeFragment" />
         <action
             android:id="@+id/action_homeFragment_to_comicsFragment"
-            app:destination="@id/comicsFragment" />
+            app:destination="@id/comicsFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_homeFragment_to_eventsFragment"
-            app:destination="@id/eventsFragment" />
+            app:destination="@id/eventsFragment"
+            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/eventsFragment"

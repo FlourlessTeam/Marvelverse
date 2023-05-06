@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.example.marvelverse.app.ui.abstracts.BaseFragment
 import com.example.marvelverse.app.ui.home.adapter.HomeAdapter
 import com.example.marvelverse.databinding.FragmentHomeBinding
+import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Series
 import com.example.marvelverse.domain.entities.main.Story
 
@@ -28,16 +28,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun setupRecyclerView() {
         adapter = HomeAdapter(viewModel)
         binding.recyclerView.adapter = adapter
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
     }
 
     private fun setupObservers() {
-        viewModel.homeEvents.observe(viewLifecycleOwner, Observer { event ->
+        viewModel.homeEvents.observe(viewLifecycleOwner) { event ->
             event?.let {
                 handleEvent(event)
+                viewModel.resetEvents()
             }
-        })
+        }
     }
 
     private fun handleEvent(event: HomeEvent) {
@@ -52,6 +53,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             HomeEvent.ClickSeeAllSeriesEvent -> handleSeeAllSeriesClick()
             HomeEvent.ClickSeeAllStoriesEvent -> handleSeeAllStoriesClick()
             HomeEvent.ClickSeeAllCharactersEvent -> handleSeeAllCharactersClick()
+            else -> {}
         }
     }
 
@@ -71,20 +73,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun handleEventClick(event: Event) {
         Log.d("HomeFragment", "ClickEventEvent $event")
     }
+
     private fun handleSeriesClick(series: Series) {
         Log.d("HomeFragment", "ClickSeriesEvent $series")
     }
 
     private fun handleSeeAllComicsClick() {
-        Log.d("HomeFragment", "ClickSeeAllComicsEvent")
+        val direction = HomeFragmentDirections.actionHomeFragmentToComicsFragment()
+        binding.root.findNavController().navigate(direction)
     }
 
     private fun handleSeeAllEventsClick() {
-        Log.d("HomeFragment", "ClickSeeAllEventsEvent")
+        val direction = HomeFragmentDirections.actionHomeFragmentToEventsFragment()
+        binding.root.findNavController().navigate(direction)
     }
 
     private fun handleSeeAllSeriesClick() {
-        Log.d("HomeFragment", "ClickSeeAllSeriesEvent")
+        val direction = HomeFragmentDirections.actionHomeFragmentToSeriesFragment()
+        binding.root.findNavController().navigate(direction)
     }
 
     private fun handleSeeAllStoriesClick() {
@@ -92,7 +98,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun handleSeeAllCharactersClick() {
-        Log.d("HomeFragment", "ClickSeeAllCharactersEvent")
+        val direction = HomeFragmentDirections.actionHomeFragmentToCharactersFragment()
+        binding.root.findNavController().navigate(direction)
     }
+
 }
 

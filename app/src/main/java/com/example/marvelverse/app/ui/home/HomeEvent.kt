@@ -7,6 +7,7 @@ import com.example.marvelverse.domain.entities.main.Series
 import com.example.marvelverse.domain.entities.main.Story
 
 sealed interface HomeEvent {
+    object ReadyState:HomeEvent
     object ClickSeeAllCharactersEvent : HomeEvent
     object ClickSeeAllComicsEvent : HomeEvent
     object ClickSeeAllEventsEvent : HomeEvent

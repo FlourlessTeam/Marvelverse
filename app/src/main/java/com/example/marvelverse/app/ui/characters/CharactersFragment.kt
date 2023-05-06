@@ -23,13 +23,13 @@ class CharactersFragment :
             }
         }
     }
-    fun handleEvent(event: CharactersEvent) {
+    private fun handleEvent(event: CharactersEvent) {
         when (event) {
             is CharactersEvent.ClickCharacterEvent ->navigateToDetails(event.character)
             CharactersEvent.BackToHome -> BackToHome()
         }
     }
-    fun navigateToDetails(character: Character) {
+    private fun navigateToDetails(character: Character) {
         Log.d("CharactersFragment", "ClickCharacterEvent $character")
     }
     fun BackToHome() {
