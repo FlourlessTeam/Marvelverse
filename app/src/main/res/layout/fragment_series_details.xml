@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.marvelverse.app.ui.series.details.SeriesViewModel" />
+            type="com.example.marvelverse.app.ui.series.details.SeriesDetailsViewModel" />
         <variable
             name="item"
             type="com.example.marvelverse.domain.entities.main.Series" />
@@ -105,7 +105,7 @@
                         android:clipToPadding="false"
                         android:orientation="horizontal"
                         android:paddingHorizontal="16dp"
-                        app:items="@{viewModel.character}"
+                        app:items="@{viewModel.characters}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_character_card" />
                     <TextView
@@ -148,7 +148,7 @@
                         tools:listitem="@layout/item_home_card"
                         android:paddingHorizontal="16dp"
                         android:clipToPadding="false"
-                        app:items="@{viewModel.event}"
+                        app:items="@{viewModel.events}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         />
 
