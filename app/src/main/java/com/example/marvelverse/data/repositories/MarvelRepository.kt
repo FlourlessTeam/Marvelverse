@@ -5,7 +5,6 @@ import com.example.marvelverse.data.dataSources.remote.RetrofitClient
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
-import com.example.marvelverse.domain.entities.main.Story
 import com.example.marvelverse.domain.entities.main.Character
 import io.reactivex.rxjava3.core.Single
 
@@ -30,8 +29,8 @@ object MarvelRepository {
         marvelApiServices.fetchEvents(limit, title).map { it.data.results }
 
 
-    fun searchStories(limit: Int? = null, title: String? = null) =
-        marvelApiServices.fetchStories(limit, title).map { it.data.results }
+    fun searchStories(limit: Int? = null) =
+        marvelApiServices.fetchStories(limit).map { it.data.results }
 
 
     fun searchCreators(limit: Int? = null, title: String? = null) =
