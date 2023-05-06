@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_homeFragment_to_seriesDetailsFragment"
             app:destination="@id/seriesDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_detailsCharacterFragment"
+            app:destination="@id/detailsCharacterFragment" />
     </fragment>
     <fragment
         android:id="@+id/eventsFragment"
@@ -115,6 +118,14 @@
         <action
             android:id="@+id/action_seriesDetailsFragment_to_comicDetailsFragment"
             app:destination="@id/comicDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsCharacterFragment"
+        android:name="com.example.marvelverse.app.ui.characters.details.DetailsCharacterFragment"
+        android:label="DetailsCharacterFragment" >
+        <argument
+            android:name="character"
+            app:argType="com.example.marvelverse.domain.entities.main.Character" />
     </fragment>
 
 
