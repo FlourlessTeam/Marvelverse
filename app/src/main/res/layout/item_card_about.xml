@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp">
 
         <TextView
             android:id="@+id/about_text"
@@ -20,7 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Abdallah hi how are you" />
+            tools:text="Abdallah hi how are you, Abdallah hi how are you,Abdallah hi how are you,Abdallah hi how are you" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
