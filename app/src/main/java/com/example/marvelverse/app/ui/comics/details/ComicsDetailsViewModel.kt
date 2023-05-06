@@ -1,13 +1,11 @@
-package com.example.marvelverse.app.ui.comics
+package com.example.marvelverse.app.ui.comics.details
 
-import android.provider.CalendarContract.Events
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelverse.DataState
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -15,7 +13,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 
-class ComicsViewModel : ViewModel() {
+class ComicsDetailsViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
     private var _character = MutableLiveData<DataState<Character>>()
     private var _event= MutableLiveData<DataState<Event>>()
