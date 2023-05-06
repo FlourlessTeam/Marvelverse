@@ -33,7 +33,7 @@ class DetailsCharacterViewModel : ViewModel(), ComicInteractionListener, EventIn
         get() = _events
     val series: LiveData<List<Series>>
         get() = _series
-    val character: LiveData<List<Character>>
+    val characters: LiveData<List<Character>>
         get() = _character
     val characterDetails: LiveData<DetailsCharacterEvents>
         get() = _characterDetails
