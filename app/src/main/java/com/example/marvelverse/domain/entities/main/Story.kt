@@ -2,6 +2,7 @@ package com.example.marvelverse.domain.entities.main
 
 import com.example.marvelverse.domain.entities.wrappers.InfoWrapper
 import com.example.marvelverse.domain.entities.wrappers.RelatedCollectionSeries
+import java.io.Serializable
 
 data class Story(
     val id: Int,
@@ -12,4 +13,4 @@ data class Story(
     val relatedCreators: InfoWrapper,
     val relatedCollectionSeries: RelatedCollectionSeries,
     val relatedEvents: InfoWrapper,
-)
+): Serializable
