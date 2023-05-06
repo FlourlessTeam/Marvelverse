@@ -2,6 +2,7 @@ package com.example.marvelverse.data.repositories
 
 import com.example.marvelverse.app.ui.home.HomeItem
 import com.example.marvelverse.data.dataSources.remote.RetrofitClient
+import com.example.marvelverse.data.local.FakeLocalData
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
@@ -13,6 +14,8 @@ object MarvelRepository {
     private val marvelApiServices by lazy {
         RetrofitClient.marvelApiServices
     }
+
+    private val fakeLocalData = FakeLocalData()
 
     fun searchComics(limit: Int? = null, title: String? = null) =
         marvelApiServices.fetchComics(limit, title).map { it.data.results }
@@ -85,6 +88,8 @@ object MarvelRepository {
                 HomeItem.SeriesItem(series)
             )
         }
+
+    fun getItems() = fakeLocalData.getAboutItems()
 
 
 }
