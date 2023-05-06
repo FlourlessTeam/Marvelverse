@@ -5,7 +5,8 @@ import com.example.marvelverse.app.ui.abstracts.BaseRecyclerAdapter
 import com.example.marvelverse.databinding.ItemSeriesBinding
 import com.example.marvelverse.domain.entities.main.Series
 
-class SeriesAdapter(private val clickListener: ClickListener) : BaseRecyclerAdapter<Series, ItemSeriesBinding>(
+class SeriesAdapter(private val clickListener: ClickListener) :
+    BaseRecyclerAdapter<Series, ItemSeriesBinding>(
         SeriesDiffUtil(),
         ItemSeriesBinding::inflate,
         {}
