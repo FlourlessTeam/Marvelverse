@@ -36,7 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.homeEvents.observe(viewLifecycleOwner) { event ->
             event?.let {
                 handleEvent(event)
-                viewModel.resetEvents()
+                viewModel.clearEvents()
             }
         }
     }

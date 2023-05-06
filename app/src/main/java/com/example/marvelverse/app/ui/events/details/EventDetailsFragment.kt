@@ -3,6 +3,7 @@ package com.example.marvelverse.app.ui.events.details
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.marvelverse.app.ui.abstracts.BaseFragment
 import com.example.marvelverse.app.ui.home.adapter.CharactersAdapter
@@ -43,6 +44,7 @@ class EventDetailsFragment :
     }
 
     private fun observeEvents() {
+
         viewModel.eventDetailsEvents.observe(viewLifecycleOwner) { clickEvent ->
             when (clickEvent) {
                 is EventDetailsEvents.ClickCharacterEvent -> navigateToCharacterDetails(clickEvent.character)
@@ -50,16 +52,32 @@ class EventDetailsFragment :
                 is EventDetailsEvents.ClickSeriesEvent -> navigateToSeriesDetails(clickEvent.series)
                 else -> {}
             }
+            viewModel.clearEvents()
         }
     }
 
     private fun navigateToCharacterDetails(character: Character) {
+        val directions =
+            EventDetailsFragmentDirections.actionEventDetailsFragmentToDetailsCharacterFragment(
+                character
+            )
+        findNavController().navigate(directions)
     }
 
     private fun navigateToComicDetails(comic: Comic) {
+        val directions =
+            EventDetailsFragmentDirections.actionEventDetailsFragmentToComicDetailsFragment(
+                comic
+            )
+        findNavController().navigate(directions)
 
     }
 
     private fun navigateToSeriesDetails(series: Series) {
+        val directions =
+            EventDetailsFragmentDirections.actionEventDetailsFragmentToSeriesDetailsFragment(
+                series
+            )
+        findNavController().navigate(directions)
     }
 }

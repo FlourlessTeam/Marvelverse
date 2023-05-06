@@ -3,10 +3,10 @@ package com.example.marvelverse.app.ui.characters.details
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.marvelverse.app.ui.abstracts.BaseFragment
 import com.example.marvelverse.app.ui.home.adapter.ComicsAdapter
-import com.example.marvelverse.app.ui.home.adapter.EventAdapter
 import com.example.marvelverse.app.ui.home.adapter.EventDetailsAdapter
 import com.example.marvelverse.app.ui.home.adapter.SeriesAdapter
 import com.example.marvelverse.databinding.FragmentDetailsCharacterBinding
@@ -48,20 +48,35 @@ class DetailsCharacterFragment :
             when (clickEvent) {
                 is DetailsCharacterEvents.ClickEventEvent -> navigateToEventsDetails(clickEvent.event)
                 is DetailsCharacterEvents.ClickComicEvent -> navigateToComicDetails(clickEvent.comic)
-                is DetailsCharacterEvents.ClickseriesEvent -> navigateToSeriesDetails(clickEvent.series)
+                is DetailsCharacterEvents.ClickSeriesEvent -> navigateToSeriesDetails(clickEvent.series)
                 else -> {}
             }
+            viewModel.clearEvents()
         }
     }
 
     private fun navigateToEventsDetails(event: Event) {
+        val direction =
+            DetailsCharacterFragmentDirections.actionDetailsCharacterFragmentToEventDetailsFragment(
+                event
+            )
+        findNavController().navigate(direction)
 
     }
 
     private fun navigateToComicDetails(comic: Comic) {
-
+        val direction =
+            DetailsCharacterFragmentDirections.actionDetailsCharacterFragmentToComicDetailsFragment(
+                comic
+            )
+        findNavController().navigate(direction)
     }
 
     private fun navigateToSeriesDetails(series: Series) {
+        val direction =
+            DetailsCharacterFragmentDirections.actionDetailsCharacterFragmentToSeriesDetailsFragment(
+                series
+            )
+        findNavController().navigate(direction)
     }
 }

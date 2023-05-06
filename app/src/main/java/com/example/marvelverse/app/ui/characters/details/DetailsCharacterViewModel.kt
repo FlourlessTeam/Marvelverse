@@ -16,7 +16,8 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 
-class DetailsCharacterViewModel : ViewModel(), ComicInteractionListener, EventInteractionListener,SeriesInteractionListener {
+class DetailsCharacterViewModel : ViewModel(), ComicInteractionListener, EventInteractionListener,
+    SeriesInteractionListener {
 
     private val compositeDisposable by lazy { CompositeDisposable() }
     private val _character: MutableLiveData<List<Character>> = MutableLiveData()
@@ -24,7 +25,6 @@ class DetailsCharacterViewModel : ViewModel(), ComicInteractionListener, EventIn
     private val _events: MutableLiveData<List<Event>> = MutableLiveData()
     private val _series: MutableLiveData<List<Series>> = MutableLiveData()
     private val _characterDetails: MutableLiveData<DetailsCharacterEvents> = MutableLiveData()
-
 
 
     val comics: LiveData<List<Comic>>
@@ -39,7 +39,7 @@ class DetailsCharacterViewModel : ViewModel(), ComicInteractionListener, EventIn
         get() = _characterDetails
 
     fun getEvent(url: String) {
-        val single =  MarvelRepository.getEventsByUrl(url).subscribeOn(Schedulers.io())
+        val single = MarvelRepository.getEventsByUrl(url).subscribeOn(Schedulers.io())
         val dispose = single.observeOn(AndroidSchedulers.mainThread()).subscribe({
             _events.postValue(it)
         }, {
@@ -49,7 +49,7 @@ class DetailsCharacterViewModel : ViewModel(), ComicInteractionListener, EventIn
 
 
     fun getComics(url: String) {
-        val single =  MarvelRepository.getComicsByUrl(url).subscribeOn(Schedulers.io())
+        val single = MarvelRepository.getComicsByUrl(url).subscribeOn(Schedulers.io())
         val dispose = single.observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 _comics.postValue(it)
@@ -70,8 +70,6 @@ class DetailsCharacterViewModel : ViewModel(), ComicInteractionListener, EventIn
     }
 
 
-
-
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
@@ -86,6 +84,11 @@ class DetailsCharacterViewModel : ViewModel(), ComicInteractionListener, EventIn
     }
 
     override fun onSeriesClick(series: Series) {
-        _characterDetails.postValue(DetailsCharacterEvents.ClickseriesEvent(series))
+        _characterDetails.postValue(DetailsCharacterEvents.ClickSeriesEvent(series))
+    }
+
+    fun clearEvents() {
+        if (_characterDetails.value != DetailsCharacterEvents.ReadyState)
+            _characterDetails.postValue(DetailsCharacterEvents.ReadyState)
     }
 }
