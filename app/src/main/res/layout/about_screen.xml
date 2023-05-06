@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.example.marvelverse.app.ui.about.AboutViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="16dp">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/about_toolbar"
@@ -20,28 +22,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/back_icon"
             app:title="About Marvel" />
 
         <ImageView
             android:id="@+id/about_image"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:background="@drawable/spider"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/marvel"
+            android:contentDescription="Marvel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/about_toolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/about_recycler_view"
+            android:id="@+id/about_recycler"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical"
-            tools:listitem="@layout/item_card_about"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/about_image" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/about_image"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
