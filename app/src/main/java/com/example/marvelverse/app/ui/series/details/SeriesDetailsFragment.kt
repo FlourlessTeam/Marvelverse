@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import com.example.marvelverse.app.ui.abstracts.BaseFragment
 import com.example.marvelverse.app.ui.home.adapter.CharactersAdapter
 import com.example.marvelverse.app.ui.home.adapter.ComicsAdapter
@@ -17,6 +18,7 @@ import com.example.marvelverse.domain.entities.main.Event
 class SeriesDetailsFragment :
     BaseFragment<FragmentSeriesDetailsBinding>(FragmentSeriesDetailsBinding::inflate) {
     private val viewModel: SeriesDetailsViewModel by viewModels()
+    private val args:SeriesDetailsFragmentArgs by navArgs()
 
     @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,9 +40,9 @@ class SeriesDetailsFragment :
 
     private fun getRecyclerData() {
         viewModel.apply {
-//            getCharacters(series_x.characters.collectionURI)
-//            getEvent(series_x.events.collectionURI)
-//            getComics(series_x.comics.collectionURI)
+            getCharacters(args.series .characters.collectionURI)
+//            getEvent(args.series.events.collectionURI)
+            getComics(args.series.comics.collectionURI)
         }
     }
 

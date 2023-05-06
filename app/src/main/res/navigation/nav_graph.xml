@@ -31,6 +31,12 @@
         <action
             android:id="@+id/action_homeFragment_to_eventDetailsFragment"
             app:destination="@id/eventDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_comicDetailsFragment"
+            app:destination="@id/comicDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_seriesDetailsFragment"
+            app:destination="@id/seriesDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/eventsFragment"
@@ -70,6 +76,24 @@
         <argument
             android:name="event"
             app:argType="com.example.marvelverse.domain.entities.main.Event" />
+    </fragment>
+    <fragment
+        android:id="@+id/comicDetailsFragment"
+        tools:layout="@layout/fragment_comic_details"
+        android:name="com.example.marvelverse.app.ui.comics.details.ComicDetailsFragment"
+        android:label="ComicDetailsFragment" >
+        <argument
+            android:name="comic"
+            app:argType="com.example.marvelverse.domain.entities.main.Comic" />
+    </fragment>
+    <fragment
+        android:id="@+id/seriesDetailsFragment"
+        tools:layout="@layout/fragment_series_details"
+        android:name="com.example.marvelverse.app.ui.series.details.SeriesDetailsFragment"
+        android:label="SeriesDetailsFragment" >
+        <argument
+            android:name="series"
+            app:argType="com.example.marvelverse.domain.entities.main.Series" />
     </fragment>
 
 

@@ -67,7 +67,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun handleComicClick(comic: Comic) {
-        Log.d("HomeFragment", "ClickComicEvent $comic")
+        val direction = HomeFragmentDirections.actionHomeFragmentToComicDetailsFragment(comic)
+        binding.root.findNavController().navigate(direction)
     }
 
     private fun handleEventClick(event: Event) {
@@ -76,7 +77,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun handleSeriesClick(series: Series) {
-        Log.d("HomeFragment", "ClickSeriesEvent $series")
+        val direction = HomeFragmentDirections.actionHomeFragmentToSeriesDetailsFragment(series)
+        binding.root.findNavController().navigate(direction)
     }
 
     private fun handleSeeAllComicsClick() {

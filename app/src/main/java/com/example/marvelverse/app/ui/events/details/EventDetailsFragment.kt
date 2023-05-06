@@ -3,7 +3,6 @@ package com.example.marvelverse.app.ui.events.details
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.example.marvelverse.app.ui.abstracts.BaseFragment
 import com.example.marvelverse.app.ui.home.adapter.CharactersAdapter
@@ -44,14 +43,14 @@ class EventDetailsFragment :
     }
 
     private fun observeEvents() {
-        viewModel.eventDetailsEvents.observe(viewLifecycleOwner, Observer { clickEvent ->
+        viewModel.eventDetailsEvents.observe(viewLifecycleOwner) { clickEvent ->
             when (clickEvent) {
                 is EventDetailsEvents.ClickCharacterEvent -> navigateToCharacterDetails(clickEvent.character)
                 is EventDetailsEvents.ClickComicEvent -> navigateToComicDetails(clickEvent.comic)
                 is EventDetailsEvents.ClickSeriesEvent -> navigateToSeriesDetails(clickEvent.series)
                 else -> {}
             }
-        })
+        }
     }
 
     private fun navigateToCharacterDetails(character: Character) {

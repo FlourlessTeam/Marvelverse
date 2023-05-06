@@ -10,4 +10,9 @@
     <string name="series_cover">series cover</string>
     <string name="character_cover">character cover</string>
     <string name="error_icon">error icon</string>
+    <string name="description">description</string>
+    <string name="characters">characters</string>
+    <string name="comics">comics</string>
+    <string name="events">events</string>
+    <string name="descrition_all">descritionAll</string>
 </resources>
