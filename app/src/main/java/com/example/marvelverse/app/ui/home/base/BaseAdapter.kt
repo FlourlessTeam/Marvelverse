@@ -1,16 +1,15 @@
 package com.example.nestedrecyclerview.ui.base
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelverse.BR
+import com.example.marvelverse.app.ui.home.base.BaseDiffUtil
+import com.example.marvelverse.app.ui.home.base.BaseInteractionListener
 
-interface BaseInteractionListener
 
 abstract class BaseAdapter<T>(
     private val listener: BaseInteractionListener,
@@ -47,14 +46,3 @@ abstract class BaseAdapter<T>(
 
 }
 
-class BaseDiffUtil<T> : DiffUtil.ItemCallback<T>() {
-    override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
-        return oldItem == newItem
-    }
-
-    @SuppressLint("DiffUtilEquals")
-    override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
-        return oldItem == newItem
-    }
-
-}

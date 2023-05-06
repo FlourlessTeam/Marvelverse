@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelverse.DataState
+import com.example.marvelverse.app.ui.characters.CharactersEvent
+import com.example.marvelverse.app.ui.home.interfaces.SeriesInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.main.Series
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -14,11 +16,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 private const val TAG = "seriesViewModel"
 
-class SeriesViewModel : ViewModel() {
+class SeriesViewModel : ViewModel(), SeriesInteractionListener {
     private val compositeDisposable = CompositeDisposable()
 
     private var _series = MutableLiveData<DataState<Series>>()
     val series: LiveData<DataState<Series>> get() = _series
+
+    private val _seriesEvent  =MutableLiveData<SeriesEvent>()
+    val seriesEvent:LiveData<SeriesEvent> get() = _seriesEvent
 
     init {
         getSeries()
@@ -40,6 +45,12 @@ class SeriesViewModel : ViewModel() {
                 })
             .addTo(compositeDisposable)
     }
+    override fun onSeriesClick(series: Series) {
+        _seriesEvent.postValue(SeriesEvent.ClickSeriesEvent(series))
+    }
+    fun backToHome(){
+        _seriesEvent.postValue(SeriesEvent.BackToHome)
+    }
 
 
     private fun Disposable.addTo(compositeDisposable: CompositeDisposable) {
@@ -51,9 +62,8 @@ class SeriesViewModel : ViewModel() {
         compositeDisposable.clear()
     }
 
-    fun onClick(series: Series) {
-        Log.d(TAG, "onClick: ${series.title}")
-    }
+
+
 }
 
 

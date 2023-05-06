@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.marvelverse.R
 import com.example.marvelverse.app.ui.home.HomeItem
 import com.example.marvelverse.app.ui.home.ParentInteractionListener
+import com.example.marvelverse.app.ui.home.base.BaseInteractionListener
 import com.example.marvelverse.databinding.ListItemsCharacterBinding
 import com.example.marvelverse.databinding.ListItemsComicBinding
 import com.example.marvelverse.databinding.ListItemsEventBinding
@@ -16,7 +17,7 @@ import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
 import com.example.marvelverse.domain.entities.main.Story
-import com.example.nestedrecyclerview.ui.base.BaseInteractionListener
+import com.example.nestedrecyclerview.ui.base.BaseAdapter
 import com.example.nestedrecyclerview.ui.base.BaseNestedRecyclerAdapter
 
 
@@ -30,7 +31,6 @@ class HomeAdapter(private val listener: ParentInteractionListener) : BaseNestedR
             is HomeItem.CharactersItem -> TYPE_CHARACTER
             is HomeItem.ComicsItem -> TYPE_COMIC
             is HomeItem.SeriesItem -> TYPE_SERIES
-            is HomeItem.StoriesItem -> TYPE_STORIES
         }
     }
 
@@ -38,7 +38,7 @@ class HomeAdapter(private val listener: ParentInteractionListener) : BaseNestedR
         inflater: LayoutInflater,
         parent: ViewGroup,
         viewType: Int,
-    ): BaseNestedRecyclerViewHolder {
+    ): BaseNestedRecyclerViewHolder<*> {
         return when (viewType) {
             TYPE_EVENT -> {
                 val binding = DataBindingUtil.inflate<ListItemsEventBinding>(
@@ -71,7 +71,7 @@ class HomeAdapter(private val listener: ParentInteractionListener) : BaseNestedR
                 ComicsHolder(binding,listener)
             }
 
-            TYPE_SERIES -> {
+          else-> {
                 val binding = DataBindingUtil.inflate<ListItemsSeriesBinding>(
                     inflater,
                     viewType,
@@ -80,47 +80,31 @@ class HomeAdapter(private val listener: ParentInteractionListener) : BaseNestedR
                 )
                 SeriesHolder(binding,listener)
             }
-
-            TYPE_STORIES -> {
-                val binding = DataBindingUtil.inflate<ListItemsStoriesBinding>(
-                    inflater,
-                    viewType,
-                    parent,
-                    false
-                )
-                StoriesHolder(binding,listener)
-            }
-
-            else -> {
-                return null!!
-            }
         }
     }
 
-    override fun bindItem(holder: BaseNestedRecyclerViewHolder, item: HomeItem) {
+    override fun bindItem(holder: BaseNestedRecyclerViewHolder<HomeItem>, item: HomeItem) {
         return when (item) {
             is HomeItem.EventsItem -> {
-                (holder as EventsHolder).bind(item.eventList)
+                (holder as EventsHolder).bind(item.eventList,listener)
             }
 
             is HomeItem.CharactersItem -> {
-                (holder as CharactersHolder).bind(item.charactersList)
+                (holder as CharactersHolder).bind(item.charactersList,listener)
             }
 
             is HomeItem.ComicsItem -> {
-                (holder as ComicsHolder).bind(item.comicsList)
+                (holder as ComicsHolder).bind(item.comicsList,listener)
             }
 
             is HomeItem.SeriesItem -> {
-                (holder as SeriesHolder).bind(item.seriesList)
+                (holder as SeriesHolder).bind(item.seriesList,listener)
             }
 
-            is HomeItem.StoriesItem -> {
-                (holder as StoriesHolder).bind(item.storiesList)
-            }
 
         }
     }
+
 
     companion object {
         const val TYPE_EVENT = R.layout.list_items_event
@@ -132,68 +116,34 @@ class HomeAdapter(private val listener: ParentInteractionListener) : BaseNestedR
 
 }
 
-class EventsHolder(binding: ListItemsEventBinding,private val interactionListener:BaseInteractionListener ) :
-    BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
-    override fun bind(item: Any?) {
-        with(binding as ListItemsEventBinding) {
-            val adapterRecycler= EventAdapter(interactionListener)
-            adapterRecycler.setItems(item as List<Event>)
-            binding.adapterRecycler=adapterRecycler
-            binding.listener=interactionListener as ParentInteractionListener
-            executePendingBindings()
-        }
+class EventsHolder(binding: ListItemsEventBinding,private val interactionListener: BaseInteractionListener) :
+    BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder<Event>(binding) {
+    override fun getAdapter(listener: BaseInteractionListener): BaseAdapter<Event> {
+        return EventAdapter(interactionListener)
     }
 }
 
 class CharactersHolder(binding: ListItemsCharacterBinding, private val interactionListener:BaseInteractionListener ) :
-    BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
-    override fun bind(item: Any?) {
-        with(binding as ListItemsCharacterBinding) {
-            val adapterRecycler= CharactersAdapter(interactionListener)
-            adapterRecycler.setItems(item as List<Character>)
-            binding.adapterRecycler=adapterRecycler
-            binding.listener=interactionListener as ParentInteractionListener
-            executePendingBindings()
-        }
+    BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder<Character>(binding) {
+    override fun getAdapter(listener: BaseInteractionListener): BaseAdapter<Character> {
+        return CharactersAdapter(interactionListener)
     }
+
 }
 
 class ComicsHolder(binding: ListItemsComicBinding,private val interactionListener:BaseInteractionListener ) :
-    BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
-    override fun bind(item: Any?) {
-        with(binding as ListItemsComicBinding) {
-            val adapterRecycler= ComicsAdapter(interactionListener)
-            adapterRecycler.setItems(item as List<Comic>)
-            binding.adapterRecycler=adapterRecycler
-            binding.listener=interactionListener as ParentInteractionListener
-            executePendingBindings()
-        }
+    BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder<Comic>(binding) {
+    override fun getAdapter(listener: BaseInteractionListener): BaseAdapter<Comic> {
+        return ComicsAdapter(interactionListener)
     }
+
 }
 
 class SeriesHolder(binding: ListItemsSeriesBinding,private val interactionListener:BaseInteractionListener ) :
-    BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
-    override fun bind(item: Any?) {
-        with(binding as ListItemsSeriesBinding) {
-            val adapterRecycler= SeriesAdapter(interactionListener)
-            adapterRecycler.setItems(item as List<Series>)
-            binding.adapterRecycler=adapterRecycler
-            binding.listener=interactionListener as ParentInteractionListener
-            executePendingBindings()
-        }
+    BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder<Series>(binding) {
+    override fun getAdapter(listener: BaseInteractionListener): BaseAdapter<Series> {
+        return SeriesAdapter(interactionListener)
     }
 }
 
-class StoriesHolder(binding: ListItemsStoriesBinding,private val interactionListener:BaseInteractionListener ) :
-    BaseNestedRecyclerAdapter.BaseNestedRecyclerViewHolder(binding) {
-    override fun bind(item: Any?) {
-        with(binding as ListItemsStoriesBinding) {
-            val adapterRecycler= StoriesAdapter(interactionListener)
-            adapterRecycler.setItems(item as List<Story>)
-            binding.adapterRecycler=adapterRecycler
-            binding.listener=interactionListener as ParentInteractionListener
-            executePendingBindings()
-        }
-    }
-}
 

@@ -2,14 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
-            name="series"
+            name="item"
             type="com.example.marvelverse.domain.entities.main.Series" />
-
         <variable
-            name="clickListener"
-            type="com.example.marvelverse.app.ui.series.SeriesAdapter.ClickListener" />
-    </data>
+            name="listener"
+            type="com.example.marvelverse.app.ui.home.interfaces.SeriesInteractionListener" />
 
+    </data>
     <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -17,7 +16,7 @@
         android:layout_margin="8dp"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> clickListener.onClick(series)}"
+        android:onClick="@{() -> listener.onSeriesClick(item)}"
         app:cardCornerRadius="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +27,7 @@
                 android:id="@+id/iv_series"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                thumbnail="@{series.thumbnail}"
+                thumbnail="@{item.thumbnail}"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +55,7 @@
                 android:alpha=".8"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@{series.title}"
+                android:text="@{item.title}"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
