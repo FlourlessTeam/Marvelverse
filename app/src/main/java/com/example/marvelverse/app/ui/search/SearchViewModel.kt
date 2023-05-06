@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
 import com.example.marvelverse.app.ui.creators.MoreCreatorsAdapter
+import com.example.marvelverse.app.ui.home.HomeEvent
 import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
@@ -27,25 +28,32 @@ import java.lang.Thread.State
 import java.util.concurrent.TimeUnit
 
 
-enum class SearchFilter{
+enum class SearchFilter {
     Character,
     Comic,
     Event,
 }
 
 @SuppressLint("CheckResult")
-class SearchViewModel : ViewModel() , BottomSheetListener , CharacterInteractionListener , ComicInteractionListener , EventInteractionListener {
+class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionListener,
+    ComicInteractionListener, EventInteractionListener {
 
     private val repositry = MarvelRepository
 
-    var searchFilterOption:MutableLiveData<SearchFilter> = MutableLiveData<SearchFilter>(SearchFilter.Character)
+    var searchFilterOption: MutableLiveData<SearchFilter> =
+        MutableLiveData<SearchFilter>(SearchFilter.Character)
 
     private val compositeDisposable = CompositeDisposable()
-    private val observable:Observable<String> = Observable.create {}
+    private val observable: Observable<String> = Observable.create {}
 
     private val _itemList = MutableLiveData<DataState<Any>>()
     val itemList: LiveData<DataState<Any>>
         get() = _itemList
+
+    private val _searchEvent = MutableLiveData<SearchEvent>()
+    val searchEvent: LiveData<SearchEvent>
+        get() = _searchEvent
+
     init {
         searchFilterOption.postValue(SearchFilter.Character)
     }
@@ -63,36 +71,38 @@ class SearchViewModel : ViewModel() , BottomSheetListener , CharacterInteraction
     fun characterSearch(limit: Int?, title: String?) {
         _itemList.postValue(DataState.Loading)
         compositeDisposable.add(
-        repositry.searchCharacters(limit, title)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onCharacterSearchSuccess, ::onSearchError)
+            repositry.searchCharacters(limit, title)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(::onCharacterSearchSuccess, ::onSearchError)
         )
     }
 
     fun eventSearch(limit: Int?, title: String?) {
         _itemList.postValue(DataState.Loading)
         compositeDisposable.add(
-        repositry.searchEvents(limit, title)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onEventSearchSuccess, ::onSearchError)
+            repositry.searchEvents(limit, title)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(::onEventSearchSuccess, ::onSearchError)
         )
     }
 
     private fun onComicsSearchSuccess(comics: List<Comic>) {
         _itemList.postValue(DataState.Success(comics))
     }
+
     private fun onCharacterSearchSuccess(characters: List<com.example.marvelverse.domain.entities.main.Character>) {
         _itemList.postValue(DataState.Success(characters))
     }
+
     private fun onEventSearchSuccess(events: List<Event>) {
         _itemList.postValue(DataState.Success(events))
     }
 
     private fun onSearchError(throwable: Throwable) {
         _itemList.postValue(DataState.Error(throwable))
-        Log.d("TAG" , throwable.message.toString())
+        Log.d("TAG", throwable.message.toString())
     }
 
     override fun onCleared() {
@@ -102,22 +112,27 @@ class SearchViewModel : ViewModel() , BottomSheetListener , CharacterInteraction
 
     override fun onSearchFilterOptionSelected(searchFilter: SearchFilter) {
         this.searchFilterOption.postValue(searchFilter)
-        when(searchFilter){
-            SearchFilter.Character -> characterSearch(null , null)
-            SearchFilter.Comic -> comicSearch(null , null)
-            SearchFilter.Event -> eventSearch(null , null)
+        when (searchFilter) {
+            SearchFilter.Character -> characterSearch(null, null)
+            SearchFilter.Comic -> comicSearch(null, null)
+            SearchFilter.Event -> eventSearch(null, null)
         }
     }
 
     override fun onCharacterClick(character: Character) {
-
+        _searchEvent.postValue(SearchEvent.ClickCharacterEvent(character))
     }
 
     override fun onComicClick(comic: Comic) {
-
+        _searchEvent.postValue(SearchEvent.ClickComicEvent(comic))
     }
 
     override fun onEventClick(event: Event) {
+        _searchEvent.postValue(SearchEvent.ClickEventEvent(event))
+    }
 
+    fun clearEvents() {
+        if (_searchEvent.value != SearchEvent.ReadyState)
+            _searchEvent.postValue(SearchEvent.ReadyState)
     }
 }
