@@ -11,30 +11,33 @@ import com.example.marvelverse.domain.entities.main.Comic
 
 class ComicsFragment : BaseFragment<FragmentComicsBinding>(FragmentComicsBinding::inflate) {
 
-        private val comicViewModel: ComicViewModel by viewModels()
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
-            val adapter = ComicAdapter(comicViewModel)
-            binding.comicRecyclerView.adapter = adapter
-            binding.viewModel = comicViewModel
-            binding.lifecycleOwner = viewLifecycleOwner
-            comicViewModel.comicEvent.observe(viewLifecycleOwner) {
-                it?.let {
-                    handleComic(it)
-                }
+    private val comicViewModel: ComicViewModel by viewModels()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val adapter = ComicAdapter(comicViewModel)
+        binding.comicRecyclerView.adapter = adapter
+        binding.viewModel = comicViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        comicViewModel.comicEvent.observe(viewLifecycleOwner) {
+            it?.let {
+                handleComic(it)
             }
         }
-        fun handleComic(event: ComicEvent) {
-            when (event) {
-                is ComicEvent.ClickComicEvent ->navigateToDetails(event.comic)
-                ComicEvent.BackToHome -> BackToHome()
-            }
+    }
+
+    fun handleComic(event: ComicEvent) {
+        when (event) {
+            is ComicEvent.ClickComicEvent -> navigateToDetails(event.comic)
+            ComicEvent.BackToHome -> BackToHome()
         }
-        fun navigateToDetails(comic: Comic) {
-            Log.d("ComicFragment", "ClickComicEvent $comic")
-        }
-        fun BackToHome() {
-            Log.d("ComicFragment", "BackToHome")
-        }
+    }
+
+    fun navigateToDetails(comic: Comic) {
+        Log.d("ComicFragment", "ClickComicEvent $comic")
+    }
+
+    fun BackToHome() {
+        Log.d("ComicFragment", "BackToHome")
+    }
 
 }
