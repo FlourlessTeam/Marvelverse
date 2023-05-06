@@ -3,7 +3,6 @@ package com.example.marvelverse.app.ui.comics.details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
@@ -15,16 +14,16 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 
-class ComicsDetailsViewModel : ViewModel() , CharacterInteractionListener,
+class ComicsDetailsViewModel : ViewModel(), CharacterInteractionListener,
     EventInteractionListener {
     private val compositeDisposable = CompositeDisposable()
     private var _character = MutableLiveData<List<Character>>()
-    private var _event= MutableLiveData<List<Event>>()
-    private  var _comicsDetailsEvent=MutableLiveData<ComicDetailsEvents>()
+    private var _event = MutableLiveData<List<Event>>()
+    private var _comicsDetailsEvent = MutableLiveData<ComicDetailsEvents>()
     val character: LiveData<List<Character>> get() = _character
-    val event: LiveData<List<Event>> get() =_event
-    val comicsDetailsEvent:LiveData<ComicDetailsEvents> get() =_comicsDetailsEvent
-    fun getCharacter(url:String) {
+    val event: LiveData<List<Event>> get() = _event
+    val comicsDetailsEvent: LiveData<ComicDetailsEvents> get() = _comicsDetailsEvent
+    fun getCharacter(url: String) {
         MarvelRepository.getCharactersByUrl(url)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -35,19 +34,20 @@ class ComicsDetailsViewModel : ViewModel() , CharacterInteractionListener,
                 {
                 }).addTo(compositeDisposable)
     }
-    fun getEvent(url:String) {
+
+    fun getEvent(url: String) {
         MarvelRepository.getEventsByUrl(url)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                  _event.postValue(it)
+                    _event.postValue(it)
                 },
                 {
                 }).addTo(compositeDisposable)
     }
 
-   private fun Disposable.addTo(compositeDisposable: CompositeDisposable) {
+    private fun Disposable.addTo(compositeDisposable: CompositeDisposable) {
         compositeDisposable.add(this)
     }
 
@@ -63,7 +63,10 @@ class ComicsDetailsViewModel : ViewModel() , CharacterInteractionListener,
 
     override fun onEventClick(event: Event) {
         _comicsDetailsEvent.postValue(ComicDetailsEvents.ClickEventEvent(event))
+    }
 
-
+    fun clearEvents() {
+        if (_comicsDetailsEvent.value != ComicDetailsEvents.ReadyState)
+            _comicsDetailsEvent.postValue(ComicDetailsEvents.ReadyState)
     }
 }

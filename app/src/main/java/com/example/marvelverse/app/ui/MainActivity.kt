@@ -18,10 +18,10 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    override fun onBackPressed() {
-        val navController = findNavController(R.id.fragmentContainerView)
-        if (!navController.popBackStack()) {
-            super.onBackPressed()
-        }
-    }
+//    override fun onBackPressed() {
+//        val navController = findNavController(R.id.fragmentContainerView)
+//        if (!navController.popBackStack()) {
+//            super.onBackPressed()
+//        }
+//    }
 }

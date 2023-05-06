@@ -89,7 +89,6 @@ fun <T> ImageView.showIfError(dataState: DataState<T>?) {
     dataState.let {
         visibility = if (dataState is DataState.Error) {
             View.VISIBLE
-
         } else {
             View.GONE
         }

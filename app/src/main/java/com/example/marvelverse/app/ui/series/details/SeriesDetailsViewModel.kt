@@ -94,4 +94,9 @@ class SeriesDetailsViewModel() : ViewModel(), ComicInteractionListener, EventInt
     override fun onEventClick(event: Event) {
         _detailsSeries.postValue(DetailsSeries.ClickEventSeries(event))
     }
+
+    fun clearEvents() {
+        if (_detailsSeries.value != DetailsSeries.ReadyState)
+            _detailsSeries.postValue(DetailsSeries.ReadyState)
+    }
 }

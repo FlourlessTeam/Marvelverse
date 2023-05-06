@@ -15,4 +15,6 @@
     <string name="comics">comics</string>
     <string name="events">events</string>
     <string name="descrition_all">descritionAll</string>
+    <string name="descriptionCharacter">Description</string>
+    <string name="seriesCharacter">series</string>
 </resources>

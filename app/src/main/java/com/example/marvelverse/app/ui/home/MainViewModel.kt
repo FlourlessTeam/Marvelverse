@@ -38,14 +38,15 @@ class MainViewModel : ViewModel(), ParentInteractionListener,
 
     @SuppressLint("CheckResult")
     fun getDataForHomeItems() {
-       disposable.add( MarvelRepository.fetchHomeItems()
+        disposable.add(MarvelRepository.fetchHomeItems()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ homeItems ->
                 _homeItems.postValue(homeItems)
             }, { error ->
                 _errorMessage.postValue(error.message)
-            }))
+            })
+        )
     }
 
     override fun onCharacterClick(character: Character) {
@@ -73,7 +74,7 @@ class MainViewModel : ViewModel(), ParentInteractionListener,
     }
 
     override fun onViewAllEventsClick() {
-        _homeEvents.postValue (HomeEvent.ClickSeeAllEventsEvent)
+        _homeEvents.postValue(HomeEvent.ClickSeeAllEventsEvent)
     }
 
     override fun onViewAllComicsClick() {
@@ -87,9 +88,12 @@ class MainViewModel : ViewModel(), ParentInteractionListener,
     override fun onViewAllSeriesClick() {
         _homeEvents.postValue(HomeEvent.ClickSeeAllSeriesEvent)
     }
-    fun resetEvents(){
-        _homeEvents.postValue(HomeEvent.ReadyState)
+
+    fun clearEvents() {
+        if (homeEvents.value != HomeEvent.ReadyState)
+            _homeEvents.postValue(HomeEvent.ReadyState)
     }
+
     override fun onCleared() {
         super.onCleared()
         disposable.dispose()

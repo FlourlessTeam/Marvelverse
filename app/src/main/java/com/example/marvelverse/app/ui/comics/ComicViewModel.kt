@@ -12,14 +12,14 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class ComicViewModel: ViewModel(), ComicInteractionListener {
+class ComicViewModel : ViewModel(), ComicInteractionListener {
     private val compositeDisposable = CompositeDisposable()
 
     private var _Comic = MutableLiveData<DataState<Comic>>()
     val comic: LiveData<DataState<Comic>> get() = _Comic
 
-    private val _comicEvent=MutableLiveData<ComicEvent>()
-    val comicEvent:LiveData<ComicEvent> get() = _comicEvent
+    private val _comicEvent = MutableLiveData<ComicEvent>()
+    val comicEvent: LiveData<ComicEvent> get() = _comicEvent
 
     init {
         getComic()
@@ -48,13 +48,19 @@ class ComicViewModel: ViewModel(), ComicInteractionListener {
     override fun onComicClick(comic: Comic) {
         _comicEvent.postValue(ComicEvent.ClickComicEvent(comic))
     }
-    fun backToHome(){
+
+    fun backToHome() {
         _comicEvent.postValue(ComicEvent.BackToHome)
     }
 
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+    }
+
+    fun clearEvents() {
+        if (_comicEvent.value != ComicEvent.ReadyState)
+            _comicEvent.postValue(ComicEvent.ReadyState)
     }
 
 }
