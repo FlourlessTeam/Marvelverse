@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
+
         <variable
-            name="series"
+            name="item"
             type="com.example.marvelverse.domain.entities.main.Series" />
 
         <variable
-            name="onSeriesClickListener"
-            type="com.example.marvelverse.app.ui.series.SeriesAdapter.OnSeriesClickListener" />
+            name="listener"
+            type="com.example.marvelverse.app.ui.home.interfaces.SeriesInteractionListener" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,7 +20,7 @@
         android:layout_margin="8dp"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> onSeriesClickListener.onClick(series)}"
+        android:onClick="@{() -> listener.onSeriesClick(item)}"
         app:cardCornerRadius="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,27 +29,27 @@
 
             <ImageView
                 android:id="@+id/iv_series"
+                thumbnail="@{item.thumbnail}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                thumbnail="@{series.thumbnail}"
+                android:contentDescription="@string/series_cover"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars"
-                android:contentDescription="series cover" />
+                tools:src="@tools:sample/avatars" />
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:importantForAccessibility="no"
                 android:scaleType="fitXY"
                 android:src="@drawable/background_character"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent=".4"
-                app:layout_constraintStart_toStartOf="parent"
-                android:importantForAccessibility="no" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/tv_series"
@@ -56,7 +59,7 @@
                 android:alpha=".8"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@{series.title}"
+                android:text="@{item.title}"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"

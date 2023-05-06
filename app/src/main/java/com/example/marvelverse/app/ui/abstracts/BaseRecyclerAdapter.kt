@@ -31,6 +31,7 @@ abstract class BaseRecyclerAdapter<T, VB : ViewBinding>
 
     override fun onBindViewHolder(holder: BaseViewHolder<T, VB>, position: Int) {
         holder.bind(getItem(position), onViewClicked = onViewClicked)
+        holder.binding.root
     }
 
     abstract class BaseViewHolder<T, VB : ViewBinding>(val binding: VB) :

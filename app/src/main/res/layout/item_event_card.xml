@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.example.marvelverse.app.ui.home.ParentInteractionListener" />
+            type="com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener" />
 
     </data>
 
@@ -32,7 +32,7 @@
             android:contentDescription="@string/home_card_image"
             android:foreground="@drawable/home_card_gradiant"
             android:scaleType="fitXY"
-            app:imageUrl="@{item.thumbnail.path}" />
+            app:imageUrl="@{item.thumbnail.path+'.'+item.thumbnail.extension}"/>
 
         <TextView
             android:id="@+id/homeCardName"
