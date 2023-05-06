@@ -31,7 +31,6 @@ enum class SearchFilter{
     Character,
     Comic,
     Event,
-    Creator
 }
 
 @SuppressLint("CheckResult")
@@ -71,16 +70,6 @@ class SearchViewModel : ViewModel() , BottomSheetListener , CharacterInteraction
         )
     }
 
-    fun creatorSearch(limit: Int?, title: String?) {
-        _itemList.postValue(DataState.Loading)
-        compositeDisposable.add(
-        repositry.searchCreators(limit, title)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onCreatorSearchSuccess, ::onSearchError)
-        )
-    }
-
     fun eventSearch(limit: Int?, title: String?) {
         _itemList.postValue(DataState.Loading)
         compositeDisposable.add(
@@ -96,9 +85,6 @@ class SearchViewModel : ViewModel() , BottomSheetListener , CharacterInteraction
     }
     private fun onCharacterSearchSuccess(characters: List<com.example.marvelverse.domain.entities.main.Character>) {
         _itemList.postValue(DataState.Success(characters))
-    }
-    private fun onCreatorSearchSuccess(creators: List<Creator>) {
-        _itemList.postValue(DataState.Success(creators))
     }
     private fun onEventSearchSuccess(events: List<Event>) {
         _itemList.postValue(DataState.Success(events))
@@ -120,7 +106,6 @@ class SearchViewModel : ViewModel() , BottomSheetListener , CharacterInteraction
             SearchFilter.Character -> characterSearch(null , null)
             SearchFilter.Comic -> comicSearch(null , null)
             SearchFilter.Event -> eventSearch(null , null)
-            SearchFilter.Creator -> creatorSearch(null , null)
         }
     }
 
