@@ -31,11 +31,12 @@
                 android:id="@+id/search_view_result"
                 android:layout_width="wrap_content"
                 app:onTextChange="@{viewModel}"
+                app:clearWhenOptionChanged="@{viewModel.searchFilterOption}"
                 android:layout_height="wrap_content"
                 android:background="@drawable/search_view_background"
                 android:iconifiedByDefault="false"
                 android:queryBackground="@android:color/transparent"
-                android:queryHint="@string/search_hint"
+                android:queryHint="Search"
                 android:layout_marginEnd="8dp"
                 />
 
@@ -46,18 +47,22 @@
                 android:src="@drawable/baseline_filter_alt_24"
                 app:showBottomSheet="@{viewModel}"
                 android:background="@drawable/search_view_background"
-                android:contentDescription="@string/filter" />
+                android:contentDescription="Advanced Filter" />
 
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:paddingHorizontal="8dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:paddingVertical="8dp"
-            app:setUpRecyclerByData="@{viewModel}"
-            app:showWhenSuccess="@{viewModel}"
+            app:listner="@{viewModel}"
+            app:items="@{viewModel.itemList.toData()}"
+            app:setUpRecyclerByData="@{viewModel.searchFilterOption}"
+            app:showWhenSuccess="@{viewModel.itemList}"
             android:clipToPadding="false"
             tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -68,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:showWhenLoading="@{viewModel}"
+            app:showWhenLoading="@{viewModel.itemList}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appbar" />
 

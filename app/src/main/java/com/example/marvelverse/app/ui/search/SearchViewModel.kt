@@ -10,7 +10,11 @@ import androidx.lifecycle.ViewModel
 import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
 import com.example.marvelverse.app.ui.creators.MoreCreatorsAdapter
+import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
+import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
+import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
+import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Creator
 import com.example.marvelverse.domain.entities.main.Event
@@ -31,7 +35,7 @@ enum class SearchFilter{
 }
 
 @SuppressLint("CheckResult")
-class SearchViewModel : ViewModel() , BottomSheetListener {
+class SearchViewModel : ViewModel() , BottomSheetListener , CharacterInteractionListener , ComicInteractionListener , EventInteractionListener {
 
     private val repositry = MarvelRepository
 
@@ -102,6 +106,7 @@ class SearchViewModel : ViewModel() , BottomSheetListener {
 
     private fun onSearchError(throwable: Throwable) {
         _itemList.postValue(DataState.Error(throwable))
+        Log.d("TAG" , throwable.message.toString())
     }
 
     override fun onCleared() {
@@ -111,5 +116,23 @@ class SearchViewModel : ViewModel() , BottomSheetListener {
 
     override fun onSearchFilterOptionSelected(searchFilter: SearchFilter) {
         this.searchFilterOption.postValue(searchFilter)
+        when(searchFilter){
+            SearchFilter.Character -> characterSearch(null , null)
+            SearchFilter.Comic -> comicSearch(null , null)
+            SearchFilter.Event -> eventSearch(null , null)
+            SearchFilter.Creator -> creatorSearch(null , null)
+        }
+    }
+
+    override fun onCharacterClick(character: Character) {
+
+    }
+
+    override fun onComicClick(comic: Comic) {
+
+    }
+
+    override fun onEventClick(event: Event) {
+
     }
 }
