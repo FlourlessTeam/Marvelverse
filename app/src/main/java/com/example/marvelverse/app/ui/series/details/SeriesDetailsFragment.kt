@@ -10,6 +10,7 @@ import com.example.marvelverse.app.ui.abstracts.BaseFragment
 import com.example.marvelverse.app.ui.home.adapter.CharactersAdapter
 import com.example.marvelverse.app.ui.home.adapter.ComicsAdapter
 import com.example.marvelverse.app.ui.home.adapter.EventAdapter
+import com.example.marvelverse.app.ui.home.adapter.EventDetailsAdapter
 import com.example.marvelverse.databinding.FragmentSeriesDetailsBinding
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
@@ -20,7 +21,6 @@ class SeriesDetailsFragment :
     private val viewModel: SeriesDetailsViewModel by viewModels()
     private val args: SeriesDetailsFragmentArgs by navArgs()
 
-    @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
@@ -29,13 +29,12 @@ class SeriesDetailsFragment :
         initRecyclerAdapters()
         getRecyclerData()
         observeSeries()
-
     }
 
 
     private fun initRecyclerAdapters() {
         binding.seriesCharacters.adapter = CharactersAdapter(viewModel)
-        binding.seriesEvents.adapter = EventAdapter(viewModel)
+        binding.seriesEvents.adapter = EventDetailsAdapter(viewModel)
         binding.seriesComics.adapter = ComicsAdapter(viewModel)
     }
 

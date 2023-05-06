@@ -8,6 +8,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.marvelverse.app.ui.abstracts.BaseFragment
 import com.example.marvelverse.app.ui.home.adapter.CharactersAdapter
 import com.example.marvelverse.app.ui.home.adapter.EventAdapter
+import com.example.marvelverse.app.ui.home.adapter.EventDetailsAdapter
 import com.example.marvelverse.databinding.FragmentComicDetailsBinding
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Event
@@ -29,7 +30,7 @@ class ComicDetailsFragment :
 
     private fun initRecyclerAdapters() {
         binding.characterRecycler.adapter = CharactersAdapter(viewModel)
-        binding.eventRecycler.adapter = EventAdapter(viewModel)
+        binding.eventRecycler.adapter = EventDetailsAdapter(viewModel)
     }
 
     private fun getRecyclerData() {
