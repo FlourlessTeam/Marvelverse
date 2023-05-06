@@ -13,10 +13,6 @@ import com.example.marvelverse.databinding.FragmentHomeBinding
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel: AboutViewModel by viewModels()
-        viewModel.currentItem.observe(viewLifecycleOwner, Observer {
-            Log.i("noor", it.toString())
-        })
     }
 
 }
