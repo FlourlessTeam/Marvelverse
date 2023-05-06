@@ -23,7 +23,7 @@ class AboutFragment:
 
         aboutAdapter = AboutAdapter(emptyList())
 
-        binding.aboutRecycler.apply{
+        binding.aboutRecyclerView.apply{
             layoutManager = LinearLayoutManager(requireContext())
             adapter = aboutAdapter
         }
