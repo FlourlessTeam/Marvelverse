@@ -15,7 +15,7 @@ import com.example.marvelverse.app.ui.bottomSheet.BottomSheetFragment
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
 import com.example.marvelverse.app.ui.characters.CharactersAdapter
 import com.example.marvelverse.app.ui.comics.ComicAdapter
-import com.example.marvelverse.app.ui.events.CreatorAdapter
+
 import com.example.marvelverse.app.ui.home.adapter.EventAdapter
 import com.example.marvelverse.app.ui.home.base.BaseInteractionListener
 import com.example.marvelverse.app.ui.search.SearchFilter
@@ -122,11 +122,8 @@ fun RecyclerView.setRecyclerAdapter(
                 adapter.setItems((items as List<Event>))
                 this.adapter = adapter
             }
-            SearchFilter.Creator -> {
-                Log.d("TAG" , "go now ${items.size}")
-                val adapter = CreatorAdapter()
-                //Not Ready Yet
-            }
+
+            else -> {}
         }
     }
 }

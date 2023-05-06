@@ -20,12 +20,6 @@
         android:background="@color/background"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_details_comic"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:navigationIcon="@drawable/baseline_arrow_back_24"
-            app:title="Comic" />
 
         <ScrollView
             android:id="@+id/scroll_view"

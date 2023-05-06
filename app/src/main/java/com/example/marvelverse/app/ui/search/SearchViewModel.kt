@@ -1,15 +1,12 @@
 package com.example.marvelverse.app.ui.search
 
 import android.annotation.SuppressLint
-import android.provider.ContactsContract.Data
 import android.util.Log
-import android.widget.ListAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
-import com.example.marvelverse.app.ui.creators.MoreCreatorsAdapter
 import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
@@ -21,10 +18,7 @@ import com.example.marvelverse.domain.entities.main.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import java.lang.Thread.State
-import java.util.concurrent.TimeUnit
 
 
 enum class SearchFilter{
@@ -125,6 +119,7 @@ class SearchViewModel : ViewModel() , BottomSheetListener , CharacterInteraction
     }
 
     override fun onCharacterClick(character: Character) {
+
 
     }
 

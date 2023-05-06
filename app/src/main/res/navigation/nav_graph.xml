@@ -5,13 +5,14 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/home_nav_group">
 
-    <navigation android:id="@+id/home_nav_group"
+    <navigation
+        android:id="@+id/home_nav_group"
         app:startDestination="@id/homeFragment">
         <fragment
             android:id="@+id/homeFragment"
             android:name="com.example.marvelverse.app.ui.home.HomeFragment"
-            android:label="HomeFragment"
-            tools:layout="@layout/fragment_home" >
+            android:label="Home"
+            tools:layout="@layout/fragment_home">
             <action
                 android:id="@+id/action_homeFragment_to_seriesFragment"
                 app:destination="@id/seriesFragment"
@@ -46,8 +47,8 @@
         <fragment
             android:id="@+id/eventsFragment"
             android:name="com.example.marvelverse.app.ui.events.EventsFragment"
-            android:label="EventsFragment"
-            tools:layout="@layout/fragment_events" >
+            android:label="Events"
+            tools:layout="@layout/fragment_events">
             <action
                 android:id="@+id/action_eventsFragment_to_eventDetailsFragment"
                 app:destination="@id/eventDetailsFragment" />
@@ -55,8 +56,8 @@
         <fragment
             android:id="@+id/seriesFragment"
             android:name="com.example.marvelverse.app.ui.series.SeriesFragment"
-            android:label="SeriesFragment"
-            tools:layout="@layout/fragment_series" >
+            android:label="Series"
+            tools:layout="@layout/fragment_series">
             <action
                 android:id="@+id/action_seriesFragment_to_seriesDetailsFragment"
                 app:destination="@id/seriesDetailsFragment" />
@@ -64,8 +65,8 @@
         <fragment
             android:id="@+id/charactersFragment"
             android:name="com.example.marvelverse.app.ui.characters.CharactersFragment"
-            android:label="fragment_characters"
-            tools:layout="@layout/fragment_characters" >
+            android:label="Characters"
+            tools:layout="@layout/fragment_characters">
             <action
                 android:id="@+id/action_charactersFragment_to_detailsCharacterFragment"
                 app:destination="@id/detailsCharacterFragment" />
@@ -73,17 +74,17 @@
         <fragment
             android:id="@+id/comicsFragment"
             android:name="com.example.marvelverse.app.ui.comics.ComicsFragment"
-            android:label="fragment_comics"
-            tools:layout="@layout/fragment_comics" >
+            android:label="Comics"
+            tools:layout="@layout/fragment_comics">
             <action
                 android:id="@+id/action_comicsFragment_to_comicDetailsFragment"
                 app:destination="@id/comicDetailsFragment" />
         </fragment>
         <fragment
             android:id="@+id/eventDetailsFragment"
-            tools:layout="@layout/fragment_event_details"
             android:name="com.example.marvelverse.app.ui.events.details.EventDetailsFragment"
-            android:label="EventDetailsFragment" >
+            android:label="Event details"
+            tools:layout="@layout/fragment_event_details">
             <argument
                 android:name="event"
                 app:argType="com.example.marvelverse.domain.entities.main.Event" />
@@ -99,9 +100,9 @@
         </fragment>
         <fragment
             android:id="@+id/comicDetailsFragment"
-            tools:layout="@layout/fragment_comic_details"
             android:name="com.example.marvelverse.app.ui.comics.details.ComicDetailsFragment"
-            android:label="ComicDetailsFragment" >
+            android:label="Comic details"
+            tools:layout="@layout/fragment_comic_details">
             <argument
                 android:name="comic"
                 app:argType="com.example.marvelverse.domain.entities.main.Comic" />
@@ -117,9 +118,9 @@
         </fragment>
         <fragment
             android:id="@+id/seriesDetailsFragment"
-            tools:layout="@layout/fragment_series_details"
             android:name="com.example.marvelverse.app.ui.series.details.SeriesDetailsFragment"
-            android:label="SeriesDetailsFragment" >
+            android:label="Series details"
+            tools:layout="@layout/fragment_series_details">
             <argument
                 android:name="series"
                 app:argType="com.example.marvelverse.domain.entities.main.Series" />
@@ -136,9 +137,9 @@
         </fragment>
         <fragment
             android:id="@+id/detailsCharacterFragment"
-            tools:layout="@layout/fragment_details_character"
             android:name="com.example.marvelverse.app.ui.characters.details.DetailsCharacterFragment"
-            android:label="DetailsCharacterFragment" >
+            android:label="Character details"
+            tools:layout="@layout/fragment_details_character">
             <argument
                 android:name="character"
                 app:argType="com.example.marvelverse.domain.entities.main.Character" />
@@ -153,18 +154,21 @@
                 app:destination="@id/comicDetailsFragment" />
         </fragment>
         <action
-            android:id="@+id/action_global_search_nav_group"
-            app:destination="@id/search_nav_group" />
+            android:id="@+id/action_home_group_to_search_group"
+            app:destination="@id/search_nav_group"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/home_nav_group" />
 
     </navigation>
 
-    <navigation android:id="@+id/search_nav_group"
-        app:startDestination="@id/eventDetailsFragment">
+    <navigation
+        android:id="@+id/search_nav_group"
+        app:startDestination="@id/searchFragment">
         <fragment
             android:id="@+id/eventDetailsFragment"
-            tools:layout="@layout/fragment_event_details"
             android:name="com.example.marvelverse.app.ui.events.details.EventDetailsFragment"
-            android:label="EventDetailsFragment" >
+            android:label="Event details"
+            tools:layout="@layout/fragment_event_details">
             <argument
                 android:name="event"
                 app:argType="com.example.marvelverse.domain.entities.main.Event" />
@@ -180,9 +184,9 @@
         </fragment>
         <fragment
             android:id="@+id/comicDetailsFragment"
-            tools:layout="@layout/fragment_comic_details"
             android:name="com.example.marvelverse.app.ui.comics.details.ComicDetailsFragment"
-            android:label="ComicDetailsFragment" >
+            android:label="Comic details"
+            tools:layout="@layout/fragment_comic_details">
             <argument
                 android:name="comic"
                 app:argType="com.example.marvelverse.domain.entities.main.Comic" />
@@ -198,9 +202,9 @@
         </fragment>
         <fragment
             android:id="@+id/seriesDetailsFragment"
-            tools:layout="@layout/fragment_series_details"
             android:name="com.example.marvelverse.app.ui.series.details.SeriesDetailsFragment"
-            android:label="SeriesDetailsFragment" >
+            android:label="Series details"
+            tools:layout="@layout/fragment_series_details">
             <argument
                 android:name="series"
                 app:argType="com.example.marvelverse.domain.entities.main.Series" />
@@ -217,9 +221,9 @@
         </fragment>
         <fragment
             android:id="@+id/detailsCharacterFragment"
-            tools:layout="@layout/fragment_details_character"
             android:name="com.example.marvelverse.app.ui.characters.details.DetailsCharacterFragment"
-            android:label="DetailsCharacterFragment" >
+            android:label="Character details"
+            tools:layout="@layout/fragment_details_character">
             <argument
                 android:name="character"
                 app:argType="com.example.marvelverse.domain.entities.main.Character" />
@@ -233,11 +237,40 @@
                 android:id="@+id/action_detailsCharacterFragment_to_comicDetailsFragment"
                 app:destination="@id/comicDetailsFragment" />
         </fragment>
+        <fragment
+            android:id="@+id/searchFragment"
+            android:name="com.example.marvelverse.app.ui.search.SearchFragment"
+            android:label="Search"
+            tools:layout="@layout/fragment_search">
+            <action
+                android:id="@+id/action_searchFragment_to_eventDetailsFragment"
+                app:destination="@id/eventDetailsFragment" />
+            <action
+                android:id="@+id/action_searchFragment_to_seriesDetailsFragment"
+                app:destination="@id/seriesDetailsFragment" />
+            <action
+                android:id="@+id/action_searchFragment_to_comicDetailsFragment"
+                app:destination="@id/comicDetailsFragment" />
+            <action
+                android:id="@+id/action_searchFragment_to_detailsCharacterFragment"
+                app:destination="@id/detailsCharacterFragment" />
+        </fragment>
         <action
-            android:id="@+id/action_global_home_nav_group"
+            android:id="@+id/action_search_group_to_home_group"
             app:destination="@id/home_nav_group" />
 
     </navigation>
+    <action
+        android:id="@+id/action_nav_graph_pop"
+        app:launchSingleTop="false"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="false" />
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.marvelverse.app.ui.about.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/about_screen" />
 
 
 </navigation>
