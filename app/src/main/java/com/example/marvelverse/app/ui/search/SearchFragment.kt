@@ -15,4 +15,5 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         binding.lifecycleOwner = this
     }
 
+
 }
