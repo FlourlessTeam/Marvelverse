@@ -63,7 +63,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun handleCharacterClick(character: Character) {
-        Log.d("HomeFragment", "ClickCharacterEvent $character")
+        val direction = HomeFragmentDirections.actionHomeFragmentToDetailsCharacterFragment(character)
+        binding.root.findNavController().navigate(direction)
     }
 
     private fun handleComicClick(comic: Comic) {
