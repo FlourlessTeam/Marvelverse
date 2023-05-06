@@ -22,7 +22,6 @@
             android:id="@+id/toolbar_characters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:navigationIcon="@drawable/baseline_arrow_back_24"
             android:title="Details"/>
 
         <ScrollView

@@ -1,6 +1,7 @@
 package com.example.marvelverse.app.ui.events.details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -11,7 +12,11 @@ import com.example.marvelverse.app.ui.home.adapter.SeriesAdapter
 import com.example.marvelverse.databinding.FragmentEventDetailsBinding
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
+import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.wrappers.InfoWrapper
+import com.example.marvelverse.domain.entities.wrappers.RelatedSeries
+import com.example.marvelverse.domain.entities.wrappers.Thumbnail
 
 
 class EventDetailsFragment :
@@ -29,9 +34,9 @@ class EventDetailsFragment :
 	}
 
 	private fun initRecyclerAdapters() {
-		binding.eventCharacters.adapter = CharactersAdapter(listOf(), viewModel)
-		binding.eventSeries.adapter = SeriesAdapter(listOf(), viewModel)
-		binding.eventComics.adapter = ComicsAdapter(listOf(), viewModel)
+		binding.eventCharacters.adapter = CharactersAdapter(viewModel)
+		binding.eventSeries.adapter = SeriesAdapter(viewModel)
+		binding.eventComics.adapter = ComicsAdapter(viewModel)
 	}
 
 	private fun getRecyclerData() {
@@ -53,7 +58,6 @@ class EventDetailsFragment :
 	}
 
 	private fun handleCharacterClick(character: Character) {
-
 	}
 
 	private fun handleComicClick(comic: Comic) {
@@ -61,6 +65,5 @@ class EventDetailsFragment :
 	}
 
 	private fun handleSeriesClick(series: Series) {
-
 	}
 }
