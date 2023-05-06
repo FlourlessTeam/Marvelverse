@@ -4,9 +4,9 @@ import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Creator
 import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.wrappers.Response
 import com.example.marvelverse.domain.entities.main.Series
 import com.example.marvelverse.domain.entities.main.Story
+import com.example.marvelverse.domain.entities.wrappers.Response
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -24,25 +24,25 @@ interface MarvelApiServices {
     @GET("events")
     fun fetchEvents(
         @Query("limit") limit: Int?,
-        @Query("titleStartsWith") title: String?
+        @Query("nameStartsWith") title: String?
     ): Single<Response<Event>>
 
     @GET("characters")
     fun fetchCharacters(
         @Query("limit") limit: Int?,
-        @Query("titleStartsWith") title: String?
+        @Query("nameStartsWith") title: String?
     ): Single<Response<Character>>
 
     @GET("stories")
     fun fetchStories(
         @Query("limit") limit: Int?,
-        @Query("titleStartsWith") title: String?
+        //@Query("titleStartsWith") title: String?
     ): Single<Response<Story>>
 
     @GET("creators")
     fun fetchCreators(
         @Query("limit") limit: Int?,
-        @Query("titleStartsWith") title: String?
+        @Query("nameStartsWith") title: String?
     ): Single<Response<Creator>>
 
     @GET("series")
