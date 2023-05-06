@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelverse.DataState
-import com.example.marvelverse.app.ui.characters.CharactersEvent
 import com.example.marvelverse.app.ui.home.interfaces.SeriesInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.main.Series
@@ -22,8 +21,8 @@ class SeriesViewModel : ViewModel(), SeriesInteractionListener {
     private var _series = MutableLiveData<DataState<Series>>()
     val series: LiveData<DataState<Series>> get() = _series
 
-    private val _seriesEvent  =MutableLiveData<SeriesEvent>()
-    val seriesEvent:LiveData<SeriesEvent> get() = _seriesEvent
+    private val _seriesEvent = MutableLiveData<SeriesEvent>()
+    val seriesEvent: LiveData<SeriesEvent> get() = _seriesEvent
 
     init {
         getSeries()
@@ -41,14 +40,16 @@ class SeriesViewModel : ViewModel(), SeriesInteractionListener {
                 },
                 {
                     _series.postValue(DataState.Error(it))
-                    Log.d("xxxx", it.toString()+"Wwwwwww")
+                    Log.d("xxxx", it.toString() + "Wwwwwww")
                 })
             .addTo(compositeDisposable)
     }
+
     override fun onSeriesClick(series: Series) {
         _seriesEvent.postValue(SeriesEvent.ClickSeriesEvent(series))
     }
-    fun backToHome(){
+
+    fun backToHome() {
         _seriesEvent.postValue(SeriesEvent.BackToHome)
     }
 
@@ -57,11 +58,16 @@ class SeriesViewModel : ViewModel(), SeriesInteractionListener {
         compositeDisposable.add(this)
     }
 
+    fun clearEvents() {
+        if (_seriesEvent.value != SeriesEvent.ReadyState)
+            _seriesEvent.postValue(SeriesEvent.ReadyState)
+
+    }
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
     }
-
 
 
 }

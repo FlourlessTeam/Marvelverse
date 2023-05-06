@@ -12,15 +12,15 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class EventsViewModel: ViewModel(), EventInteractionListener {
+class EventsViewModel : ViewModel(), EventInteractionListener {
 
     private val compositeDisposable = CompositeDisposable()
 
     private var _event = MutableLiveData<DataState<Event>>()
     val event: LiveData<DataState<Event>> get() = _event
 
-    private val _eventsEvent=MutableLiveData<EventsEvent>()
-    val eventsEvent:LiveData<EventsEvent> get() = _eventsEvent
+    private val _eventsEvent = MutableLiveData<EventsEvent>()
+    val eventsEvent: LiveData<EventsEvent> get() = _eventsEvent
 
     init {
         getEvent()
@@ -49,8 +49,14 @@ class EventsViewModel: ViewModel(), EventInteractionListener {
     override fun onEventClick(event: Event) {
         _eventsEvent.postValue(EventsEvent.ClickEventsEvent(event))
     }
-    fun backToHome(){
+
+    fun backToHome() {
         _eventsEvent.postValue(EventsEvent.BackToHome)
+    }
+
+    fun clearEvents() {
+        if (_eventsEvent.value != EventsEvent.ReadyState)
+            _eventsEvent.postValue(EventsEvent.ReadyState)
     }
 
     override fun onCleared() {

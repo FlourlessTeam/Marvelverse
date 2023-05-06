@@ -4,34 +4,46 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.marvelverse.app.ui.abstracts.BaseFragment
 import com.example.marvelverse.databinding.FragmentCharactersBinding
 import com.example.marvelverse.domain.entities.main.Character
 
 class CharactersFragment :
     BaseFragment<FragmentCharactersBinding>(FragmentCharactersBinding::inflate) {
-    private val charactersViewModel: CharactersViewModel by viewModels()
+    private val viewModel: CharactersViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = CharactersAdapter(charactersViewModel)
+        val adapter = CharactersAdapter(viewModel)
         binding.rvCharacters.adapter = adapter
-        binding.viewModel = charactersViewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        charactersViewModel.characterEvent.observe(viewLifecycleOwner) {
+        viewModel.characterEvent.observe(viewLifecycleOwner) {
             it?.let {
                 handleEvent(it)
+
             }
         }
     }
+
     private fun handleEvent(event: CharactersEvent) {
         when (event) {
-            is CharactersEvent.ClickCharacterEvent ->navigateToDetails(event.character)
+            is CharactersEvent.ClickCharacterEvent -> navigateToDetails(event.character)
             CharactersEvent.BackToHome -> BackToHome()
+            else -> {}
         }
+        viewModel.clearEvents()
     }
+
     private fun navigateToDetails(character: Character) {
-        Log.d("CharactersFragment", "ClickCharacterEvent $character")
+        val directions =
+            CharactersFragmentDirections.actionCharactersFragmentToDetailsCharacterFragment(
+                character
+            )
+        findNavController().navigate(directions)
     }
+
+
     fun BackToHome() {
         Log.d("CharactersFragment", "BackToHome")
     }

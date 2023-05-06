@@ -4,19 +4,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.marvelverse.app.ui.abstracts.BaseFragment
 import com.example.marvelverse.databinding.FragmentSeriesBinding
 import com.example.marvelverse.domain.entities.main.Series
 
 class SeriesFragment : BaseFragment<FragmentSeriesBinding>(FragmentSeriesBinding::inflate) {
-    private val seriesViewModel: SeriesViewModel by viewModels()
+    private val viewModel: SeriesViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = SeriesAdapter(seriesViewModel)
+        val adapter = SeriesAdapter(viewModel)
         binding.rvSeries.adapter = adapter
-        binding.viewModel = seriesViewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        seriesViewModel.seriesEvent.observe(viewLifecycleOwner) {
+        viewModel.seriesEvent.observe(viewLifecycleOwner) {
             it?.let {
                 handleEvent(it)
             }
@@ -27,11 +28,15 @@ class SeriesFragment : BaseFragment<FragmentSeriesBinding>(FragmentSeriesBinding
         when (event) {
             is SeriesEvent.ClickSeriesEvent -> navigateToDetails(event.series)
             SeriesEvent.BackToHome -> BackToHome()
+            else -> {}
         }
+        viewModel.clearEvents()
+
     }
 
     fun navigateToDetails(series: Series) {
-        Log.d("SeriesFragment", "ClickSeriesEvent $series")
+        val direction = SeriesFragmentDirections.actionSeriesFragmentToSeriesDetailsFragment(series)
+        findNavController().navigate(direction)
     }
 
     fun BackToHome() {

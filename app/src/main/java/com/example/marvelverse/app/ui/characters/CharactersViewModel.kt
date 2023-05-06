@@ -19,8 +19,8 @@ class CharactersViewModel : ViewModel(), CharacterInteractionListener {
     private var _characters = MutableLiveData<DataState<Character>>()
     val characters: LiveData<DataState<Character>> get() = _characters
 
-    private val _characterEvent=MutableLiveData<CharactersEvent>()
-    val characterEvent:LiveData<CharactersEvent> get() = _characterEvent
+    private val _characterEvent = MutableLiveData<CharactersEvent>()
+    val characterEvent: LiveData<CharactersEvent> get() = _characterEvent
 
     init {
         getCharacters()
@@ -49,8 +49,14 @@ class CharactersViewModel : ViewModel(), CharacterInteractionListener {
     override fun onCharacterClick(character: Character) {
         _characterEvent.postValue(CharactersEvent.ClickCharacterEvent(character))
     }
-    fun backToHome(){
+
+    fun backToHome() {
         _characterEvent.postValue(CharactersEvent.BackToHome)
+    }
+
+    fun clearEvents() {
+        if (_characterEvent.value != CharactersEvent.ReadyState)
+            _characterEvent.postValue(CharactersEvent.ReadyState)
     }
 
     override fun onCleared() {
