@@ -14,6 +14,7 @@ import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Series
 
 
+
 class EventDetailsFragment :
 	BaseFragment<FragmentEventDetailsBinding>(FragmentEventDetailsBinding::inflate) {
 
@@ -29,9 +30,9 @@ class EventDetailsFragment :
 	}
 
 	private fun initRecyclerAdapters() {
-		binding.eventCharacters.adapter = CharactersAdapter(listOf(), viewModel)
-		binding.eventSeries.adapter = SeriesAdapter(listOf(), viewModel)
-		binding.eventComics.adapter = ComicsAdapter(listOf(), viewModel)
+		binding.eventCharacters.adapter = CharactersAdapter(viewModel)
+		binding.eventSeries.adapter = SeriesAdapter(viewModel)
+		binding.eventComics.adapter = ComicsAdapter(viewModel)
 	}
 
 	private fun getRecyclerData() {
@@ -43,24 +44,22 @@ class EventDetailsFragment :
 	}
 
 	private fun observeEvents() {
-		viewModel.detailsEvents.observe(viewLifecycleOwner, Observer { clickEvent ->
+		viewModel.eventDetailsEvents.observe(viewLifecycleOwner, Observer { clickEvent ->
 			when (clickEvent) {
-				is DetailsEvent.ClickCharacterEvent -> handleCharacterClick(clickEvent.character)
-				is DetailsEvent.ClickComicEvent -> handleComicClick(clickEvent.comic)
-				is DetailsEvent.ClickSeriesEvent -> handleSeriesClick(clickEvent.series)
+				is EventDetailsEvents.ClickCharacterEvent -> navigateToCharacterDetails(clickEvent.character)
+				is EventDetailsEvents.ClickComicEvent -> navigateToComicDetails(clickEvent.comic)
+				is EventDetailsEvents.ClickSeriesEvent -> navigateToSeriesDetails(clickEvent.series)
 			}
 		})
 	}
 
-	private fun handleCharacterClick(character: Character) {
+	private fun navigateToCharacterDetails(character: Character) {
+	}
+
+	private fun navigateToComicDetails(comic: Comic) {
 
 	}
 
-	private fun handleComicClick(comic: Comic) {
-
-	}
-
-	private fun handleSeriesClick(series: Series) {
-
+	private fun navigateToSeriesDetails(series: Series) {
 	}
 }

@@ -4,16 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelverse.BR
+import com.example.marvelverse.app.ui.home.base.BaseDiffUtil
+import com.example.marvelverse.app.ui.home.base.BaseInteractionListener
 
-interface BaseInteractionListener
 
 abstract class BaseAdapter<T>(
-    private var items: List<T>,
     private val listener: BaseInteractionListener,
-) : RecyclerView.Adapter<BaseAdapter.BaseViewHolder>() {
+) : ListAdapter<T, BaseAdapter.BaseViewHolder>(BaseDiffUtil<T>()) {
 
     abstract val layoutID: Int
 
@@ -30,7 +30,7 @@ abstract class BaseAdapter<T>(
 
     open fun bind(holder: ItemViewHolder, position: Int) {
         holder.binding.apply {
-            setVariable(BR.item, items[position])
+            setVariable(BR.item, getItem(position))
             setVariable(BR.listener, listener)
         }
     }
@@ -39,17 +39,10 @@ abstract class BaseAdapter<T>(
 
     abstract class BaseViewHolder(binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun getItemCount() = items.size
 
-    open  fun setItems(newItems: List<T>) {
-        val diffResult = DiffUtil.calculateDiff(BaseDiffUtil(items, newItems,::areItemsSame, ::areContentSame))
-        items = newItems
-        diffResult.dispatchUpdatesTo(this)
+    open fun setItems(newItems: List<T>) {
+        submitList(newItems)
     }
-
-    open fun areItemsSame(oldItem: T, newItem: T): Boolean {
-        return oldItem?.equals(newItem) == true
-    }
-    open fun areContentSame(oldPosition: T, newPosition: T) = true
 
 }
+
