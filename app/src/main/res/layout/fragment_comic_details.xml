@@ -17,6 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
@@ -65,6 +66,7 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/poppins_bold"
                     android:text="Description"
+                    visibilityIfNotBlank="@{item.description}"
                     android:textColor="@color/main_title" />
 
                 <TextView
@@ -75,6 +77,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="16dp"
+                    visibilityIfNotBlank="@{item.description}"
                     android:text="@{item.description}"
                     tools:text="Description" />
 
@@ -83,8 +86,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_bold"
+                    availableItemsVisibility="@{viewModel.character.size}"
                     android:text="Characters"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/main_title" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -95,6 +99,7 @@
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
+                    availableItemsVisibility="@{viewModel.character.size}"
                     app:items="@{viewModel.character}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_comic_card" />
@@ -105,6 +110,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/poppins_bold"
+                    availableItemsVisibility="@{viewModel.event.size}"
                     android:text="Events"
                     android:textColor="@color/main_title" />
 
@@ -116,6 +122,7 @@
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
+                    availableItemsVisibility="@{viewModel.event.size}"
                     app:items="@{viewModel.event}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_comic_card" />
