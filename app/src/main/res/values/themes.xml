@@ -30,5 +30,12 @@
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/primary</item>
     </style>
+    <style name="Widget.App.Chip" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="android:checkable">true</item>
+        <item name="chipIconVisible">false</item>
+        <item name="closeIconVisible">false</item>
+        <item name="chipBackgroundColor">@color/primary</item>
+        <item name="checkedIcon">@drawable/baseline_check_24</item>
+    </style>
 
 </resources>
