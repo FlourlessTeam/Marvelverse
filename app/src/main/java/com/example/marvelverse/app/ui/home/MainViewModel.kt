@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class MainViewModel : ViewModel(), ParentInteractionListener,
     CharacterInteractionListener, EventInteractionListener, ComicInteractionListener,
     SeriesInteractionListener {
-    val disposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
     private val _homeItems: MutableLiveData<List<HomeItem>> = MutableLiveData()
     val homeItems: LiveData<List<HomeItem>> = _homeItems
 
@@ -86,6 +86,9 @@ class MainViewModel : ViewModel(), ParentInteractionListener,
 
     override fun onViewAllSeriesClick() {
         _homeEvents.postValue(HomeEvent.ClickSeeAllSeriesEvent)
+    }
+    fun resetEvents(){
+        _homeEvents.postValue(HomeEvent.ReadyState)
     }
     override fun onCleared() {
         super.onCleared()
