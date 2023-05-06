@@ -71,7 +71,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun handleEventClick(event: Event) {
-        Log.d("HomeFragment", "ClickEventEvent $event")
+        val direction = HomeFragmentDirections.actionHomeFragmentToEventDetailsFragment(event)
+        binding.root.findNavController().navigate(direction)
     }
 
     private fun handleSeriesClick(series: Series) {

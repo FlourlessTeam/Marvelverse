@@ -1,8 +1,7 @@
 package com.example.marvelverse.domain.entities.main
 
-import com.example.marvelverse.domain.entities.wrappers.Thumbnail
-import com.example.marvelverse.domain.entities.wrappers.RelatedSeries
 import com.example.marvelverse.domain.entities.wrappers.InfoWrapper
+import com.example.marvelverse.domain.entities.wrappers.Thumbnail
 
 
 data class Comic(
@@ -11,7 +10,7 @@ data class Comic(
     val description:String?,
     val resourceURI: String,
     val pageCount:Int,
-    val series: RelatedSeries,
+    val series: InfoWrapper,
     val characters: InfoWrapper,
     val creators: InfoWrapper,
     val stories: InfoWrapper,

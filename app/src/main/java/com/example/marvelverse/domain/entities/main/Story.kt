@@ -1,7 +1,7 @@
 package com.example.marvelverse.domain.entities.main
 
 import com.example.marvelverse.domain.entities.wrappers.InfoWrapper
-import com.example.marvelverse.domain.entities.wrappers.RelatedSeries
+import com.example.marvelverse.domain.entities.wrappers.RelatedCollectionSeries
 
 data class Story(
     val id: Int,
@@ -10,6 +10,6 @@ data class Story(
     val relatedComics: InfoWrapper,
     val relatedCharacters: InfoWrapper,
     val relatedCreators: InfoWrapper,
-    val relatedSeries: RelatedSeries,
+    val relatedCollectionSeries: RelatedCollectionSeries,
     val relatedEvents: InfoWrapper,
 )

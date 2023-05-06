@@ -28,6 +28,9 @@
             android:id="@+id/action_homeFragment_to_eventsFragment"
             app:destination="@id/eventsFragment"
             app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/eventsFragment"
@@ -59,6 +62,15 @@
         android:name="com.example.marvelverse.app.ui.stories.MoreStoriesFragment"
         android:label="MoreStoriesFragment"
         tools:layout="@layout/fragment_more_stories" />
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        tools:layout="@layout/fragment_event_details"
+        android:name="com.example.marvelverse.app.ui.events.details.EventDetailsFragment"
+        android:label="EventDetailsFragment" >
+        <argument
+            android:name="event"
+            app:argType="com.example.marvelverse.domain.entities.main.Event" />
+    </fragment>
 
 
 </navigation>
