@@ -5,15 +5,13 @@
 
     <data>
 
-        <variable
-            name="viewModel"
-            type="com.example.marvelverse.app.ui.about.AboutViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="16dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/about_toolbar"
@@ -28,9 +26,8 @@
             android:id="@+id/about_image"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginHorizontal="16dp"
             android:background="@drawable/marvel"
-            android:contentDescription="Marvel"
+            android:contentDescription="@string/marvel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +37,8 @@
             android:id="@+id/about_recycler"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/item_card_about"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
