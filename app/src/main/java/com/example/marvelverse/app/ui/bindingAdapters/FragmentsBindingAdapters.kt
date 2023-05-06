@@ -100,23 +100,19 @@ fun RecyclerView.setRecyclerAdapter(
     listener:BaseInteractionListener,
     filterOption: SearchFilter?
 ) {
-    Log.d("TAG" , "go now ${filterOption} , ${items?.size}")
     if(items!= null){
         when (filterOption!!) {
             SearchFilter.Character -> {
-                Log.d("TAG" , "go now ${items.size}")
                 val adapter = CharactersAdapter(listener)
                 adapter.setItems(items as List<Character>)
                 this.adapter = adapter
             }
             SearchFilter.Comic -> {
-                Log.d("TAG" , "go now ${items.size}")
                 val adapter = ComicAdapter(listener)
                 adapter.setItems((items as List<Comic>))
                 this.adapter = adapter
             }
             SearchFilter.Event -> {
-                Log.d("TAG" , "go now ${items.size}")
                 val adapter = EventAdapter(listener)
                 adapter.setItems((items as List<Event>))
                 this.adapter = adapter
