@@ -23,9 +23,9 @@ class SeriesDetailsFragment :
     @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        binding.item = args.series
         initRecyclerAdapters()
         getRecyclerData()
         observeSeries()
