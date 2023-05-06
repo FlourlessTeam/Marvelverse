@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelverse.data.repositories.MarvelRepository
 
-class AboutViewModel: ViewModel() {
+class AboutViewModel : ViewModel() {
 
     private val repository = MarvelRepository
 
@@ -17,8 +17,6 @@ class AboutViewModel: ViewModel() {
         getAboutItems()
     }
 
-    private fun getAboutItems() {
-        _currentItem.postValue(repository.getItems())
-    }
+    private fun getAboutItems() = _currentItem.postValue(repository.getItems())
 
 }

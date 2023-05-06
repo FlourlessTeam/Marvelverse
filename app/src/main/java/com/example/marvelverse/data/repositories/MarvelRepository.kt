@@ -9,7 +9,7 @@ object MarvelRepository {
         RetrofitClient.marvelApiServices
     }
 
-    private val api = FakeLocalData()
+    private val fakeLocalData = FakeLocalData()
 
     fun searchComics(limit: Int? = null, title: String? = null) =
         marvelApiServices.fetchComics(limit, title).map { it.data.results }
@@ -51,7 +51,6 @@ object MarvelRepository {
     fun getEventsByUrl(url: String) =
         marvelApiServices.fetchEventsByUrl(url).map { it.data.results }
 
-    fun getItems() = api.getAboutItems()
-
+    fun getItems() = fakeLocalData.getAboutItems()
 
 }
