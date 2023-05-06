@@ -27,21 +27,21 @@ class ComicsFragment : BaseFragment<FragmentComicsBinding>(FragmentComicsBinding
         }
     }
 
-    fun handleComic(event: ComicEvent) {
+    private fun handleComic(event: ComicEvent) {
         when (event) {
             is ComicEvent.ClickComicEvent -> navigateToDetails(event.comic)
-            ComicEvent.BackToHome -> BackToHome()
+            ComicEvent.BackToHome -> backToHome()
             else -> {}
         }
         viewModel.clearEvents()
     }
 
-    fun navigateToDetails(comic: Comic) {
+    private fun navigateToDetails(comic: Comic) {
         val direction = ComicsFragmentDirections.actionComicsFragmentToComicDetailsFragment(comic)
         findNavController().navigate(direction)
     }
 
-    fun BackToHome() {
+    private fun backToHome() {
         Log.d("ComicFragment", "BackToHome")
     }
 
