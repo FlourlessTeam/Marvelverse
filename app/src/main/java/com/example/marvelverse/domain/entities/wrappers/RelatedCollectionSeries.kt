@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class InfoWrapper(val collectionURI: String, val available: Int) : Parcelable
+data class RelatedCollectionSeries(val collectionURI: String="", val available: Int=0) : Parcelable
