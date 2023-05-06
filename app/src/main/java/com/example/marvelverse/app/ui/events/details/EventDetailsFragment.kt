@@ -20,36 +20,12 @@ import com.example.marvelverse.domain.entities.wrappers.Thumbnail
 
 class EventDetailsFragment :
 	BaseFragment<FragmentEventDetailsBinding>(FragmentEventDetailsBinding::inflate) {
-	val event = Event(
-		id = 116,
-		title = "Acts of Vengeance!",
-		description = "Loki sets about convincing the super-villains of Earth to attack heroes other than those they normally fight in an attempt to destroy the Avengers to absolve his guilt over inadvertently creating the team in the first place.",
-		series = RelatedSeries(
-			resourceURI = "http://gateway.marvel.com/v1/public/events/116/series",
-			available = 4201
-		),
-		comics = InfoWrapper(
-			collectionURI = "http://gateway.marvel.com/v1/public/events/116/comics",
-			available = 4099
-		),
-		creators = InfoWrapper(collectionURI = "collection_u_r_i", available = 2295),
-		stories = InfoWrapper(collectionURI = "collection_u_r_i", available = 3334),
-		characters = InfoWrapper(
-			collectionURI = "http://gateway.marvel.com/v1/public/events/116/characters",
-			available = 4477
-		),
-		thumbnail = Thumbnail(
-			path = "http://i.annihil.us/u/prod/marvel/i/mg/9/40/51ca10d996b8b",
-			extension = "jpg"
-		)
-	)
-
 
 	private val viewModel: EventDetailsViewModel by viewModels()
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		binding.viewModel = viewModel
-		binding.item = event
+		//binding.item = event
 		binding.lifecycleOwner = viewLifecycleOwner
 		initRecyclerAdapters()
 		getRecyclerData()
@@ -64,9 +40,9 @@ class EventDetailsFragment :
 
 	private fun getRecyclerData() {
 		viewModel.apply {
-			getCharacters(event.characters.collectionURI)
-			getSeries(event.series.resourceURI)
-			getComics(event.comics.collectionURI)
+			//getCharacters(event.characters.collectionURI)
+			//getSeries(event.series.resourceURI)
+			//getComics(event.comics.collectionURI)
 		}
 	}
 
