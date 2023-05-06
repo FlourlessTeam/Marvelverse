@@ -35,10 +35,10 @@
             android:id="@+id/characterCardText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
             android:gravity="center"
             tools:text="Spider Man"
-            android:textColor="#303030"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/main_title"
             android:text="@{item.name}"
             android:textSize="12sp" />
 

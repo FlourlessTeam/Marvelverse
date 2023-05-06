@@ -17,6 +17,7 @@
     <color name="icon">#351E06</color>
     <color name="checked_chip">#FBD9B6</color>
     <color name="recipe_tile_stroke">#FFFBFA</color>
+    <color name="icon_background">#1F1F1F</color>
 
 
 

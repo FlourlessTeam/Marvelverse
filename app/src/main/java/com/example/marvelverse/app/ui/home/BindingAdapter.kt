@@ -1,6 +1,7 @@
 package com.example.marvelverse.app.ui.home
 
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -30,3 +31,18 @@ fun bindNestedRecyclerView(recyclerView: RecyclerView, items: List<HomeItem>?) {
         (recyclerView.adapter as HomeAdapter).addNestedItem(it as MutableList<HomeItem>)
     }
 }
+
+@BindingAdapter("availableItemsVisibility")
+fun setAvailableItemsVisibility(view: View, availableItemCount: Int) {
+    view.visibility = if (availableItemCount > 0) View.VISIBLE else View.GONE
+}
+@BindingAdapter("visibilityIfNotBlank")
+fun setVisibilityIfNotBlank(view: View, text: String?) {
+    if (text.isNullOrEmpty()) {
+        view.visibility = View.GONE
+    } else {
+        view.visibility = View.VISIBLE
+    }
+}
+
+
