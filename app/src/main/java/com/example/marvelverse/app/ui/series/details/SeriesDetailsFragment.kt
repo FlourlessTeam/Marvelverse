@@ -1,15 +1,13 @@
 package com.example.marvelverse.app.ui.series.details
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.marvelverse.app.ui.abstracts.BaseFragment
+import com.example.marvelverse.app.ui.abstracts.InnerFragment
 import com.example.marvelverse.app.ui.home.adapter.CharactersAdapter
 import com.example.marvelverse.app.ui.home.adapter.ComicsAdapter
-import com.example.marvelverse.app.ui.home.adapter.EventAdapter
 import com.example.marvelverse.app.ui.home.adapter.EventDetailsAdapter
 import com.example.marvelverse.databinding.FragmentSeriesDetailsBinding
 import com.example.marvelverse.domain.entities.main.Character
@@ -17,7 +15,7 @@ import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 
 class SeriesDetailsFragment :
-    BaseFragment<FragmentSeriesDetailsBinding>(FragmentSeriesDetailsBinding::inflate) {
+    InnerFragment<FragmentSeriesDetailsBinding>(FragmentSeriesDetailsBinding::inflate) {
     private val viewModel: SeriesDetailsViewModel by viewModels()
     private val args: SeriesDetailsFragmentArgs by navArgs()
 

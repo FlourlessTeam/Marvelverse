@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.marvelverse.app.ui.abstracts.BaseFragment
+import com.example.marvelverse.app.ui.abstracts.InnerFragment
 import com.example.marvelverse.app.ui.home.adapter.ComicsAdapter
 import com.example.marvelverse.app.ui.home.adapter.EventDetailsAdapter
 import com.example.marvelverse.app.ui.home.adapter.SeriesAdapter
@@ -15,7 +16,7 @@ import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
 
 class DetailsCharacterFragment :
-    BaseFragment<FragmentDetailsCharacterBinding>(FragmentDetailsCharacterBinding::inflate) {
+    InnerFragment<FragmentDetailsCharacterBinding>(FragmentDetailsCharacterBinding::inflate) {
     private val viewModel: DetailsCharacterViewModel by viewModels()
     private val args: DetailsCharacterFragmentArgs by navArgs()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -3,11 +3,10 @@ package com.example.marvelverse.app.ui.creators
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.example.marvelverse.app.ui.abstracts.BaseFragment
-import com.example.marvelverse.app.ui.stories.MoreStoriesAdapter
+import com.example.marvelverse.app.ui.abstracts.InnerFragment
 import com.example.marvelverse.databinding.FragmentMoreCreatorsBinding
 
-class MoreCreatorsFragment : BaseFragment<FragmentMoreCreatorsBinding>
+class MoreCreatorsFragment : InnerFragment<FragmentMoreCreatorsBinding>
     (FragmentMoreCreatorsBinding::inflate) {
 
     private val viewModel: MoreCreatorsViewModel by viewModels()

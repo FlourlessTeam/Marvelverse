@@ -5,12 +5,12 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.marvelverse.app.ui.abstracts.BaseFragment
+import com.example.marvelverse.app.ui.abstracts.InnerFragment
 import com.example.marvelverse.databinding.FragmentCharactersBinding
 import com.example.marvelverse.domain.entities.main.Character
 
 class CharactersFragment :
-    BaseFragment<FragmentCharactersBinding>(FragmentCharactersBinding::inflate) {
+    InnerFragment<FragmentCharactersBinding>(FragmentCharactersBinding::inflate) {
     private val viewModel: CharactersViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -6,11 +6,12 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.marvelverse.app.ui.abstracts.BaseFragment
+import com.example.marvelverse.app.ui.abstracts.InnerFragment
 import com.example.marvelverse.databinding.FragmentEventsBinding
 import com.example.marvelverse.domain.entities.main.Event
 
 
-class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding::inflate) {
+class EventsFragment : InnerFragment<FragmentEventsBinding>(FragmentEventsBinding::inflate) {
 
     private val viewModel: EventsViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
