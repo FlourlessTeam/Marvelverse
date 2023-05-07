@@ -94,7 +94,7 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
         _itemList.postValue(DataState.Success(comics))
     }
 
-    private fun onCharacterSearchSuccess(characters: List<com.example.marvelverse.domain.entities.main.Character>) {
+    private fun onCharacterSearchSuccess(characters: List<Character>) {
         _itemList.postValue(DataState.Success(characters))
     }
 

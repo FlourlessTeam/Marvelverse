@@ -18,7 +18,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/event_recycler_view"
-            bindFragmentList="@{viewModel.event}"
+           app:items="@{viewModel.event}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"

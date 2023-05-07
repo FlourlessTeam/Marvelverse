@@ -1,6 +1,5 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item android:state_checked="true"
-        android:drawable="@color/white" />
-    <item android:drawable="@color/bottom_navigation_item" />
+        android:color="@color/white" />
+    <item android:color="@color/bottom_navigation_item" />
 </selector>

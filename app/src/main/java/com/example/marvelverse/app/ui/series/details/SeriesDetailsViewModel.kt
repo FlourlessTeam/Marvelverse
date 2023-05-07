@@ -3,6 +3,7 @@ package com.example.marvelverse.app.ui.series.details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
@@ -17,17 +18,17 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class SeriesDetailsViewModel() : ViewModel(), ComicInteractionListener, EventInteractionListener,
     CharacterInteractionListener {
 
-    private val _characters: MutableLiveData<List<Character>> = MutableLiveData()
-    private val _comics: MutableLiveData<List<Comic>> = MutableLiveData()
-    private val _events: MutableLiveData<List<Event>> = MutableLiveData()
+    private val _characters: MutableLiveData<DataState<Character>> = MutableLiveData()
+    private val _comics: MutableLiveData<DataState<Comic>> = MutableLiveData()
+    private val _events: MutableLiveData<DataState<Event>> = MutableLiveData()
     private val disposables = CompositeDisposable()
     private val _detailsSeries: MutableLiveData<DetailsSeries> = MutableLiveData()
 
-    val characters: LiveData<List<Character>>
+    val characters: LiveData<DataState<Character>>
         get() = _characters
-    val comics: LiveData<List<Comic>>
+    val comics: LiveData<DataState<Comic>>
         get() = _comics
-    val events: LiveData<List<Event>>
+    val events: LiveData<DataState<Event>>
         get() = _events
     val detailsSeries: LiveData<DetailsSeries>
         get() = _detailsSeries
@@ -39,9 +40,10 @@ class SeriesDetailsViewModel() : ViewModel(), ComicInteractionListener, EventInt
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { characters ->
-                    _characters.postValue(characters)
+                    _characters.postValue(DataState.Success(characters))
                 },
                 {
+                    _characters.postValue(DataState.Error(it))
                 }
             )
         disposables.add(disposable)
@@ -54,10 +56,10 @@ class SeriesDetailsViewModel() : ViewModel(), ComicInteractionListener, EventInt
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { comics ->
-                    _comics.postValue(comics)
+                    _comics.postValue(DataState.Success(comics))
                 },
                 {
-
+                    _comics.postValue(DataState.Error(it))
                 }
             )
         disposables.add(disposable)
@@ -70,9 +72,10 @@ class SeriesDetailsViewModel() : ViewModel(), ComicInteractionListener, EventInt
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { events ->
-                    _events.postValue(events)
+                    _events.postValue(DataState.Success(events))
                 },
                 {
+                    _events.postValue(DataState.Error(it))
                 }
             )
         disposables.add(disposable)

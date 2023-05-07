@@ -12,6 +12,7 @@ object RetrofitClient {
     //    private val gson = GsonBuilder()
 //        .registerTypeAdapter(Response::class.java,ResponseDeserializer<List<Comic>>())
 //        .create()
+
     val moshi = Moshi.Builder().build()
     private val retrofit: Retrofit by lazy {
         val client = OkHttpClient.Builder().addInterceptor(AuthInterceptor()).build()

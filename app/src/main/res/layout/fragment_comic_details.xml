@@ -14,13 +14,12 @@
             type="com.example.marvelverse.domain.entities.main.Comic" />
     </data>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
         android:orientation="vertical">
-
-
         <ScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
@@ -80,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    availableItemsVisibility="@{viewModel.character.size}"
+                    availableItemsVisibility="@{viewModel.character}"
                     android:text="Characters"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/main_title" />
@@ -93,7 +92,7 @@
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
-                    availableItemsVisibility="@{viewModel.character.size}"
+                    availableItemsVisibility="@{viewModel.character}"
                     app:items="@{viewModel.character}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_comic_card" />
@@ -104,7 +103,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/poppins_bold"
-                    availableItemsVisibility="@{viewModel.event.size}"
+                    availableItemsVisibility="@{viewModel.event}"
                     android:text="Events"
                     android:textColor="@color/main_title" />
 
@@ -116,12 +115,13 @@
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
-                    availableItemsVisibility="@{viewModel.event.size}"
+                    availableItemsVisibility="@{viewModel.event}"
                     app:items="@{viewModel.event}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_comic_card" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
 
 </layout>

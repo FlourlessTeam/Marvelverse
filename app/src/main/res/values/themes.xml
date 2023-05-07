@@ -3,12 +3,8 @@
     <style name="Theme.Marvelverse" parent="Theme.Material3.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">@color/view_pager_activated</item>
-        <item name="colorOnPrimary">@color/background</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/sub_card_background</item>
-        <item name="colorSecondaryVariant">@color/view_pager_activated</item>
-        <item name="colorOnSecondary">@color/background</item>
+        <item name="colorPrimaryVariant">@color/background</item>
+        <item name="colorOnPrimary">@color/background</item>>
         <!-- Status bar color. -->
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/background</item>
@@ -19,12 +15,12 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="Widget.Material3.BottomNavigationView.style" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+    <style name="BottomNavigationView">
         <item name="android:color">@color/primary</item>
         <item name="android:background">@color/card_background</item>
+        <item name="itemActiveIndicatorStyle">@style/App.Custom.Indicator</item>
         <item name="itemTextColor">@drawable/nav_item_text_color</item>
         <item name="itemIconTint">@drawable/nav_item_color</item>
-        <item name="itemActiveIndicatorStyle">@style/App.Custom.Indicator</item>
     </style>
 
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
@@ -35,6 +31,7 @@
         <item name="chipIconVisible">false</item>
         <item name="closeIconVisible">false</item>
         <item name="chipBackgroundColor">@color/primary</item>
+        <item name="android:textColor">@color/white</item>
         <item name="checkedIcon">@drawable/baseline_check_24</item>
     </style>
 

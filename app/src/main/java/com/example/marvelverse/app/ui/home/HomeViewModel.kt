@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
@@ -13,21 +14,16 @@ import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
-import com.example.marvelverse.domain.entities.main.Story
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MainViewModel : ViewModel(), ParentInteractionListener,
+class HomeViewModel : ViewModel(), ParentInteractionListener,
     CharacterInteractionListener, EventInteractionListener, ComicInteractionListener,
     SeriesInteractionListener {
     private val disposable = CompositeDisposable()
-    private val _homeItems: MutableLiveData<List<HomeItem>> = MutableLiveData()
-    val homeItems: LiveData<List<HomeItem>> = _homeItems
-
-
-    private val _errorMessage: MutableLiveData<String> = MutableLiveData()
-    val errorMessage: LiveData<String> = _errorMessage
+    private val _homeItems: MutableLiveData<DataState<HomeItem>> = MutableLiveData()
+    val homeItems: LiveData<DataState<HomeItem>> = _homeItems
 
     private val _homeEvents: MutableLiveData<HomeEvent> = MutableLiveData()
     val homeEvents: LiveData<HomeEvent> = _homeEvents
@@ -38,14 +34,16 @@ class MainViewModel : ViewModel(), ParentInteractionListener,
 
     @SuppressLint("CheckResult")
     fun getDataForHomeItems() {
-        disposable.add(MarvelRepository.fetchHomeItems()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ homeItems ->
-                _homeItems.postValue(homeItems)
-            }, { error ->
-                _errorMessage.postValue(error.message)
-            })
+        _homeItems.postValue(DataState.Loading)
+        disposable.add(
+            MarvelRepository.fetchHomeItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ homeItems ->
+                    _homeItems.postValue(DataState.Success(homeItems))
+                }, { error ->
+                    _homeItems.postValue(DataState.Error(error))
+                })
         )
     }
 
@@ -59,10 +57,6 @@ class MainViewModel : ViewModel(), ParentInteractionListener,
 
     override fun onComicClick(comic: Comic) {
         _homeEvents.postValue(HomeEvent.ClickComicEvent(comic))
-    }
-
-    override fun onStoriesClick(stories: Story) {
-        _homeEvents.postValue(HomeEvent.ClickStoryEvent(stories))
     }
 
     override fun onSeriesClick(series: Series) {
@@ -81,9 +75,6 @@ class MainViewModel : ViewModel(), ParentInteractionListener,
         _homeEvents.postValue(HomeEvent.ClickSeeAllComicsEvent)
     }
 
-    override fun onViewAllStoriesClick() {
-        _homeEvents.postValue(HomeEvent.ClickSeeAllStoriesEvent)
-    }
 
     override fun onViewAllSeriesClick() {
         _homeEvents.postValue(HomeEvent.ClickSeeAllSeriesEvent)

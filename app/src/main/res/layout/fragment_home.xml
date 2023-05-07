@@ -7,10 +7,10 @@
 
         <variable
             name="viewModel"
-            type="com.example.marvelverse.app.ui.home.MainViewModel" />
+            type="com.example.marvelverse.app.ui.home.HomeViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@color/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -24,5 +24,27 @@
             app:nestedItems="@{viewModel.homeItems}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <ImageView
+            showIfError="@{viewModel.homeItems}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/error_icon"
+            android:src="@drawable/baseline_error_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            showIfLoading="@{viewModel.homeItems}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

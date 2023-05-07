@@ -26,11 +26,9 @@
             android:layout_margin="16dp"
             android:gravity="center"
             android:text="Characters"
-            android:fontFamily="@font/poppins_bold"
+            android:fontFamily="@font/poppins_medium"
             android:textColor="@color/main_title"
-            tools:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +39,7 @@
             android:layout_marginEnd="16dp"
             android:gravity="center"
             android:text="Show All"
-            android:fontFamily="@font/poppins_medium"
+            android:fontFamily="@font/poppins_regular"
             android:textColor="@color/main_title"
             android:onClick="@{() -> listener.onViewAllCharactersClick()}"
             android:textSize="14sp"
