@@ -131,19 +131,18 @@ fun SearchView.searchViewListener(viewModel: SearchViewModel) {
         }
 
         override fun onQueryTextChange(newText: String?): Boolean {
-            if (!newText.isNullOrEmpty())
+            if (!newText.isNullOrEmpty()) {
                 when (viewModel.searchFilterOption.value!!) {
                     SearchFilter.Character -> viewModel.characterSearch(null, newText)
                     SearchFilter.Comic -> viewModel.comicSearch(null, newText)
                     SearchFilter.Event -> viewModel.eventSearch(null, newText)
                 }
+            }else{
+                viewModel.setItemListStateEmpty()
+            }
             return true
         }
     })
-    this.setOnCloseListener {
-
-        return@setOnCloseListener true
-    }
 }
 
 @BindingAdapter(value = ["app:showBottomSheet" , "app:selectedFilterOption"])
@@ -184,6 +183,12 @@ fun <T> showWhenLoading(view: View, state: DataState<T>?) {
     if (state is DataState.Loading) {
         view.visibility = View.VISIBLE
     } else {
+        view.visibility = View.GONE
+    }
+}
+@BindingAdapter(value = ["app:hideWhenEmpty"])
+fun <T> hideWhenEmpty(view: View, state: DataState<T>?) {
+    if (state is DataState.Empty) {
         view.visibility = View.GONE
     }
 }

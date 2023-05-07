@@ -75,6 +75,7 @@
             app:listener="@{viewModel}"
             app:items="@{viewModel.itemList.toData()}"
             app:setUpRecyclerByData="@{viewModel.searchFilterOption}"
+            app:hideWhenEmpty="@{viewModel.itemList}"
             app:showWhenSuccess="@{viewModel.itemList}"
             android:clipToPadding="false"
             tools:visibility="visible"

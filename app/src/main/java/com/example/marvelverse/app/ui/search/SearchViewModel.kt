@@ -1,13 +1,11 @@
 package com.example.marvelverse.app.ui.search
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
-import com.example.marvelverse.app.ui.characters.CharactersEvent
 import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
@@ -17,7 +15,6 @@ import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Creator
 import com.example.marvelverse.domain.entities.main.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -117,11 +114,8 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
 
     override fun onSearchFilterOptionSelected(searchFilter: SearchFilter) {
         this.searchFilterOption.postValue(searchFilter)
-        when (searchFilter) {
-            SearchFilter.Character -> characterSearch(null, null)
-            SearchFilter.Comic -> comicSearch(null, null)
-            SearchFilter.Event -> eventSearch(null, null)
-        }
+
+        _itemList.postValue(DataState.Empty)
     }
 
     override fun onCharacterClick(character: Character) {
@@ -138,5 +132,9 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
     fun clearEvents() {
         if (_searchEvent.value != SearchEvent.ReadyState)
             _searchEvent.postValue(SearchEvent.ReadyState)
+    }
+
+    fun setItemListStateEmpty(){
+        _itemList.postValue(DataState.Empty)
     }
 }
