@@ -1,6 +1,5 @@
 package com.example.marvelverse.app.ui.bindingAdapters
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -95,13 +94,12 @@ fun <T> ImageView.showIfError(dataState: DataState<T>?) {
     }
 }
 
-@BindingAdapter(value = ["app:items" , "app:listner" , "app:setUpRecyclerByData"])
+@BindingAdapter(value = ["app:items" , "app:listener" , "app:setUpRecyclerByData"])
 fun RecyclerView.setRecyclerAdapter(
     items:List<*>?,
     listener:BaseInteractionListener,
     filterOption: SearchFilter?
 ) {
-    Log.d("TAG" , "go now ${filterOption} , ${items?.size}")
     if(items!= null){
         when (filterOption!!) {
             SearchFilter.Character -> {
@@ -142,12 +140,16 @@ fun SearchView.searchViewListener(viewModel: SearchViewModel) {
             return true
         }
     })
+    this.setOnCloseListener {
+
+        return@setOnCloseListener true
+    }
 }
 
-@BindingAdapter(value = ["app:showBottomSheet"])
-fun showBottomSheet(view: View, listener: BottomSheetListener) {
+@BindingAdapter(value = ["app:showBottomSheet" , "app:selectedFilterOption"])
+fun showBottomSheet(view: View, listener: BottomSheetListener , selectedOption:SearchFilter) {
     view.setOnClickListener {
-        BottomSheetFragment(listener).show(
+        BottomSheetFragment(listener ,selectedOption ).show(
             it.findFragment<SearchFragment>().childFragmentManager,
             "TAG"
         )

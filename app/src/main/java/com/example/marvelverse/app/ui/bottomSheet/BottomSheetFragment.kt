@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.marvelverse.R
 import com.example.marvelverse.app.ui.search.SearchFilter
-import com.example.marvelverse.app.ui.search.SearchViewModel
 import com.example.marvelverse.databinding.FragmentBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class BottomSheetFragment(private val bottomSheetListener: BottomSheetListener) :
+class BottomSheetFragment(
+    private val bottomSheetListener: BottomSheetListener,
+    private val selectedOption: SearchFilter
+) :
     BottomSheetDialogFragment() {
 
 
@@ -31,7 +33,15 @@ class BottomSheetFragment(private val bottomSheetListener: BottomSheetListener) 
         binding.buttonShow.setOnClickListener {
             buttonClicked()
         }
+        setSelectedSearchFilter()
+    }
 
+    private fun setSelectedSearchFilter(){
+        when(selectedOption){
+            SearchFilter.Character -> binding.chipCharacter.isChecked = true
+            SearchFilter.Comic ->  binding.chipComics.isChecked = true
+            SearchFilter.Event ->  binding.chipEvent.isChecked = true
+        }
     }
     private fun buttonClicked() {
         val selectedSearchFilter = when (binding.chipGroupSearchOption.checkedChipId) {
