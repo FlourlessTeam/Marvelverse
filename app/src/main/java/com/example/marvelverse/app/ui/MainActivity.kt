@@ -2,26 +2,38 @@ package com.example.marvelverse.app.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import com.example.marvelverse.R
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.marvelverse.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private lateinit var bottomNavigationView: BottomNavigationView
+    private val navController by lazy {
+        binding.fragmentContainerView.getFragment<Fragment>().findNavController()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setUpBottomNavigationBar()
+        setUpAppBar()
+    }
+
+    private fun setUpBottomNavigationBar() {
+        bottomNavigationView = binding.bottomNavigationBar
+        NavigationUI.setupWithNavController(bottomNavigationView, navController)
+
+    }
+
+    private fun setUpAppBar() {
+        NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.fragmentContainerView)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-//    override fun onBackPressed() {
-//        val navController = findNavController(R.id.fragmentContainerView)
-//        if (!navController.popBackStack()) {
-//            super.onBackPressed()
-//        }
-//    }
 }
