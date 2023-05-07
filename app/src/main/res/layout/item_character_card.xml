@@ -25,9 +25,10 @@
             android:layout_width="85dp"
             android:layout_height="85dp"
             android:scaleType="centerCrop"
-            tools:src="@drawable/character"
+            android:background="@drawable/loading_anim"
             app:shapeAppearanceOverlay="@style/card_circle"
             app:strokeColor="#303030"
+            android:padding="2dp"
             app:imageUrl="@{item.thumbnail.path+'.'+item.thumbnail.extension}"
             app:strokeWidth="1dp" />
 
@@ -37,10 +38,12 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             tools:text="Spider Man"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:fontFamily="@font/poppins_regular"
             android:textColor="@color/main_title"
             android:text="@{item.name}"
             android:textSize="12sp" />
-
     </LinearLayout>
 </layout>

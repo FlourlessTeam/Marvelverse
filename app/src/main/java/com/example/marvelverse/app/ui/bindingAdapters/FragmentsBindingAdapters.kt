@@ -1,6 +1,5 @@
 package com.example.marvelverse.app.ui.bindingAdapters
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -15,6 +14,7 @@ import com.example.marvelverse.app.ui.bottomSheet.BottomSheetFragment
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
 import com.example.marvelverse.app.ui.characters.CharactersAdapter
 import com.example.marvelverse.app.ui.comics.ComicAdapter
+import com.example.marvelverse.app.ui.events.EventsAdapter
 
 import com.example.marvelverse.app.ui.home.adapter.EventAdapter
 import com.example.marvelverse.app.ui.home.base.BaseInteractionListener
@@ -28,6 +28,10 @@ import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Story
 import com.example.marvelverse.domain.entities.wrappers.Thumbnail
 import com.example.nestedrecyclerview.ui.base.BaseAdapter
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 
 @BindingAdapter(value = ["app:items"])
@@ -95,14 +99,13 @@ fun <T> ImageView.showIfError(dataState: DataState<T>?) {
     }
 }
 
-@BindingAdapter(value = ["app:items" , "app:listner" , "app:setUpRecyclerByData"])
+@BindingAdapter(value = ["app:items", "app:listener", "app:setUpRecyclerByData"])
 fun RecyclerView.setRecyclerAdapter(
-    items:List<*>?,
-    listener:BaseInteractionListener,
+    items: List<*>?,
+    listener: BaseInteractionListener,
     filterOption: SearchFilter?
 ) {
-    Log.d("TAG" , "go now ${filterOption} , ${items?.size}")
-    if(items!= null){
+    if (items != null) {
         when (filterOption!!) {
             SearchFilter.Character -> {
                 val adapter = CharactersAdapter(listener)
@@ -115,7 +118,7 @@ fun RecyclerView.setRecyclerAdapter(
                 this.adapter = adapter
             }
             SearchFilter.Event -> {
-                val adapter = EventAdapter(listener)
+                val adapter = EventsAdapter(listener)
                 adapter.setItems((items as List<Event>))
                 this.adapter = adapter
             }
@@ -127,27 +130,42 @@ fun RecyclerView.setRecyclerAdapter(
 
 @BindingAdapter(value = ["app:onTextChange"])
 fun SearchView.searchViewListener(viewModel: SearchViewModel) {
-    this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String?): Boolean {
-            return true
+
+    val observable = Observable.create<String> { emitter ->
+        this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    emitter.onNext(newText)
+                }
+                return true
+            }
+        })
+    }.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .debounce(1, TimeUnit.SECONDS)
+        .subscribe { text ->
+            if (text.isNotEmpty()) {
+                when (viewModel.searchFilterOption.value!!) {
+                    SearchFilter.Character -> viewModel.characterSearch(null, text)
+                    SearchFilter.Comic -> viewModel.comicSearch(null, text)
+                    SearchFilter.Event -> viewModel.eventSearch(null, text)
+                }
+            } else {
+                viewModel.setItemListStateEmpty()
+            }
         }
 
-        override fun onQueryTextChange(newText: String?): Boolean {
-            if (!newText.isNullOrEmpty())
-                when (viewModel.searchFilterOption.value!!) {
-                    SearchFilter.Character -> viewModel.characterSearch(null, newText)
-                    SearchFilter.Comic -> viewModel.comicSearch(null, newText)
-                    SearchFilter.Event -> viewModel.eventSearch(null, newText)
-                }
-            return true
-        }
-    })
+
 }
 
-@BindingAdapter(value = ["app:showBottomSheet"])
-fun showBottomSheet(view: View, listener: BottomSheetListener) {
+@BindingAdapter(value = ["app:showBottomSheet", "app:selectedFilterOption"])
+fun showBottomSheet(view: View, listener: BottomSheetListener, selectedOption: SearchFilter) {
     view.setOnClickListener {
-        BottomSheetFragment(listener).show(
+        BottomSheetFragment(listener, selectedOption).show(
             it.findFragment<SearchFragment>().childFragmentManager,
             "TAG"
         )
@@ -155,8 +173,8 @@ fun showBottomSheet(view: View, listener: BottomSheetListener) {
 }
 
 @BindingAdapter(value = ["app:clearWhenOptionChanged"])
-fun SearchView.clearWhenOptionChanged(searchFilter: SearchFilter){
-    this.setQuery("" , true)
+fun SearchView.clearWhenOptionChanged(searchFilter: SearchFilter) {
+    this.setQuery("", true)
 }
 
 @BindingAdapter(value = ["app:showWhenError"])
@@ -182,6 +200,13 @@ fun <T> showWhenLoading(view: View, state: DataState<T>?) {
     if (state is DataState.Loading) {
         view.visibility = View.VISIBLE
     } else {
+        view.visibility = View.GONE
+    }
+}
+
+@BindingAdapter(value = ["app:hideWhenEmpty"])
+fun <T> hideWhenEmpty(view: View, state: DataState<T>?) {
+    if (state is DataState.Empty) {
         view.visibility = View.GONE
     }
 }

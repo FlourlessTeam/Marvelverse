@@ -14,114 +14,111 @@
             type="com.example.marvelverse.domain.entities.main.Comic" />
     </data>
 
-
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background"
-        android:orientation="vertical">
-        <ScrollView
-            android:id="@+id/scroll_view"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/image_series"
+                android:layout_width="match_parent"
+                android:layout_height="224dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                app:roundPercent="0.1"
+                app:thumbnail="@{item.thumbnail}"
+                tools:src="@drawable/spider" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@{item.title}"
+                android:textColor="@color/main_title"
+                android:textSize="16sp"
+                tools:text="Marvel Previews (2017)" />
+
+            <TextView
+                visibilityIfNotBlank="@{item.description}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/description"
+                android:textColor="@color/main_title"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/text_view_history_first_description"
+                style="style/TextStyle.Body.Medium"
+                visibilityIfNotBlank="@{item.description}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="@{item.description}"
+                android:textColor="@color/body_text"
+                android:textSize="14sp"
+                tools:text="Description" />
 
-                <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:id="@+id/image_series"
-                    android:layout_width="match_parent"
-                    android:layout_height="224dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="8dp"
-                    android:scaleType="centerCrop"
-                    app:roundPercent="0.1"
-                    app:thumbnail="@{item.thumbnail}"
-                    tools:src="@drawable/spider" />
+            <TextView
+                availableItemsVisibility="@{viewModel.character}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/characters"
+                android:textColor="@color/main_title"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@{item.title}"
-                    android:textColor="@color/main_title"
-                    tools:text="Marvel Previews (2017)" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/character_recycler"
+                availableItemsVisibility="@{viewModel.character}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:items="@{viewModel.character}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_comic_card" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="Description"
-                    visibilityIfNotBlank="@{item.description}"
-                    android:textColor="@color/main_title" />
+            <TextView
+                availableItemsVisibility="@{viewModel.event}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/events"
+                android:textColor="@color/main_title"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/text_view_history_first_description"
-                    style="style/TextStyle.Body.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    visibilityIfNotBlank="@{item.description}"
-                    android:text="@{item.description}"
-                    tools:text="Description" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    availableItemsVisibility="@{viewModel.character}"
-                    android:text="Characters"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textColor="@color/main_title" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/character_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp"
-                    availableItemsVisibility="@{viewModel.character}"
-                    app:items="@{viewModel.character}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_comic_card" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_bold"
-                    availableItemsVisibility="@{viewModel.event}"
-                    android:text="Events"
-                    android:textColor="@color/main_title" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/event_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp"
-                    availableItemsVisibility="@{viewModel.event}"
-                    app:items="@{viewModel.event}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_comic_card" />
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
-
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/event_recycler"
+                availableItemsVisibility="@{viewModel.event}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:items="@{viewModel.event}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_comic_card" />
+        </LinearLayout>
+    </ScrollView>
 </layout>

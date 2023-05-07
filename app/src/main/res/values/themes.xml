@@ -3,8 +3,9 @@
     <style name="Theme.Marvelverse" parent="Theme.Material3.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">@color/background</item>
-        <item name="colorOnPrimary">@color/background</item>>
+        <item name="colorPrimaryVariant">@color/primary</item>
+        <item name="colorOnPrimary">@color/background</item>
+        <item name="actionBarTheme">@style/MyActionBarStyle</item>
         <!-- Status bar color. -->
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/background</item>
@@ -15,9 +16,15 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="MyActionBarStyle" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/background</item>
+        <item name="android:titleTextColor">@color/white</item>
+        <item name="android:subtitleTextColor">@color/white</item>
+    </style>
+
     <style name="BottomNavigationView">
         <item name="android:color">@color/primary</item>
-        <item name="android:background">@color/card_background</item>
+        <item name="android:background">@color/bottom_navigation_background</item>
         <item name="itemActiveIndicatorStyle">@style/App.Custom.Indicator</item>
         <item name="itemTextColor">@drawable/nav_item_text_color</item>
         <item name="itemIconTint">@drawable/nav_item_color</item>
