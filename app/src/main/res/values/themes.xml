@@ -24,7 +24,7 @@
 
     <style name="BottomNavigationView">
         <item name="android:color">@color/primary</item>
-        <item name="android:background">@color/card_background</item>
+        <item name="android:background">@color/bottom_navigation_background</item>
         <item name="itemActiveIndicatorStyle">@style/App.Custom.Indicator</item>
         <item name="itemTextColor">@drawable/nav_item_text_color</item>
         <item name="itemIconTint">@drawable/nav_item_color</item>
