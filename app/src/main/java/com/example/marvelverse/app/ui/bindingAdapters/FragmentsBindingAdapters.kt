@@ -15,6 +15,7 @@ import com.example.marvelverse.app.ui.bottomSheet.BottomSheetFragment
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
 import com.example.marvelverse.app.ui.characters.CharactersAdapter
 import com.example.marvelverse.app.ui.comics.ComicAdapter
+import com.example.marvelverse.app.ui.events.EventsAdapter
 
 import com.example.marvelverse.app.ui.home.adapter.EventAdapter
 import com.example.marvelverse.app.ui.home.base.BaseInteractionListener
@@ -115,7 +116,7 @@ fun RecyclerView.setRecyclerAdapter(
                 this.adapter = adapter
             }
             SearchFilter.Event -> {
-                val adapter = EventAdapter(listener)
+                val adapter = EventsAdapter(listener)
                 adapter.setItems((items as List<Event>))
                 this.adapter = adapter
             }
