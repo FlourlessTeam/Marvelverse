@@ -3,6 +3,7 @@ package com.example.marvelverse.app.ui.comics.details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
@@ -17,11 +18,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class ComicsDetailsViewModel : ViewModel(), CharacterInteractionListener,
     EventInteractionListener {
     private val compositeDisposable = CompositeDisposable()
-    private var _character = MutableLiveData<List<Character>>()
-    private var _event = MutableLiveData<List<Event>>()
+    private var _character = MutableLiveData<DataState<Character>>()
+    private var _event = MutableLiveData<DataState<Event>>()
     private var _comicsDetailsEvent = MutableLiveData<ComicDetailsEvents>()
-    val character: LiveData<List<Character>> get() = _character
-    val event: LiveData<List<Event>> get() = _event
+    val character: LiveData<DataState<Character>> get() = _character
+    val event: LiveData<DataState<Event>> get() = _event
     val comicsDetailsEvent: LiveData<ComicDetailsEvents> get() = _comicsDetailsEvent
     fun getCharacter(url: String) {
         MarvelRepository.getCharactersByUrl(url)
@@ -29,9 +30,10 @@ class ComicsDetailsViewModel : ViewModel(), CharacterInteractionListener,
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    _character.postValue(it)
+                    _character.postValue(DataState.Success(it))
                 },
                 {
+                    _character.postValue(DataState.Error(it))
                 }).addTo(compositeDisposable)
     }
 
@@ -41,10 +43,12 @@ class ComicsDetailsViewModel : ViewModel(), CharacterInteractionListener,
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    _event.postValue(it)
+                    _event.postValue(DataState.Success(it))
                 },
                 {
+                    _event.postValue(DataState.Error(it))
                 }).addTo(compositeDisposable)
+
     }
 
     private fun Disposable.addTo(compositeDisposable: CompositeDisposable) {

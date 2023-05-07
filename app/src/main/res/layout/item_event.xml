@@ -15,8 +15,8 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="180dp"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_margin="@dimen/margin_small"
         android:onClick="@{() -> listener.onEventClick(item)}"
         app:cardCornerRadius="12dp"
@@ -43,7 +43,7 @@
             android:maxLines="2"
             android:text="@{item.title}"
             android:textColor="@color/white"
-            android:textSize="10sp"
+            android:textSize="18sp"
             tools:ignore="SmallSp" />
 
     </com.google.android.material.card.MaterialCardView>

@@ -12,10 +12,8 @@ sealed interface HomeEvent {
     object ClickSeeAllComicsEvent : HomeEvent
     object ClickSeeAllEventsEvent : HomeEvent
     object ClickSeeAllSeriesEvent : HomeEvent
-    object ClickSeeAllStoriesEvent : HomeEvent
     data class ClickCharacterEvent(val character: Character) : HomeEvent
     data class ClickComicEvent(val comic: Comic) : HomeEvent
     data class ClickEventEvent(val event: Event) : HomeEvent
     data class ClickSeriesEvent(val series: Series) : HomeEvent
-    data class ClickStoryEvent(val story: Story) : HomeEvent
 }

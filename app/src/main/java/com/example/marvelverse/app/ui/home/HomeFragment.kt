@@ -1,7 +1,6 @@
 package com.example.marvelverse.app.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -12,11 +11,10 @@ import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
-import com.example.marvelverse.domain.entities.main.Story
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
     private lateinit var adapter: HomeAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,23 +45,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             is HomeEvent.ClickComicEvent -> handleComicClick(event.comic)
             is HomeEvent.ClickEventEvent -> handleEventClick(event.event)
             is HomeEvent.ClickSeriesEvent -> handleSeriesClick(event.series)
-            is HomeEvent.ClickStoryEvent -> handleStoryClick(event.story)
             HomeEvent.ClickSeeAllComicsEvent -> handleSeeAllComicsClick()
             HomeEvent.ClickSeeAllEventsEvent -> handleSeeAllEventsClick()
             HomeEvent.ClickSeeAllSeriesEvent -> handleSeeAllSeriesClick()
-            HomeEvent.ClickSeeAllStoriesEvent -> handleSeeAllStoriesClick()
             HomeEvent.ClickSeeAllCharactersEvent -> handleSeeAllCharactersClick()
             else -> {}
         }
     }
 
-    private fun handleStoryClick(story: Story) {
-        Log.d("HomeFragment", "ClickStoryEvent $story")
-
-    }
-
     private fun handleCharacterClick(character: Character) {
-        val direction = HomeFragmentDirections.actionHomeFragmentToDetailsCharacterFragment(character)
+        val direction =
+            HomeFragmentDirections.actionHomeFragmentToDetailsCharacterFragment(character)
         binding.root.findNavController().navigate(direction)
     }
 
@@ -95,10 +87,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun handleSeeAllSeriesClick() {
         val direction = HomeFragmentDirections.actionHomeFragmentToSeriesFragment()
         binding.root.findNavController().navigate(direction)
-    }
-
-    private fun handleSeeAllStoriesClick() {
-        Log.d("HomeFragment", "ClickSeeAllStoriesEvent")
     }
 
     private fun handleSeeAllCharactersClick() {

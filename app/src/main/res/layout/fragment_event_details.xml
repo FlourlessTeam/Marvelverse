@@ -90,7 +90,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/poppins_medium"
-                    availableItemsVisibility="@{viewModel.character.size}"
+                    availableItemsVisibility="@{viewModel.character}"
                     android:text="Characters"
                     android:textColor="@color/main_title"
                     android:textSize="16sp" />
@@ -104,7 +104,7 @@
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
                     app:items="@{viewModel.character}"
-                    availableItemsVisibility="@{viewModel.character.size}"
+                    availableItemsVisibility="@{viewModel.character}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_character_card" />
 
@@ -115,7 +115,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/poppins_medium"
-                    availableItemsVisibility="@{viewModel.comics.size}"
+                    availableItemsVisibility="@{viewModel.comics}"
                     android:text="Comics"
                     android:textColor="@color/main_title"
                     android:textSize="16sp" />
@@ -128,7 +128,7 @@
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
-                    availableItemsVisibility="@{viewModel.comics.size}"
+                    availableItemsVisibility="@{viewModel.comics}"
                     app:items="@{viewModel.comics}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_comic_card" />
@@ -140,7 +140,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/poppins_medium"
-                    availableItemsVisibility="@{viewModel.series.size}"
+                    availableItemsVisibility="@{viewModel.series}"
                     android:text="Series"
                     android:textColor="@color/main_title"
                     android:textSize="16sp" />
@@ -154,7 +154,7 @@
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
-                    availableItemsVisibility="@{viewModel.series.size}"
+                    availableItemsVisibility="@{viewModel.series}"
                     app:items="@{viewModel.series}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_series_card" />

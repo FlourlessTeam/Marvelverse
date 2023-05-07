@@ -91,7 +91,7 @@
                         android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/main_title"
                         android:textSize="16sp"
-                        availableItemsVisibility="@{viewModel.characters.size}"
+                        availableItemsVisibility="@{viewModel.characters}"
                         android:text="@string/characters" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -103,7 +103,7 @@
                         android:orientation="horizontal"
                         android:paddingHorizontal="16dp"
                         app:items="@{viewModel.characters}"
-                        availableItemsVisibility="@{viewModel.characters.size}"
+                        availableItemsVisibility="@{viewModel.characters}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_character_card" />
                     <TextView
@@ -115,7 +115,7 @@
                         android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/main_title"
                         android:textSize="16sp"
-                        availableItemsVisibility="@{viewModel.comics.size}"
+                        availableItemsVisibility="@{viewModel.comics}"
                         android:text="@string/comics" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -125,7 +125,7 @@
                         android:orientation="horizontal"
                         android:paddingHorizontal="16dp"
                         android:clipToPadding="false"
-                        availableItemsVisibility="@{viewModel.comics.size}"
+                        availableItemsVisibility="@{viewModel.comics}"
                         app:items="@{viewModel.comics}"
                         tools:listitem="@layout/item_home_card"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -138,7 +138,7 @@
                         android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/main_title"
                         android:textSize="16sp"
-                        availableItemsVisibility="@{viewModel.events.size}"
+                        availableItemsVisibility="@{viewModel.events}"
                         android:text="@string/events" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -149,7 +149,7 @@
                         tools:listitem="@layout/item_home_card"
                         android:paddingHorizontal="16dp"
                         android:clipToPadding="false"
-                        availableItemsVisibility="@{viewModel.events.size}"
+                        availableItemsVisibility="@{viewModel.events}"
                         app:items="@{viewModel.events}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         />

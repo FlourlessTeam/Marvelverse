@@ -87,7 +87,7 @@ Norem ipsum dolor sit amet, consectetur " />
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/poppins_medium"
-                    availableItemsVisibility="@{viewModel.comics.size}"
+                    availableItemsVisibility="@{viewModel.comics}"
                     android:text="@string/comics"
                     android:textSize="16sp" />
 
@@ -97,7 +97,7 @@ Norem ipsum dolor sit amet, consectetur " />
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:items="@{viewModel.comics}"
-                    availableItemsVisibility="@{viewModel.comics.size}"
+                    availableItemsVisibility="@{viewModel.comics}"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
@@ -111,7 +111,7 @@ Norem ipsum dolor sit amet, consectetur " />
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/poppins_medium"
-                    availableItemsVisibility="@{viewModel.series.size}"
+                    availableItemsVisibility="@{viewModel.series}"
                     android:text="@string/seriesCharacter"
                     android:textSize="16sp" />
 
@@ -123,7 +123,7 @@ Norem ipsum dolor sit amet, consectetur " />
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     app:items="@{viewModel.series}"
-                    availableItemsVisibility="@{viewModel.series.size}"
+                    availableItemsVisibility="@{viewModel.series}"
                     android:paddingHorizontal="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_home_card" />
@@ -136,7 +136,7 @@ Norem ipsum dolor sit amet, consectetur " />
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/poppins_medium"
-                    availableItemsVisibility="@{viewModel.events.size}"
+                    availableItemsVisibility="@{viewModel.events}"
                     android:text="@string/events"
                     android:textSize="16sp" />
 
@@ -147,7 +147,7 @@ Norem ipsum dolor sit amet, consectetur " />
                     android:layout_marginTop="8dp"
                     android:clipToPadding="false"
                     app:items="@{viewModel.events}"
-                    availableItemsVisibility="@{viewModel.events.size}"
+                    availableItemsVisibility="@{viewModel.events}"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

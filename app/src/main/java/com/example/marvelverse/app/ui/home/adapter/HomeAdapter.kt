@@ -11,12 +11,10 @@ import com.example.marvelverse.databinding.ListItemsCharacterBinding
 import com.example.marvelverse.databinding.ListItemsComicBinding
 import com.example.marvelverse.databinding.ListItemsEventBinding
 import com.example.marvelverse.databinding.ListItemsSeriesBinding
-import com.example.marvelverse.databinding.ListItemsStoriesBinding
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
-import com.example.marvelverse.domain.entities.main.Story
 import com.example.nestedrecyclerview.ui.base.BaseAdapter
 import com.example.nestedrecyclerview.ui.base.BaseNestedRecyclerAdapter
 
@@ -111,7 +109,6 @@ class HomeAdapter(private val listener: ParentInteractionListener) : BaseNestedR
         const val TYPE_CHARACTER = R.layout.list_items_character
         const val TYPE_COMIC = R.layout.list_items_comic
         const val TYPE_SERIES = R.layout.list_items_series
-        const val TYPE_STORIES = R.layout.list_items_stories
     }
 
 }
