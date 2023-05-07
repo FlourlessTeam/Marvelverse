@@ -29,7 +29,6 @@ class AboutFragment:
         }
 
         viewModel.currentItem.observe(viewLifecycleOwner, Observer {
-            Log.i("noor", it.toString())
             aboutAdapter.histories = it
             aboutAdapter.notifyDataSetChanged()
         })
