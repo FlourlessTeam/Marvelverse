@@ -64,7 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:listitem="@layout/item_event_card" />
+            tools:listitem="@layout/item_home_event_card" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

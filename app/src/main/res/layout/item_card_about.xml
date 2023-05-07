@@ -7,21 +7,17 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/about_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp">
-
-        <TextView
-            android:id="@+id/about_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Abdallah hi how are you, Abdallah hi how are you,Abdallah hi how are you,Abdallah hi how are you" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/body_text"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Abdallah hi how are you, Abdallah hi how are you,Abdallah hi how are you,Abdallah hi how are you" />
 </layout>
