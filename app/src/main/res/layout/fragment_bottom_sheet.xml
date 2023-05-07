@@ -32,7 +32,6 @@
             android:textColor="@color/main_title"
             android:textSize="16sp" />
 
-
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +70,6 @@
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 
-
         <Button
             android:id="@+id/button_show"
             style="?attr/materialButtonOutlinedStyle"
@@ -81,7 +79,5 @@
             android:text="SHOW RESULT"
             android:textColor="@color/main_title"
             android:textSize="16dp" />
-
-
     </LinearLayout>
 </layout>

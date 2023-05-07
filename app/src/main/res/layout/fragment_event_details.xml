@@ -14,151 +14,142 @@
             type="com.example.marvelverse.domain.entities.main.Event" />
     </data>
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        tools:context=".app.ui.comics.events.EventsFragment">
 
-
-
-        <ScrollView
-            android:id="@+id/scroll_view"
+        <LinearLayout
+            android:id="@+id/linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            tools:context=".app.ui.comics.events.EventsFragment">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/linear_layout"
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/event_image"
+                android:layout_width="match_parent"
+                android:layout_height="224dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/spider"
+                app:roundPercent="0.2"
+                app:thumbnail="@{item.thumbnail}" />
+
+            <TextView
+                android:id="@+id/event_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@{item.title}"
+                android:textColor="@color/main_title"
+                android:textSize="16sp"
+                tools:text="Acts of Vengeance!" />
+
+            <TextView
+                android:id="@+id/description"
+                visibilityIfNotBlank="@{item.description}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/description"
+                android:textColor="@color/main_title"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/event_description"
+                visibilityIfNotBlank="@{item.description}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@{item.description}"
+                android:textColor="@color/body_text"
+                android:textSize="14sp"
+                tools:text="@string/fantastic_four_description" />
+
+            <TextView
+                android:id="@+id/characters"
+                availableItemsVisibility="@{viewModel.character}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/characters"
+                android:textColor="@color/main_title"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/event_characters"
+                availableItemsVisibility="@{viewModel.character}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:items="@{viewModel.character}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_character_card" />
 
-                <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:id="@+id/event_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="224dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="8dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/spider"
-                    app:roundPercent="0.2"
-                    app:thumbnail="@{item.thumbnail}" />
+            <TextView
+                android:id="@+id/comics"
+                availableItemsVisibility="@{viewModel.comics}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/comics"
+                android:textColor="@color/main_title"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/event_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@{item.title}"
-                    android:textColor="@color/main_title"
-                    android:textSize="16sp"
-                    tools:text="Acts of Vengeance!" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/event_comics"
+                availableItemsVisibility="@{viewModel.comics}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:items="@{viewModel.comics}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_comic_card" />
 
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Description"
-                    visibilityIfNotBlank="@{item.description}"
-                    android:textColor="@color/main_title"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/series"
+                availableItemsVisibility="@{viewModel.series}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/series"
+                android:textColor="@color/main_title"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/event_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/poppins_regular"
-                    visibilityIfNotBlank="@{item.description}"
-                    android:text="@{item.description}"
-                    android:textColor="@color/body_text"
-                    android:textSize="14sp"
-                    tools:text="@string/fantastic_four_description" />
-
-                <TextView
-                    android:id="@+id/characters"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_medium"
-                    availableItemsVisibility="@{viewModel.character}"
-                    android:text="Characters"
-                    android:textColor="@color/main_title"
-                    android:textSize="16sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/event_characters"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp"
-                    app:items="@{viewModel.character}"
-                    availableItemsVisibility="@{viewModel.character}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_character_card" />
-
-                <TextView
-                    android:id="@+id/comics"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_medium"
-                    availableItemsVisibility="@{viewModel.comics}"
-                    android:text="Comics"
-                    android:textColor="@color/main_title"
-                    android:textSize="16sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/event_comics"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp"
-                    availableItemsVisibility="@{viewModel.comics}"
-                    app:items="@{viewModel.comics}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_comic_card" />
-
-                <TextView
-                    android:id="@+id/series"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_medium"
-                    availableItemsVisibility="@{viewModel.series}"
-                    android:text="Series"
-                    android:textColor="@color/main_title"
-                    android:textSize="16sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/event_series"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp"
-                    availableItemsVisibility="@{viewModel.series}"
-                    app:items="@{viewModel.series}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_series_card" />
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/event_series"
+                availableItemsVisibility="@{viewModel.series}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:items="@{viewModel.series}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_series_card" />
+        </LinearLayout>
+    </ScrollView>
 </layout>

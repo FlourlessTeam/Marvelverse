@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="card_background">#242424</color>
+    <color name="bottom_navigation_background">#242424</color>
     <color name="bottom_navigation_item">#61FFFFFF</color>
     <color name="main_title">#DEFFFFFF</color>
     <color name="body_text">#4DFFFFFF</color>
@@ -15,7 +16,4 @@
     <color name="icon">#DEFFFFFF</color>
     <color name="checked_chip">#D24C1C</color>
     <color name="icon_background">#FFFAF4</color>
-
-
-
 </resources>

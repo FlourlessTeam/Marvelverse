@@ -4,155 +4,151 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.example.marvelverse.domain.entities.main.Character" />
+
         <variable
             name="viewModel"
             type="com.example.marvelverse.app.ui.characters.details.DetailsCharacterViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
-
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/charcter_image"
                 android:layout_width="match_parent"
+                android:layout_height="224dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                android:scaleType="centerCrop"
+                app:roundPercent="0.1"
+                app:thumbnail="@{item.thumbnail}"
+                tools:src="@drawable/spider" />
+
+            <TextView
+                android:id="@+id/character_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@{item.name}"
+                android:textColor="@color/main_title"
+                android:textSize="16sp"
+                tools:text="SpiderMan" />
 
+            <TextView
+                android:id="@+id/character_description"
+                visibilityIfNotBlank="@{item.description}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/description"
+                android:textColor="@color/main_title"
+                android:textSize="16sp" />
 
-                <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:id="@+id/charcter_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="224dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginVertical="8dp"
-                    android:scaleType="centerCrop"
-                    app:roundPercent="0.1"
-                    app:thumbnail="@{item.thumbnail}"
-                    tools:src="@drawable/spider" />
-
-                <TextView
-                    android:id="@+id/character_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginVertical="8dp"
-                    android:text="@{item.name}"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textSize="16sp"
-                    tools:text="SpiderMan" />
-
-                <TextView
-                    android:id="@+id/character_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginVertical="8dp"
-                    visibilityIfNotBlank="@{item.description}"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/descriptionCharacter"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/character_description_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginVertical="8dp"
-                    android:alpha="0.5"
-                    android:text="@{item.description}"
-                    visibilityIfNotBlank="@{item.description}"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textSize="14sp"
-                    tools:ignore="TextContrastCheck"
-                    tools:text="Norem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.
+            <TextView
+                android:id="@+id/character_description_text"
+                visibilityIfNotBlank="@{item.description}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                android:alpha="0.5"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@{item.description}"
+                android:textSize="14sp"
+                android:textColor="@color/body_text"
+                tools:ignore="TextContrastCheck"
+                tools:text="Norem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.
 Norem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.
 Norem ipsum dolor sit amet, consectetur " />
 
-                <TextView
-                    android:id="@+id/character_comics"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/poppins_medium"
-                    availableItemsVisibility="@{viewModel.comics}"
-                    android:text="@string/comics"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/character_comics"
+                availableItemsVisibility="@{viewModel.comics}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/comics"
+                android:textSize="16sp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_characters_comics"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:items="@{viewModel.comics}"
-                    availableItemsVisibility="@{viewModel.comics}"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_home_card" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_characters_comics"
+                availableItemsVisibility="@{viewModel.comics}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:items="@{viewModel.comics}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_home_card" />
 
-                <TextView
-                    android:id="@+id/character_series"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_medium"
-                    availableItemsVisibility="@{viewModel.series}"
-                    android:text="@string/seriesCharacter"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/character_series"
+                availableItemsVisibility="@{viewModel.series}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/seriesCharacter"
+                android:textSize="16sp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_characters_series"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    app:items="@{viewModel.series}"
-                    availableItemsVisibility="@{viewModel.series}"
-                    android:paddingHorizontal="16dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_home_card" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_characters_series"
+                availableItemsVisibility="@{viewModel.series}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:items="@{viewModel.series}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_home_card" />
 
 
-                <TextView
-                    android:id="@+id/character_events"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_medium"
-                    availableItemsVisibility="@{viewModel.events}"
-                    android:text="@string/events"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/character_events"
+                availableItemsVisibility="@{viewModel.events}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/events"
+                android:textSize="16sp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_characters_events"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:clipToPadding="false"
-                    app:items="@{viewModel.events}"
-                    availableItemsVisibility="@{viewModel.events}"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_home_card" />
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_characters_events"
+                availableItemsVisibility="@{viewModel.events}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:items="@{viewModel.events}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_home_card" />
+        </LinearLayout>
+    </ScrollView>
 </layout>
