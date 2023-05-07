@@ -11,7 +11,7 @@
         <fragment
             android:id="@+id/homeFragment"
             android:name="com.example.marvelverse.app.ui.home.HomeFragment"
-            android:label="Home"
+            android:label=""
             tools:layout="@layout/fragment_home">
             <action
                 android:id="@+id/action_homeFragment_to_seriesFragment"
@@ -240,7 +240,7 @@
         <fragment
             android:id="@+id/searchFragment"
             android:name="com.example.marvelverse.app.ui.search.SearchFragment"
-            android:label="Search"
+            android:label=""
             tools:layout="@layout/fragment_search">
             <action
                 android:id="@+id/action_searchFragment_to_eventDetailsFragment"
@@ -269,7 +269,7 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.example.marvelverse.app.ui.about.AboutFragment"
-        android:label="About"
+        android:label=""
         tools:layout="@layout/about_screen" />
 
 
