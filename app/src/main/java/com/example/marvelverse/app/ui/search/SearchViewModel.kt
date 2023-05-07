@@ -15,6 +15,7 @@ import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Creator
 import com.example.marvelverse.domain.entities.main.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -67,16 +68,6 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
         )
     }
 
-    fun creatorSearch(limit: Int?, title: String?) {
-        _itemList.postValue(DataState.Loading)
-        compositeDisposable.add(
-            repositry.searchCreators(limit, title)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(::onCreatorSearchSuccess, ::onSearchError)
-        )
-    }
-
     fun eventSearch(limit: Int?, title: String?) {
         _itemList.postValue(DataState.Loading)
         compositeDisposable.add(
@@ -93,10 +84,6 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
 
     private fun onCharacterSearchSuccess(characters: List<Character>) {
         _itemList.postValue(DataState.Success(characters))
-    }
-
-    private fun onCreatorSearchSuccess(creators: List<Creator>) {
-        _itemList.postValue(DataState.Success(creators))
     }
 
     private fun onEventSearchSuccess(events: List<Event>) {
