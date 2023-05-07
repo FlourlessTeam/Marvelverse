@@ -2,17 +2,14 @@ package com.example.marvelverse.app.ui.about
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.marvelverse.app.ui.abstracts.BaseFragment
+import com.example.marvelverse.app.ui.abstracts.BottomNavFragment
 import com.example.marvelverse.databinding.AboutScreenBinding
-import com.example.marvelverse.databinding.FragmentCharactersBinding
 
-class AboutFragment:
-    BaseFragment<AboutScreenBinding>(AboutScreenBinding::inflate) {
+class AboutFragment :
+    BottomNavFragment<AboutScreenBinding>(AboutScreenBinding::inflate) {
 
     private lateinit var aboutAdapter: AboutAdapter
 
@@ -23,15 +20,15 @@ class AboutFragment:
 
         aboutAdapter = AboutAdapter(emptyList())
 
-        binding.aboutRecyclerView.apply{
+        binding.aboutRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = aboutAdapter
         }
 
-        viewModel.currentItem.observe(viewLifecycleOwner, Observer {
+        viewModel.currentItem.observe(viewLifecycleOwner) {
             aboutAdapter.histories = it
             aboutAdapter.notifyDataSetChanged()
-        })
+        }
     }
 
 }

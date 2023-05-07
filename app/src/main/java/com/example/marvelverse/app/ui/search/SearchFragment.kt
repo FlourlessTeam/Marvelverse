@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.marvelverse.app.ui.abstracts.BaseFragment
-import com.example.marvelverse.app.ui.characters.CharactersEvent
-import com.example.marvelverse.app.ui.characters.CharactersFragmentDirections
+import com.example.marvelverse.app.ui.abstracts.BottomNavFragment
 import com.example.marvelverse.databinding.FragmentSearchBinding
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 
-class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
+class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
     private val viewModel: SearchViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
