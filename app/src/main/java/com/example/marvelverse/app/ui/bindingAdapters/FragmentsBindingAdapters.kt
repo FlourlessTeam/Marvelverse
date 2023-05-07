@@ -105,19 +105,16 @@ fun RecyclerView.setRecyclerAdapter(
     if(items!= null){
         when (filterOption!!) {
             SearchFilter.Character -> {
-                Log.d("TAG" , "go now ${items.size}")
                 val adapter = CharactersAdapter(listener)
                 adapter.setItems(items as List<Character>)
                 this.adapter = adapter
             }
             SearchFilter.Comic -> {
-                Log.d("TAG" , "go now ${items.size}")
                 val adapter = ComicAdapter(listener)
                 adapter.setItems((items as List<Comic>))
                 this.adapter = adapter
             }
             SearchFilter.Event -> {
-                Log.d("TAG" , "go now ${items.size}")
                 val adapter = EventAdapter(listener)
                 adapter.setItems((items as List<Event>))
                 this.adapter = adapter
@@ -141,7 +138,6 @@ fun SearchView.searchViewListener(viewModel: SearchViewModel) {
                     SearchFilter.Character -> viewModel.characterSearch(null, newText)
                     SearchFilter.Comic -> viewModel.comicSearch(null, newText)
                     SearchFilter.Event -> viewModel.eventSearch(null, newText)
-                    SearchFilter.Creator -> viewModel.creatorSearch(null, newText)
                 }
             return true
         }

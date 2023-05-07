@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
+import com.example.marvelverse.app.ui.characters.CharactersEvent
 import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
@@ -25,7 +26,6 @@ enum class SearchFilter {
     Character,
     Comic,
     Event,
-    Creator
 }
 
 @SuppressLint("CheckResult")
@@ -38,11 +38,13 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
         MutableLiveData<SearchFilter>(SearchFilter.Character)
 
     private val compositeDisposable = CompositeDisposable()
-    private val observable: Observable<String> = Observable.create {}
 
     private val _itemList = MutableLiveData<DataState<Any>>()
     val itemList: LiveData<DataState<Any>>
         get() = _itemList
+
+    private val _searchEvent = MutableLiveData<SearchEvent>()
+    val searchEvent: LiveData<SearchEvent> get() = _searchEvent
 
     init {
         searchFilterOption.postValue(SearchFilter.Character)
@@ -106,7 +108,6 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
 
     private fun onSearchError(throwable: Throwable) {
         _itemList.postValue(DataState.Error(throwable))
-        Log.d("TAG", throwable.message.toString())
     }
 
     override fun onCleared() {
@@ -120,20 +121,22 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
             SearchFilter.Character -> characterSearch(null, null)
             SearchFilter.Comic -> comicSearch(null, null)
             SearchFilter.Event -> eventSearch(null, null)
-            SearchFilter.Creator -> creatorSearch(null, null)
         }
     }
 
     override fun onCharacterClick(character: Character) {
-
-
+        _searchEvent.postValue(SearchEvent.ClickCharacterEvent(character))
     }
 
     override fun onComicClick(comic: Comic) {
-
+        _searchEvent.postValue(SearchEvent.ClickComicEvent(comic))
     }
 
     override fun onEventClick(event: Event) {
-
+        _searchEvent.postValue(SearchEvent.ClickEventEvent(event))
+    }
+    fun clearEvents() {
+        if (_searchEvent.value != SearchEvent.ReadyState)
+            _searchEvent.postValue(SearchEvent.ReadyState)
     }
 }
