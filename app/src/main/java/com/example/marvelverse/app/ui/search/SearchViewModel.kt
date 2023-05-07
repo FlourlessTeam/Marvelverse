@@ -1,13 +1,11 @@
 package com.example.marvelverse.app.ui.search
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelverse.DataState
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
-import com.example.marvelverse.app.ui.characters.CharactersEvent
 import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
@@ -70,16 +68,6 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
         )
     }
 
-    fun creatorSearch(limit: Int?, title: String?) {
-        _itemList.postValue(DataState.Loading)
-        compositeDisposable.add(
-            repositry.searchCreators(limit, title)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(::onCreatorSearchSuccess, ::onSearchError)
-        )
-    }
-
     fun eventSearch(limit: Int?, title: String?) {
         _itemList.postValue(DataState.Loading)
         compositeDisposable.add(
@@ -98,10 +86,6 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
         _itemList.postValue(DataState.Success(characters))
     }
 
-    private fun onCreatorSearchSuccess(creators: List<Creator>) {
-        _itemList.postValue(DataState.Success(creators))
-    }
-
     private fun onEventSearchSuccess(events: List<Event>) {
         _itemList.postValue(DataState.Success(events))
     }
@@ -117,11 +101,8 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
 
     override fun onSearchFilterOptionSelected(searchFilter: SearchFilter) {
         this.searchFilterOption.postValue(searchFilter)
-        when (searchFilter) {
-            SearchFilter.Character -> characterSearch(null, null)
-            SearchFilter.Comic -> comicSearch(null, null)
-            SearchFilter.Event -> eventSearch(null, null)
-        }
+
+        _itemList.postValue(DataState.Empty)
     }
 
     override fun onCharacterClick(character: Character) {
@@ -138,5 +119,9 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
     fun clearEvents() {
         if (_searchEvent.value != SearchEvent.ReadyState)
             _searchEvent.postValue(SearchEvent.ReadyState)
+    }
+
+    fun setItemListStateEmpty(){
+        _itemList.postValue(DataState.Empty)
     }
 }

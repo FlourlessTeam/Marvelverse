@@ -46,6 +46,7 @@
                 android:layout_height="48dp"
                 android:src="@drawable/baseline_filter_alt_24"
                 app:showBottomSheet="@{viewModel}"
+                app:selectedFilterOption="@{viewModel.searchFilterOption}"
                 android:background="@drawable/search_view_background"
                 android:contentDescription="Advanced Filter" />
 
@@ -71,9 +72,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:paddingVertical="8dp"
-            app:listner="@{viewModel}"
+            app:listener="@{viewModel}"
             app:items="@{viewModel.itemList.toData()}"
             app:setUpRecyclerByData="@{viewModel.searchFilterOption}"
+            app:hideWhenEmpty="@{viewModel.itemList}"
             app:showWhenSuccess="@{viewModel.itemList}"
             android:clipToPadding="false"
             tools:visibility="visible"
