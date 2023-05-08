@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.example.marvelverse.app.ui.search.SearchViewModel" />
@@ -78,11 +77,10 @@
             app:setUpRecyclerByData="@{viewModel.searchFilterOption}"
             app:showWhenSuccess="@{viewModel.itemList}"
             app:spanCount="2"
-            tools:visibility="visible"
+            tools:visibility="gone"
             tools:listitem="@layout/item_comic"/>
 
         <ProgressBar
-            android:id="@+id/empty_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
@@ -91,6 +89,48 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:showWhenLoading="@{viewModel.itemList}" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"
+            app:showWhenEmpty="@{viewModel.itemList}"
+            android:orientation="vertical">
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationView"
+                android:layout_width="360dp"
+                android:layout_height="180dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/empty_list"
+                android:layout_marginBottom="16dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_title"
+                android:text="No results found "
+                android:textSize="18sp"
+                android:visibility="visible"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/body_text"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:text="We couldn't find what you searched for\nTry searching again"
+                android:visibility="visible" />
+        </LinearLayout>
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
