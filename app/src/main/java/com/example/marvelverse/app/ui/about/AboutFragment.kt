@@ -24,11 +24,9 @@ class AboutFragment :
             layoutManager = LinearLayoutManager(requireContext())
             adapter = aboutAdapter
         }
-
         viewModel.currentItem.observe(viewLifecycleOwner) {
             aboutAdapter.histories = it
             aboutAdapter.notifyDataSetChanged()
         }
     }
-
 }
