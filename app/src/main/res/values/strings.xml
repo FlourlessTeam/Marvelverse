@@ -14,6 +14,8 @@
     <string name="characters">Characters</string>
     <string name="comics">Comics</string>
     <string name="events">Events</string>
+    <string name="empty_list">Your Search List is Empty</string>
+    <string name="descriptionSearch">Explore Movies and add them \n to Search to show them here.</string>
     <string name="series">Series</string>
     <string name="descrition_all">descritionAll</string>
     <string name="seriesCharacter">Series</string>
