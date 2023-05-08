@@ -103,9 +103,10 @@ fun <T> ImageView.showIfError(dataState: DataState<T>?) {
 fun RecyclerView.setRecyclerAdapter(
     items: List<*>?,
     listener: BaseInteractionListener,
-    filterOption: SearchFilter?
+    filterOption: SearchFilter?,
 ) {
-    if (items != null) {
+    if (items != null)
+    {
         when (filterOption!!) {
             SearchFilter.Character -> {
                 val adapter = CharactersAdapter(listener)
@@ -207,6 +208,15 @@ fun <T> showWhenLoading(view: View, state: DataState<T>?) {
 @BindingAdapter(value = ["app:hideWhenEmpty"])
 fun <T> hideWhenEmpty(view: View, state: DataState<T>?) {
     if (state is DataState.Empty) {
+        view.visibility = View.GONE
+    }
+}
+
+@BindingAdapter(value = ["app:showWhenEmpty"])
+fun <T> showWhenEmpty(view: View, state: DataState<T>?) {
+    if (state is DataState.Empty || (state)?.toData()?.isEmpty() == true) {
+        view.visibility = View.VISIBLE
+    }else{
         view.visibility = View.GONE
     }
 }
