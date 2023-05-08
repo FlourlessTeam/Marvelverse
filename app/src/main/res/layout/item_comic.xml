@@ -7,7 +7,7 @@
 
         <variable
             name="listener"
-            type="com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener" />
+            type="com.example.marvelverse.app.ui.interfaces.ComicInteractionListener" />
 
         <variable
             name="item"

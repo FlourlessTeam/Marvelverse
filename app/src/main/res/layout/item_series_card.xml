@@ -10,7 +10,7 @@
             type="com.example.marvelverse.domain.entities.main.Series" />
         <variable
             name="listener"
-            type="com.example.marvelverse.app.ui.home.interfaces.SeriesInteractionListener" />
+            type="com.example.marvelverse.app.ui.interfaces.SeriesInteractionListener" />
 
     </data>
 

@@ -3,25 +3,22 @@ package com.example.marvelverse.app.ui.home
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.marvelverse.DataState
-import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
-import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
-import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
-import com.example.marvelverse.app.ui.home.interfaces.SeriesInteractionListener
+import com.example.marvelverse.utilites.DataState
+import com.example.marvelverse.app.ui.base.BaseViewModel
+import com.example.marvelverse.app.ui.interfaces.CharacterInteractionListener
+import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
+import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
+import com.example.marvelverse.app.ui.interfaces.ParentInteractionListener
+import com.example.marvelverse.app.ui.interfaces.SeriesInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 
-class HomeViewModel : ViewModel(), ParentInteractionListener,
+class HomeViewModel : BaseViewModel(), ParentInteractionListener,
     CharacterInteractionListener, EventInteractionListener, ComicInteractionListener,
     SeriesInteractionListener {
-    private val disposable = CompositeDisposable()
     private val _homeItems: MutableLiveData<DataState<HomeItem>> = MutableLiveData()
     val homeItems: LiveData<DataState<HomeItem>> = _homeItems
 
@@ -35,16 +32,12 @@ class HomeViewModel : ViewModel(), ParentInteractionListener,
     @SuppressLint("CheckResult")
     fun getDataForHomeItems() {
         _homeItems.postValue(DataState.Loading)
-        disposable.add(
-            MarvelRepository.fetchHomeItems()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ homeItems ->
-                    _homeItems.postValue(DataState.Success(homeItems))
-                }, { error ->
-                    _homeItems.postValue(DataState.Error(error))
-                })
-        )
+        MarvelRepository.fetchHomeItems().applySchedulers()
+            .subscribe({ homeItems ->
+                _homeItems.postValue(DataState.Success(homeItems))
+            }, { error ->
+                _homeItems.postValue(DataState.Error(error))
+            }).addTo(disposables)
     }
 
     override fun onCharacterClick(character: Character) {
@@ -85,8 +78,4 @@ class HomeViewModel : ViewModel(), ParentInteractionListener,
             _homeEvents.postValue(HomeEvent.ReadyState)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        disposable.dispose()
-    }
 }
