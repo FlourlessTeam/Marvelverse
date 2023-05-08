@@ -15,10 +15,10 @@
         <ImageView
             android:id="@+id/about_image"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="220dp"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/marvel"
+            android:background="@drawable/marvelcover"
             android:contentDescription="@string/marvel" />
 
         <androidx.recyclerview.widget.RecyclerView

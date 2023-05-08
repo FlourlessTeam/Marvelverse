@@ -57,7 +57,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="@string/description"
                 android:textColor="@color/main_title"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/character_description_text"
@@ -73,9 +73,7 @@
                 android:textSize="14sp"
                 android:textColor="@color/body_text"
                 tools:ignore="TextContrastCheck"
-                tools:text="Norem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.
-Norem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.
-Norem ipsum dolor sit amet, consectetur " />
+                tools:text="Norem ipsum dolor sit amet" />
 
             <TextView
                 android:id="@+id/character_comics"

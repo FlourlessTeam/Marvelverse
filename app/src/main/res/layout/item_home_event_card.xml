@@ -18,7 +18,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cuisineCard"
         android:layout_width="300dp"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:layout_marginEnd="@dimen/margin_small"
         android:onClick="@{() -> listener.onEventClick(item)}"
         app:cardCornerRadius="12dp"
