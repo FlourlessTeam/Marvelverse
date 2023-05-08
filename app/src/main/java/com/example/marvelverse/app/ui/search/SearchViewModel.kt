@@ -101,7 +101,6 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
 
     override fun onSearchFilterOptionSelected(searchFilter: SearchFilter) {
         this.searchFilterOption.postValue(searchFilter)
-
         _itemList.postValue(DataState.Empty)
     }
 
