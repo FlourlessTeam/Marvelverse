@@ -8,11 +8,11 @@
 
         <variable
             name="adapterRecycler"
-            type="com.example.marvelverse.app.ui.home.adapter.ComicsAdapter" />
+            type="com.example.marvelverse.app.ui.adapter.ComicsAdapter" />
 
         <variable
             name="listener"
-            type="com.example.marvelverse.app.ui.home.ParentInteractionListener" />
+            type="com.example.marvelverse.app.ui.interfaces.ParentInteractionListener" />
 
     </data>
 

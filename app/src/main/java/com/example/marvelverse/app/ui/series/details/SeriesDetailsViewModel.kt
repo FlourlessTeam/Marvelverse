@@ -2,26 +2,25 @@ package com.example.marvelverse.app.ui.series.details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.marvelverse.DataState
-import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
-import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
-import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
+import com.example.marvelverse.utilites.DataState
+import com.example.marvelverse.app.ui.base.BaseViewModel
+import com.example.marvelverse.app.ui.interfaces.CharacterInteractionListener
+import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
+import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class SeriesDetailsViewModel() : ViewModel(), ComicInteractionListener, EventInteractionListener,
+class SeriesDetailsViewModel() : BaseViewModel(), ComicInteractionListener,
+    EventInteractionListener,
     CharacterInteractionListener {
 
     private val _characters: MutableLiveData<DataState<Character>> = MutableLiveData()
     private val _comics: MutableLiveData<DataState<Comic>> = MutableLiveData()
     private val _events: MutableLiveData<DataState<Event>> = MutableLiveData()
-    private val disposables = CompositeDisposable()
     private val _detailsSeries: MutableLiveData<DetailsSeries> = MutableLiveData()
 
     val characters: LiveData<DataState<Character>>
@@ -35,7 +34,7 @@ class SeriesDetailsViewModel() : ViewModel(), ComicInteractionListener, EventInt
 
     fun getCharacters(url: String) {
 
-        val disposable = MarvelRepository.getCharactersByUrl(url)
+       MarvelRepository.getCharactersByUrl(url)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -45,13 +44,12 @@ class SeriesDetailsViewModel() : ViewModel(), ComicInteractionListener, EventInt
                 {
                     _characters.postValue(DataState.Error(it))
                 }
-            )
-        disposables.add(disposable)
+            ).addTo(disposables)
     }
 
     fun getComics(url: String) {
 
-        val disposable = MarvelRepository.getComicsByUrl(url)
+        MarvelRepository.getComicsByUrl(url)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -61,8 +59,7 @@ class SeriesDetailsViewModel() : ViewModel(), ComicInteractionListener, EventInt
                 {
                     _comics.postValue(DataState.Error(it))
                 }
-            )
-        disposables.add(disposable)
+            ).addTo(disposables)
 
     }
 
@@ -77,14 +74,10 @@ class SeriesDetailsViewModel() : ViewModel(), ComicInteractionListener, EventInt
                 {
                     _events.postValue(DataState.Error(it))
                 }
-            )
-        disposables.add(disposable)
+            ).addTo(disposables)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        disposables.dispose()
-    }
+
 
     override fun onCharacterClick(character: Character) {
         _detailsSeries.postValue(DetailsSeries.ClickCharacterSeries(character))

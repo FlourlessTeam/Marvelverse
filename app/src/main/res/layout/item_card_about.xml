@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="item"
+            type="com.example.marvelverse.domain.entities.main.About" />
 
     </data>
 
@@ -18,5 +21,6 @@
         android:padding="16dp"
         android:textColor="@color/body_text"
         android:textSize="14sp"
+        android:text="@{item.title}"
         tools:text="Abdallah hi how are you, Abdallah hi how are you,Abdallah hi how are you,Abdallah hi how are you" />
 </layout>

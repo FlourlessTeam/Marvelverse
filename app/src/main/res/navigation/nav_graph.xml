@@ -268,7 +268,7 @@
 
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.example.marvelverse.app.ui.about.AboutFragment"
+        android:name="com.example.marvelverse.app.ui.history.AboutFragment"
         android:label=""
         tools:layout="@layout/about_screen" />
 

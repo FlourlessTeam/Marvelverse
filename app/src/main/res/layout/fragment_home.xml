@@ -23,7 +23,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <ImageView
-            showIfError="@{viewModel.homeItems}"
+            app:showWhenError="@{viewModel.homeItems}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/error_icon"
@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
-            showIfLoading="@{viewModel.homeItems}"
+            app:showWhenLoading="@{viewModel.homeItems}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"

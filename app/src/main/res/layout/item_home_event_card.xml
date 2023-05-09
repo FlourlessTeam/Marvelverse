@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener" />
+            type="com.example.marvelverse.app.ui.interfaces.EventInteractionListener" />
 
     </data>
 

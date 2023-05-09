@@ -2,18 +2,13 @@ package com.example.marvelverse.app.ui.comics
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.marvelverse.DataState
-import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
+import com.example.marvelverse.utilites.DataState
+import com.example.marvelverse.app.ui.base.BaseViewModel
+import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.main.Comic
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 
-class ComicViewModel : ViewModel(), ComicInteractionListener {
-    private val compositeDisposable = CompositeDisposable()
+class ComicViewModel : BaseViewModel(), ComicInteractionListener {
 
     private var _Comic = MutableLiveData<DataState<Comic>>()
     val comic: LiveData<DataState<Comic>> get() = _Comic
@@ -28,8 +23,7 @@ class ComicViewModel : ViewModel(), ComicInteractionListener {
     private fun getComic() {
         _Comic.postValue(DataState.Loading)
         MarvelRepository.searchComics()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .applySchedulers()
             .subscribe(
                 {
                     _Comic.postValue(DataState.Success(it))
@@ -37,13 +31,9 @@ class ComicViewModel : ViewModel(), ComicInteractionListener {
                 {
                     _Comic.postValue(DataState.Error(it))
                 }
-            ).addTo(compositeDisposable)
+            ).addTo(disposables)
     }
 
-
-    private fun Disposable.addTo(compositeDisposable: CompositeDisposable) {
-        compositeDisposable.add(this)
-    }
 
     override fun onComicClick(comic: Comic) {
         _comicEvent.postValue(ComicEvent.ClickComicEvent(comic))
@@ -53,10 +43,6 @@ class ComicViewModel : ViewModel(), ComicInteractionListener {
         _comicEvent.postValue(ComicEvent.BackToHome)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
-    }
 
     fun clearEvents() {
         if (_comicEvent.value != ComicEvent.ReadyState)

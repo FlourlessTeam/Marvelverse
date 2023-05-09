@@ -3,21 +3,16 @@ package com.example.marvelverse.app.ui.search
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.marvelverse.DataState
+import com.example.marvelverse.utilites.DataState
+import com.example.marvelverse.app.ui.base.BaseViewModel
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
-import com.example.marvelverse.app.ui.home.interfaces.CharacterInteractionListener
-import com.example.marvelverse.app.ui.home.interfaces.ComicInteractionListener
-import com.example.marvelverse.app.ui.home.interfaces.EventInteractionListener
+import com.example.marvelverse.app.ui.interfaces.CharacterInteractionListener
+import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
+import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Creator
 import com.example.marvelverse.domain.entities.main.Event
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 
 enum class SearchFilter {
@@ -27,7 +22,8 @@ enum class SearchFilter {
 }
 
 @SuppressLint("CheckResult")
-class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionListener,
+class SearchViewModel :
+    BaseViewModel(), BottomSheetListener, CharacterInteractionListener,
     ComicInteractionListener, EventInteractionListener {
 
     private val repositry = MarvelRepository
@@ -35,7 +31,6 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
     var searchFilterOption: MutableLiveData<SearchFilter> =
         MutableLiveData<SearchFilter>(SearchFilter.Character)
 
-    private val compositeDisposable = CompositeDisposable()
 
     private val _itemList = MutableLiveData<DataState<Any>>()
     val itemList: LiveData<DataState<Any>>
@@ -50,32 +45,26 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
 
     fun comicSearch(limit: Int?, title: String?) {
         _itemList.postValue(DataState.Loading)
-        compositeDisposable.add(
             repositry.searchComics(limit, title)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .applySchedulers()
                 .subscribe(::onComicsSearchSuccess, ::onSearchError)
-        )
+                .addTo(disposables)
     }
 
     fun characterSearch(limit: Int?, title: String?) {
         _itemList.postValue(DataState.Loading)
-        compositeDisposable.add(
             repositry.searchCharacters(limit, title)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .applySchedulers()
                 .subscribe(::onCharacterSearchSuccess, ::onSearchError)
-        )
+                .addTo(disposables)
     }
 
     fun eventSearch(limit: Int?, title: String?) {
         _itemList.postValue(DataState.Loading)
-        compositeDisposable.add(
             repositry.searchEvents(limit, title)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .applySchedulers()
                 .subscribe(::onEventSearchSuccess, ::onSearchError)
-        )
+                .addTo(disposables)
     }
 
     private fun onComicsSearchSuccess(comics: List<Comic>) {
@@ -92,11 +81,6 @@ class SearchViewModel : ViewModel(), BottomSheetListener, CharacterInteractionLi
 
     private fun onSearchError(throwable: Throwable) {
         _itemList.postValue(DataState.Error(throwable))
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
     }
 
     override fun onSearchFilterOptionSelected(searchFilter: SearchFilter) {

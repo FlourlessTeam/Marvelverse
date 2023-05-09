@@ -5,11 +5,10 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.marvelverse.app.ui.abstracts.BaseFragment
-import com.example.marvelverse.app.ui.abstracts.InnerFragment
-import com.example.marvelverse.app.ui.home.adapter.CharactersAdapter
-import com.example.marvelverse.app.ui.home.adapter.ComicsAdapter
-import com.example.marvelverse.app.ui.home.adapter.SeriesAdapter
+import com.example.marvelverse.app.ui.base.InnerFragment
+import com.example.marvelverse.app.ui.adapter.CharactersAdapter
+import com.example.marvelverse.app.ui.adapter.ComicsAdapter
+import com.example.marvelverse.app.ui.adapter.SeriesAdapter
 import com.example.marvelverse.databinding.FragmentEventDetailsBinding
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic

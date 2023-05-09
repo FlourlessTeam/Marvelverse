@@ -1,9 +1,11 @@
 package com.example.marvelverse.data.local
 
+import com.example.marvelverse.domain.entities.main.About
+
 class FakeLocalData(){
 
-    fun getAboutItems(): List<String>{
-        return listOf(HISTORY1, HISTORY2, HISTORY3, HISTORY4)
+    fun getAboutItems(): List<About>{
+        return listOf(About(HISTORY1), About(HISTORY2), About(HISTORY3), About(HISTORY4))
     }
 
     companion object{
