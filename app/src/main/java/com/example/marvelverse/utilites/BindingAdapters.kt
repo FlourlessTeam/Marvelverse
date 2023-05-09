@@ -1,5 +1,6 @@
 package com.example.marvelverse.app.ui.bindingAdapters
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -27,6 +28,7 @@ import com.example.marvelverse.domain.entities.wrappers.Thumbnail
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
 
@@ -146,14 +148,23 @@ fun SearchView.searchViewListener(viewModel: SearchViewModel) {
 
 }
 
+@SuppressLint("CheckResult")
 @BindingAdapter(value = ["app:showBottomSheet", "app:selectedFilterOption"])
 fun showBottomSheet(view: View, listener: BottomSheetListener, selectedOption: SearchFilter) {
+    val clickSubject = PublishSubject.create<Unit>()
+
     view.setOnClickListener {
-        BottomSheetFragment(listener, selectedOption).show(
-            it.findFragment<SearchFragment>().childFragmentManager,
-            "TAG"
-        )
+        clickSubject.onNext(Unit)
     }
+
+    clickSubject.throttleFirst(500, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe {
+            BottomSheetFragment(listener, selectedOption).show(
+                view.findFragment<SearchFragment>().childFragmentManager,
+                "TAG"
+            )
+        }
 }
 
 @BindingAdapter(value = ["app:clearWhenOptionChanged"])
