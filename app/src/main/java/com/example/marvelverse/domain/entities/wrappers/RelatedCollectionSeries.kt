@@ -1,7 +1,6 @@
 package com.example.marvelverse.domain.entities.wrappers
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
-@Parcelize
-data class RelatedCollectionSeries(val collectionURI: String="", val available: Int=0) : Parcelable
+
+data class RelatedCollectionSeries(val collectionURI: String="", val available: Int=0) : Serializable
