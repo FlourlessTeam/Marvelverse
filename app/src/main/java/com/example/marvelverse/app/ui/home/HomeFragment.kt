@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.example.marvelverse.app.ui.abstracts.BottomNavFragment
-import com.example.marvelverse.app.ui.home.adapter.HomeAdapter
+import com.example.marvelverse.app.ui.base.BottomNavFragment
+import com.example.marvelverse.app.ui.adapter.HomeAdapter
 import com.example.marvelverse.databinding.FragmentHomeBinding
 import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic

@@ -30,7 +30,7 @@
             tools:listitem="@layout/item_character" />
 
         <ImageView
-            showIfError="@{viewModel.characters}"
+            app:showWhenError="@{viewModel.characters}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/error_icon"
@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
-            showIfLoading="@{viewModel.characters}"
+            app:showWhenLoading="@{viewModel.characters}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"

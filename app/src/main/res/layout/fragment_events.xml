@@ -11,24 +11,24 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/event_recycler_view"
-           app:items="@{viewModel.event}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingHorizontal="8dp"
+            app:items="@{viewModel.event}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             tools:listitem="@layout/item_event" />
 
         <ImageView
-            showIfError="@{viewModel.event}"
+            app:showWhenError="@{viewModel.event}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/error_icon"
@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
-            showIfLoading="@{viewModel.event}"
+            app:showWhenLoading="@{viewModel.event}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"

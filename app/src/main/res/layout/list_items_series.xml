@@ -6,11 +6,11 @@
 
         <variable
             name="adapterRecycler"
-            type="com.example.marvelverse.app.ui.home.adapter.SeriesAdapter" />
+            type="com.example.marvelverse.app.ui.adapter.SeriesAdapter" />
 
         <variable
             name="listener"
-            type="com.example.marvelverse.app.ui.home.ParentInteractionListener" />
+            type="com.example.marvelverse.app.ui.interfaces.ParentInteractionListener" />
 
     </data>
 

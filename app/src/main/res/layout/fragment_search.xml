@@ -37,7 +37,7 @@
             android:layout_height="48dp"
             android:background="@drawable/search_view_background"
             android:contentDescription="Advanced Filter"
-            android:src="@drawable/baseline_filter_list_24"
+            android:src="@drawable/filter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/search_view_result"
