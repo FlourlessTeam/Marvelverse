@@ -1,44 +1,77 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
+
 
 android {
     namespace 'com.example.marvelverse'
     compileSdk 33
-
     defaultConfig {
         applicationId "com.example.marvelverse"
         minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //Todo add your Api Keys here
+        buildConfigField "String", "public_key", '"4af2f3af478a5ca944259f72d0b5565c"'
+        buildConfigField "String", "private_key", '"32b03f302eff2def1086558620b3657a1ab873fa"'
+    }
+    buildFeatures {
+        dataBinding true
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
     }
+
 }
 
+
 dependencies {
+    def nav_version = "2.5.3"
 
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    //Navigation Component
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+
+    //RX
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    //Moshi
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    //noinspection KaptUsageInsteadOfKsp
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.14.0'
+
+    //Hashing
+    implementation 'xerces:xercesImpl:2.12.2'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    implementation "com.airbnb.android:lottie:3.4.0"
+
 }
