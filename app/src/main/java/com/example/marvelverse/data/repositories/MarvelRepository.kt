@@ -72,23 +72,6 @@ object MarvelRepository {
     fun getRandomEvents() =
         marvelApiServices.fetchEvents(50, null).map { it.data.results.shuffled().take(10) }
 
-
-
-    fun fetchHomeItems() =
-        Single.zip(
-            getRandomCharacters(),
-            getRandomComics(),
-            getRandomEvents(),
-            getRandomSeries()
-        ) { characters: List<Character>, comics: List<Comic>,events: List<Event>, series: List<Series> ->
-            listOf(
-                HomeItem.CharactersItem(characters),
-                HomeItem.ComicsItem(comics),
-                HomeItem.EventsItem(events),
-                HomeItem.SeriesItem(series)
-            )
-        }
-
     fun getItems() = fakeLocalData.getAboutItems()
 
 
