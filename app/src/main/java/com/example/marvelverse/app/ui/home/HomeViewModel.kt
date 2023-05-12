@@ -15,6 +15,7 @@ import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
+import io.reactivex.rxjava3.core.Single
 
 class HomeViewModel : BaseViewModel(), ParentInteractionListener,
     CharacterInteractionListener, EventInteractionListener, ComicInteractionListener,
@@ -32,13 +33,27 @@ class HomeViewModel : BaseViewModel(), ParentInteractionListener,
     @SuppressLint("CheckResult")
     fun getDataForHomeItems() {
         _homeItems.postValue(DataState.Loading)
-        MarvelRepository.fetchHomeItems().applySchedulers()
+        Single.zip(
+            MarvelRepository.getRandomComics(),
+            MarvelRepository.getRandomEvents(),
+            MarvelRepository.getRandomCharacters(),
+            MarvelRepository.getRandomSeries()
+        ) { comics, events, characters, series ->
+            listOf(
+                HomeItem.CharactersItem(characters),
+                HomeItem.ComicsItem(comics),
+                HomeItem.EventsItem(events),
+                HomeItem.SeriesItem(series)
+            )
+        }
+            .applySchedulers()
             .subscribe({ homeItems ->
                 _homeItems.postValue(DataState.Success(homeItems))
-            }, { error ->
-                _homeItems.postValue(DataState.Error(error))
+            }, {
+                _homeItems.postValue(DataState.Error(it))
             }).addTo(disposables)
     }
+
 
     override fun onCharacterClick(character: Character) {
         _homeEvents.postValue(HomeEvent.ClickCharacterEvent(character))
