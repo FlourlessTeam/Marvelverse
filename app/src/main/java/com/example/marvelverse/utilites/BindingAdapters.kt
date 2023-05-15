@@ -32,16 +32,6 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
 
-@BindingAdapter(value = ["app:imageUrl"])
-fun setImageUrl(imageView: ImageView, url: String?) {
-    if (url != null) {
-        Log.d("BindingAdapter", "setImageUrl: $url")
-        Glide.with(imageView.context)
-            .load(url)
-            .into(imageView)
-
-    }
-}
 
 @BindingAdapter(value = ["app:items"])
 fun <T> bindRecyclerView(recyclerView: RecyclerView, state: DataState<T>?) {
@@ -60,26 +50,6 @@ fun <T> bindNestedRecyclerView(recyclerView: RecyclerView, items: DataState<T>?)
             (recyclerView.adapter as BaseNestedRecyclerAdapter<T>).addNestedItem(items.data as MutableList<T>)
         }
     }
-}
-
-@BindingAdapter("availableItemsVisibility")
-fun setAvailableItemsVisibility(view: View, state: DataState<*>?) {
-    val availableItemCount = state?.let { it.toData()?.size ?: 0 } ?: 0
-    view.visibility = if (availableItemCount > 0) View.VISIBLE else View.GONE
-}
-
-@BindingAdapter("visibilityIfNotBlank")
-fun setVisibilityIfNotBlank(view: View, text: String?) {
-    if (text.isNullOrEmpty()) {
-        view.visibility = View.GONE
-    } else {
-        view.visibility = View.VISIBLE
-    }
-}
-
-@BindingAdapter("visibilityIfNoItems")
-fun setVisibilityIfNoItems(view: View, availableItemCount: Int) {
-    view.visibility = if (availableItemCount == 0) View.GONE else View.VISIBLE
 }
 
 
@@ -172,6 +142,7 @@ fun SearchView.clearWhenOptionChanged(searchFilter: SearchFilter) {
     this.setQuery("", true)
 }
 
+
 @BindingAdapter(value = ["app:showWhenError"])
 fun <T> showWhenError(view: View, state: DataState<T>?) {
     if (state is DataState.Error) {
@@ -199,6 +170,7 @@ fun <T> showWhenLoading(view: View, state: DataState<T>?) {
     }
 }
 
+
 @BindingAdapter(value = ["app:hideWhenEmpty"])
 fun <T> hideWhenEmpty(view: View, state: DataState<T>?) {
     if (state is DataState.Empty) {
@@ -208,12 +180,23 @@ fun <T> hideWhenEmpty(view: View, state: DataState<T>?) {
 
 @BindingAdapter(value = ["app:showWhenEmpty"])
 fun <T> showWhenEmpty(view: View, state: DataState<T>?) {
-    if (state is DataState.Empty || (state)?.toData()?.isEmpty() == true) {
+    if (state is DataState.Empty ) {
         view.visibility = View.VISIBLE
     } else {
         view.visibility = View.GONE
     }
 }
+
+
+@BindingAdapter("visibilityIfNotBlank")
+fun setVisibilityIfNotBlank(view: View, text: String?) {
+    if (text.isNullOrEmpty()) {
+        view.visibility = View.GONE
+    } else {
+        view.visibility = View.VISIBLE
+    }
+}
+
 
 @BindingAdapter("thumbnail")
 fun ImageView.bindThumbNail(thumbnail: Thumbnail) {
