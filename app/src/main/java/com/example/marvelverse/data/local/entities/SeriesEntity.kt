@@ -1,11 +1,14 @@
-package com.example.marvelverse.domain.entities.main
+package com.example.marvelverse.data.local.entities
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.marvelverse.domain.entities.wrappers.InfoWrapper
 import com.example.marvelverse.domain.entities.wrappers.Thumbnail
 import java.io.Serializable
 
-data class Series(
-    val id: Int,
+@Entity("SERIES_TABLE")
+data class SeriesEntity(
+    @PrimaryKey(autoGenerate = true) val id: Int,
     val title: String,
     val description: String?,
     val resourceURI: String,
