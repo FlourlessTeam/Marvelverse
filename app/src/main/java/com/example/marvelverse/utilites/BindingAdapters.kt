@@ -180,24 +180,13 @@ fun <T> hideWhenEmpty(view: View, state: DataState<T>?) {
 
 @BindingAdapter(value = ["app:showWhenEmpty"])
 fun <T> showWhenEmpty(view: View, state: DataState<T>?) {
-    if (state is DataState.Empty || (state)?.toData()?.isEmpty() == true) {
+    if (state is DataState.Empty ) {
         view.visibility = View.VISIBLE
     } else {
         view.visibility = View.GONE
     }
 }
 
-
-@BindingAdapter("availableItemsVisibility")
-fun setAvailableItemsVisibility(view: View, state: DataState<*>?) {
-    val availableItemCount = state?.let { it.toData()?.size ?: 0 } ?: 0
-    view.visibility = if (availableItemCount > 0) View.VISIBLE else View.GONE
-}
-
-@BindingAdapter("visibilityIfNoItems")
-fun setVisibilityIfNoItems(view: View, availableItemCount: Int) {
-    view.visibility = if (availableItemCount == 0) View.GONE else View.VISIBLE
-}
 
 @BindingAdapter("visibilityIfNotBlank")
 fun setVisibilityIfNotBlank(view: View, text: String?) {

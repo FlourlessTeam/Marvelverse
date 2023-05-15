@@ -19,8 +19,8 @@ class EventsFragment : InnerFragment<FragmentEventsBinding>(FragmentEventsBindin
         binding.eventRecyclerView.adapter = adapter
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.eventsEvent.observe(viewLifecycleOwner) {
-            it?.let {
+        viewModel.eventsEvent.observe(viewLifecycleOwner) { event->
+            event.getUnHandledData()?.let {
                 handleEvent(it)
             }
         }
@@ -29,18 +29,11 @@ class EventsFragment : InnerFragment<FragmentEventsBinding>(FragmentEventsBindin
     fun handleEvent(event: EventsEvent) {
         when (event) {
             is EventsEvent.ClickEventsEvent -> navigateToDetails(event.event)
-            EventsEvent.BackToHome -> BackToHome()
-            else -> {}
         }
-        viewModel.clearEvents()
     }
 
     fun navigateToDetails(event: Event) {
         val direction = EventsFragmentDirections.actionEventsFragmentToEventDetailsFragment(event)
         findNavController().navigate(direction)
-    }
-
-    fun BackToHome() {
-        Log.d("EventFragment", "BackToHome")
     }
 }
