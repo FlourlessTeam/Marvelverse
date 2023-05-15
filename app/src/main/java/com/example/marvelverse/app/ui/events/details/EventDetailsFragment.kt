@@ -3,6 +3,8 @@ package com.example.marvelverse.app.ui.events.details
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.marvelverse.app.ui.base.InnerFragment
@@ -46,13 +48,16 @@ class EventDetailsFragment :
     private fun observeEvents() {
 
         viewModel.eventDetailsEvents.observe(viewLifecycleOwner) { clickEvent ->
-            when (clickEvent) {
-                is EventDetailsEvents.ClickCharacterEvent -> navigateToCharacterDetails(clickEvent.character)
-                is EventDetailsEvents.ClickComicEvent -> navigateToComicDetails(clickEvent.comic)
-                is EventDetailsEvents.ClickSeriesEvent -> navigateToSeriesDetails(clickEvent.series)
-                else -> {}
+            clickEvent.getUnHandledData()?.let {
+                handleEvent(it)
             }
-            viewModel.clearEvents()
+        }
+    }
+    fun handleEvent(event: EventDetailsEvents) {
+        when (event) {
+            is EventDetailsEvents.ClickCharacterEvent -> navigateToCharacterDetails(event.character)
+            is EventDetailsEvents.ClickComicEvent -> navigateToComicDetails(event.comic)
+            is EventDetailsEvents.ClickSeriesEvent -> navigateToSeriesDetails(event.series)
         }
     }
 
@@ -61,7 +66,7 @@ class EventDetailsFragment :
             EventDetailsFragmentDirections.actionEventDetailsFragmentToDetailsCharacterFragment(
                 character
             )
-        findNavController().navigate(directions)
+        goToNavigate(directions)
     }
 
     private fun navigateToComicDetails(comic: Comic) {
@@ -69,7 +74,7 @@ class EventDetailsFragment :
             EventDetailsFragmentDirections.actionEventDetailsFragmentToComicDetailsFragment(
                 comic
             )
-        findNavController().navigate(directions)
+        goToNavigate(directions)
 
     }
 
@@ -78,6 +83,9 @@ class EventDetailsFragment :
             EventDetailsFragmentDirections.actionEventDetailsFragmentToSeriesDetailsFragment(
                 series
             )
-        findNavController().navigate(directions)
+        goToNavigate(directions)
+    }
+    private fun goToNavigate(direction: NavDirections){
+        findNavController().navigate(direction)
     }
 }

@@ -15,6 +15,7 @@ import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.utilites.SingleEventState
 import io.reactivex.rxjava3.core.Single
 
 class HomeViewModel : BaseViewModel(), ParentInteractionListener,
@@ -23,8 +24,8 @@ class HomeViewModel : BaseViewModel(), ParentInteractionListener,
     private val _homeItems: MutableLiveData<DataState<HomeItem>> = MutableLiveData()
     val homeItems: LiveData<DataState<HomeItem>> = _homeItems
 
-    private val _homeEvents: MutableLiveData<HomeEvent> = MutableLiveData()
-    val homeEvents: LiveData<HomeEvent> = _homeEvents
+    private val _homeEvent: MutableLiveData<SingleEventState<HomeEvent>> = MutableLiveData()
+    val homeEvent: LiveData<SingleEventState<HomeEvent>> = _homeEvent
 
     init {
         getDataForHomeItems()
@@ -45,52 +46,49 @@ class HomeViewModel : BaseViewModel(), ParentInteractionListener,
                 HomeItem.EventsItem(events),
                 HomeItem.SeriesItem(series)
             )
-        }
-            .applySchedulers()
-            .subscribe({ homeItems ->
-                _homeItems.postValue(DataState.Success(homeItems))
-            }, {
-                _homeItems.postValue(DataState.Error(it))
-            }).addTo(disposables)
+        }.subscribeBy(::OnSuccess, ::OnError)
     }
 
+    fun OnSuccess(homeItem: List<HomeItem>) {
+        _homeItems.postValue(DataState.Success(homeItem))
+    }
+
+    fun OnError(error: Throwable) {
+        _homeItems.postValue(DataState.Error(error))
+    }
 
     override fun onCharacterClick(character: Character) {
-        _homeEvents.postValue(HomeEvent.ClickCharacterEvent(character))
+        _homeEvent.postValue(SingleEventState(HomeEvent.ClickCharacterEvent(character)))
     }
 
     override fun onEventClick(event: Event) {
-        _homeEvents.postValue(HomeEvent.ClickEventEvent(event))
+        _homeEvent.postValue(SingleEventState(HomeEvent.ClickEventEvent(event)))
     }
 
     override fun onComicClick(comic: Comic) {
-        _homeEvents.postValue(HomeEvent.ClickComicEvent(comic))
+        _homeEvent.postValue(SingleEventState(HomeEvent.ClickComicEvent(comic)))
     }
 
     override fun onSeriesClick(series: Series) {
-        _homeEvents.postValue(HomeEvent.ClickSeriesEvent(series))
+        _homeEvent.postValue(SingleEventState(HomeEvent.ClickSeriesEvent(series)))
     }
 
     override fun onViewAllCharactersClick() {
-        _homeEvents.postValue(HomeEvent.ClickSeeAllCharactersEvent)
+        _homeEvent.postValue(SingleEventState(HomeEvent.ClickSeeAllCharactersEvent))
     }
 
     override fun onViewAllEventsClick() {
-        _homeEvents.postValue(HomeEvent.ClickSeeAllEventsEvent)
+        _homeEvent.postValue(SingleEventState(HomeEvent.ClickSeeAllEventsEvent))
     }
 
     override fun onViewAllComicsClick() {
-        _homeEvents.postValue(HomeEvent.ClickSeeAllComicsEvent)
+        _homeEvent.postValue(SingleEventState(HomeEvent.ClickSeeAllComicsEvent))
     }
 
 
     override fun onViewAllSeriesClick() {
-        _homeEvents.postValue(HomeEvent.ClickSeeAllSeriesEvent)
+        _homeEvent.postValue(SingleEventState(HomeEvent.ClickSeeAllSeriesEvent))
     }
 
-    fun clearEvents() {
-        if (homeEvents.value != HomeEvent.ReadyState)
-            _homeEvents.postValue(HomeEvent.ReadyState)
-    }
 
 }

@@ -46,17 +46,20 @@ class SeriesDetailsFragment :
 
 
     private fun observeSeries() {
-
-        viewModel.detailsSeries.observe(viewLifecycleOwner) { clickSeries ->
-            when (clickSeries) {
-                is DetailsSeries.ClickCharacterSeries -> navigateToCharacterDetails(clickSeries.character)
-                is DetailsSeries.ClickComicSeries -> navigateToComicDetails(clickSeries.comic)
-                is DetailsSeries.ClickEventSeries -> navigateToEventDetails(clickSeries.event)
-                else -> {}
+        viewModel.detailsSeries.observe(viewLifecycleOwner) { event ->
+            event.getUnHandledData()?.let {
+                handleEvent(it)
             }
-            viewModel.clearEvents()
         }
 
+    }
+
+    fun handleEvent(event: DetailsSeries) {
+        when (event) {
+            is DetailsSeries.ClickCharacterSeries -> navigateToCharacterDetails(event.character)
+            is DetailsSeries.ClickComicSeries -> navigateToComicDetails(event.comic)
+            is DetailsSeries.ClickEventSeries -> navigateToEventDetails(event.event)
+        }
     }
 
     private fun navigateToCharacterDetails(character: Character) {

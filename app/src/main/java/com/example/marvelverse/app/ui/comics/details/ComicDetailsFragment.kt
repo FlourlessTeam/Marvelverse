@@ -38,13 +38,16 @@ class ComicDetailsFragment :
     }
 
     private fun observeEvents() {
-        viewModel.comicsDetailsEvent.observe(viewLifecycleOwner) {
-            when (it) {
-                is ComicDetailsEvents.ClickCharacterEvent -> navigateToCharacterDetails(it.character)
-                is ComicDetailsEvents.ClickEventEvent -> navigateToEventDetails(it.event)
-                else -> {}
+        viewModel.comicsDetailsEvent.observe(viewLifecycleOwner) { event->
+            event.getUnHandledData()?.let {
+                handleEvent(it)
             }
-            viewModel.clearEvents()
+        }
+    }
+    fun handleEvent(event: ComicDetailsEvents) {
+        when (event) {
+            is ComicDetailsEvents.ClickCharacterEvent -> navigateToCharacterDetails(event.character)
+            is ComicDetailsEvents.ClickEventEvent -> navigateToEventDetails(event.event)
         }
     }
 

@@ -5,7 +5,6 @@ import com.example.marvelverse.domain.entities.main.Comic
 import com.example.marvelverse.domain.entities.main.Event
 
 sealed interface DetailsSeries {
-    object ReadyState : DetailsSeries
     data class ClickCharacterSeries(val character: Character) : DetailsSeries
     data class ClickComicSeries(val comic: Comic) : DetailsSeries
     data class ClickEventSeries(val event: Event) : DetailsSeries
