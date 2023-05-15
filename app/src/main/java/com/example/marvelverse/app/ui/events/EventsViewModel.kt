@@ -7,6 +7,7 @@ import com.example.marvelverse.app.ui.base.BaseViewModel
 import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.utilites.SingleEventState
 
 class EventsViewModel : BaseViewModel(), EventInteractionListener {
 
@@ -14,8 +15,8 @@ class EventsViewModel : BaseViewModel(), EventInteractionListener {
     private var _event = MutableLiveData<DataState<Event>>()
     val event: LiveData<DataState<Event>> get() = _event
 
-    private val _eventsEvent = MutableLiveData<EventsEvent>()
-    val eventsEvent: LiveData<EventsEvent> get() = _eventsEvent
+    private val _eventsEvent = MutableLiveData<SingleEventState<EventsEvent>>()
+    val eventsEvent: LiveData<SingleEventState<EventsEvent>> get() = _eventsEvent
 
     init {
         getEvent()
@@ -23,29 +24,23 @@ class EventsViewModel : BaseViewModel(), EventInteractionListener {
 
     private fun getEvent() {
         _event.postValue(DataState.Loading)
-        MarvelRepository.searchEvents().applySchedulers()
-            .subscribe(
-                {
-                    _event.postValue(DataState.Success(it))
-                },
-                {
-                    _event.postValue(DataState.Error(it))
-                }
-            ).addTo(disposables)
+        MarvelRepository.searchEvents().subscribeBy(::onEventSuccess, ::onEventError)
+    }
+    fun onEventSuccess(it: List<Event>) {
+        if (it.isEmpty()) {
+            _event.postValue(DataState.Empty)
+        } else {
+            _event.postValue(DataState.Success(it))
+        }
+    }
+    fun onEventError(it: Throwable) {
+        _event.postValue(DataState.Error(it))
     }
 
     override fun onEventClick(event: Event) {
-        _eventsEvent.postValue(EventsEvent.ClickEventsEvent(event))
+        _eventsEvent.postValue(SingleEventState(EventsEvent.ClickEventsEvent(event)))
     }
 
-    fun backToHome() {
-        _eventsEvent.postValue(EventsEvent.BackToHome)
-    }
-
-    fun clearEvents() {
-        if (_eventsEvent.value != EventsEvent.ReadyState)
-            _eventsEvent.postValue(EventsEvent.ReadyState)
-    }
 
 
 }

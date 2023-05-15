@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelverse.BR
 
-
+interface BaseInteractionListener
 abstract class BaseAdapter<T>(
     private val listener: BaseInteractionListener?,
 ) : ListAdapter<T, BaseAdapter.BaseViewHolder>(BaseDiffUtil<T>()) {

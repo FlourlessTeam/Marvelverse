@@ -7,6 +7,7 @@ import com.example.marvelverse.app.ui.base.BaseViewModel
 import com.example.marvelverse.app.ui.interfaces.CharacterInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.main.Character
+import com.example.marvelverse.utilites.SingleEventState
 
 
 class CharactersViewModel : BaseViewModel(), CharacterInteractionListener {
@@ -14,8 +15,8 @@ class CharactersViewModel : BaseViewModel(), CharacterInteractionListener {
     private var _characters = MutableLiveData<DataState<Character>>()
     val characters: LiveData<DataState<Character>> get() = _characters
 
-    private val _characterEvent = MutableLiveData<CharactersEvent>()
-    val characterEvent: LiveData<CharactersEvent> get() = _characterEvent
+    private val _characterEvent = MutableLiveData<SingleEventState<CharactersEvent>>()
+    val characterEvent: LiveData<SingleEventState<CharactersEvent>> get() = _characterEvent
 
     init {
         getCharacters()
@@ -23,31 +24,23 @@ class CharactersViewModel : BaseViewModel(), CharacterInteractionListener {
 
     private fun getCharacters() {
         _characters.postValue(DataState.Loading)
-        MarvelRepository.searchCharacters().applySchedulers()
-            .subscribe(
-                {
-                    _characters.postValue(DataState.Success(it))
-                },
-                {
-                    _characters.postValue(DataState.Error(it))
-                }
-            ).addTo(disposables)
+        MarvelRepository.searchCharacters().subscribeBy(::onCharactersSuccess, ::onCharactersError)
+    }
+    fun onCharactersSuccess(it: List<Character>) {
+        if (it.isEmpty()) {
+            _characters.postValue(DataState.Empty)
+        } else {
+            _characters.postValue(DataState.Success(it))
+        }
+    }
+    fun onCharactersError(it: Throwable) {
+        _characters.postValue(DataState.Error(it))
     }
 
 
     override fun onCharacterClick(character: Character) {
-        _characterEvent.postValue(CharactersEvent.ClickCharacterEvent(character))
+        _characterEvent.postValue(SingleEventState(CharactersEvent.ClickCharacterEvent(character)))
     }
-
-    fun backToHome() {
-        _characterEvent.postValue(CharactersEvent.BackToHome)
-    }
-
-    fun clearEvents() {
-        if (_characterEvent.value != CharactersEvent.ReadyState)
-            _characterEvent.postValue(CharactersEvent.ReadyState)
-    }
-
 
 }
 

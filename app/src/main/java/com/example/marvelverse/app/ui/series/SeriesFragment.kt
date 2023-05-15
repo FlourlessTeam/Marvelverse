@@ -11,14 +11,14 @@ import com.example.marvelverse.domain.entities.main.Series
 
 class SeriesFragment : InnerFragment<FragmentSeriesBinding>(FragmentSeriesBinding::inflate) {
     private val viewModel: SeriesViewModel by viewModels()
+    private val adapter by lazy { SeriesAdapter(viewModel) }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = SeriesAdapter(viewModel)
         binding.rvSeries.adapter = adapter
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.seriesEvent.observe(viewLifecycleOwner) {
-            it?.let {
+        viewModel.seriesEvent.observe(viewLifecycleOwner) { event->
+            event.getUnHandledData()?.let {
                 handleEvent(it)
             }
         }
@@ -27,20 +27,12 @@ class SeriesFragment : InnerFragment<FragmentSeriesBinding>(FragmentSeriesBindin
     fun handleEvent(event: SeriesEvent) {
         when (event) {
             is SeriesEvent.ClickSeriesEvent -> navigateToDetails(event.series)
-            SeriesEvent.BackToHome -> BackToHome()
-            else -> {}
         }
-        viewModel.clearEvents()
-
     }
 
     fun navigateToDetails(series: Series) {
         val direction = SeriesFragmentDirections.actionSeriesFragmentToSeriesDetailsFragment(series)
         findNavController().navigate(direction)
-    }
-
-    fun BackToHome() {
-        Log.d("SeriesFragment", "BackToHome")
     }
 
 }

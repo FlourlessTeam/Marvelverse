@@ -19,10 +19,9 @@ class ComicsFragment : InnerFragment<FragmentComicsBinding>(FragmentComicsBindin
         binding.comicRecyclerView.adapter = adapter
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.comicEvent.observe(viewLifecycleOwner) {
-            it?.let {
+        viewModel.comicEvent.observe(viewLifecycleOwner) { event->
+            event.getUnHandledData()?.let {
                 handleComic(it)
-                viewModel.clearEvents()
             }
         }
     }
@@ -30,10 +29,7 @@ class ComicsFragment : InnerFragment<FragmentComicsBinding>(FragmentComicsBindin
     private fun handleComic(event: ComicEvent) {
         when (event) {
             is ComicEvent.ClickComicEvent -> navigateToDetails(event.comic)
-            ComicEvent.BackToHome -> backToHome()
-            else -> {}
         }
-        viewModel.clearEvents()
     }
 
     private fun navigateToDetails(comic: Comic) {
@@ -41,8 +37,5 @@ class ComicsFragment : InnerFragment<FragmentComicsBinding>(FragmentComicsBindin
         findNavController().navigate(direction)
     }
 
-    private fun backToHome() {
-        Log.d("ComicFragment", "BackToHome")
-    }
 
 }

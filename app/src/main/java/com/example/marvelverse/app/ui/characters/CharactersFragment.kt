@@ -18,10 +18,9 @@ class CharactersFragment :
         binding.rvCharacters.adapter = adapter
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.characterEvent.observe(viewLifecycleOwner) {
-            it?.let {
+        viewModel.characterEvent.observe(viewLifecycleOwner) { event->
+            event.getUnHandledData()?.let {
                 handleEvent(it)
-
             }
         }
     }
@@ -29,10 +28,7 @@ class CharactersFragment :
     private fun handleEvent(event: CharactersEvent) {
         when (event) {
             is CharactersEvent.ClickCharacterEvent -> navigateToDetails(event.character)
-            CharactersEvent.BackToHome -> BackToHome()
-            else -> {}
         }
-        viewModel.clearEvents()
     }
 
     private fun navigateToDetails(character: Character) {
@@ -41,11 +37,6 @@ class CharactersFragment :
                 character
             )
         findNavController().navigate(directions)
-    }
-
-
-    fun BackToHome() {
-        Log.d("CharactersFragment", "BackToHome")
     }
 
 }

@@ -4,7 +4,6 @@ import com.example.marvelverse.domain.entities.main.Character
 import com.example.marvelverse.domain.entities.main.Event
 
 sealed interface ComicDetailsEvents {
-    object ReadyState : ComicDetailsEvents
     data class ClickCharacterEvent(val character: Character) : ComicDetailsEvents
     data class ClickEventEvent(val event: Event) : ComicDetailsEvents
 }
