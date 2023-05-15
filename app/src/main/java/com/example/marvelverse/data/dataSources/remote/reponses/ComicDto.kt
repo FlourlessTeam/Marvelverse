@@ -29,8 +29,6 @@ data class ComicDto(
 	val format: String? = null,
 	@SerializedName("pageCount")
 	val pageCount: Int? = null,
-	@SerializedName("textObjects")
-	val textObjects: List<Any>? = null,
 	@SerializedName("resourceURI")
 	val resourceURI: String? = null,
 	@SerializedName("modified")
@@ -47,18 +45,10 @@ data class ComicDto(
 	val stories: SubList? = null,
 	@SerializedName("events")
 	val events: SubList? = null,
-	@SerializedName("variants")
-	val variants: SubList? = null,
-	@SerializedName("collections")
-	val collections: SubList? = null,
-	@SerializedName("collectedIssues")
-	val collectedIssues: SubList? = null,
 	@SerializedName("dates")
 	val dates: List<Dates>? = null,
 	@SerializedName("prices")
 	val prices: List<Prices>? = null,
-	@SerializedName("images")
-	val images: SubList? = null,
 	@SerializedName("creators")
 	val creators: SubList? = null,
 	@SerializedName("characters")
