@@ -42,7 +42,7 @@ class HomeViewModel : BaseViewModel(), ParentInteractionListener,
         ) { comics, events, characters, series ->
             listOf(
                 HomeItem.CharactersItem(characters),
-             //   HomeItem.ComicsItem(comics),
+                HomeItem.ComicsItem(comics),
                 HomeItem.EventsItem(events),
                 HomeItem.SeriesItem(series)
             )

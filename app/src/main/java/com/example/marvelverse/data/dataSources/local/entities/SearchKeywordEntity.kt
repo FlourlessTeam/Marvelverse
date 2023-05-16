@@ -1,4 +1,4 @@
-package com.example.marvelverse.data.local.entities
+package com.example.marvelverse.data.dataSources.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,13 +1,12 @@
-package com.example.marvelverse.data.local.entities
+package com.example.marvelverse.data.dataSources.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.Serializable
 
 @Entity("EVENT_TABLE")
 data class EventEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    val title: String,
+    @PrimaryKey(autoGenerate = true) val id: Int?,
+    val title: String?,
     val description: String?,
     val series: String?,
     val comics: String?,
@@ -15,4 +14,4 @@ data class EventEntity(
     val stories: String?,
     val characters: String?,
     val thumbnail: String?,
-) : Serializable
+)

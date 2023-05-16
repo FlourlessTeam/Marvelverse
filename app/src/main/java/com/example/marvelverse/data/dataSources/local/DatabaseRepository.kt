@@ -1,11 +1,11 @@
-package com.example.marvelverse.data.local
+package com.example.marvelverse.data.dataSources.local
 
 import android.content.Context
-import com.example.marvelverse.data.local.entities.CharacterEntity
-import com.example.marvelverse.data.local.entities.ComicEntity
-import com.example.marvelverse.data.local.entities.EventEntity
-import com.example.marvelverse.data.local.entities.SearchKeywordEntity
-import com.example.marvelverse.data.local.entities.SeriesEntity
+import com.example.marvelverse.data.dataSources.local.entities.CharacterEntity
+import com.example.marvelverse.data.dataSources.local.entities.ComicEntity
+import com.example.marvelverse.data.dataSources.local.entities.EventEntity
+import com.example.marvelverse.data.dataSources.local.entities.SearchKeywordEntity
+import com.example.marvelverse.data.dataSources.local.entities.SeriesEntity
 
 class DatabaseRepository(context: Context) {
     private val characterDao = MarvelDatabase.getInstance(context).characterDao
