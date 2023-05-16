@@ -9,8 +9,8 @@ import com.example.marvelverse.app.ui.base.InnerFragment
 import com.example.marvelverse.app.ui.adapter.CharactersAdapter
 import com.example.marvelverse.app.ui.adapter.EventDetailsAdapter
 import com.example.marvelverse.databinding.FragmentComicDetailsBinding
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Event
 
 class ComicDetailsFragment :
     InnerFragment<FragmentComicDetailsBinding>(FragmentComicDetailsBinding::inflate) {
@@ -33,8 +33,8 @@ class ComicDetailsFragment :
     }
 
     private fun getRecyclerData() {
-        viewModel.getEvent(args.comic.events.collectionURI)
-        viewModel.getCharacter(args.comic.characters.collectionURI)
+        viewModel.getEvent(args.comic.eventsUri.collectionURI)
+        viewModel.getCharacter(args.comic.charactersUri.collectionURI)
     }
 
     private fun observeEvents() {

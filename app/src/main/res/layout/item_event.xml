@@ -11,7 +11,7 @@
 
         <variable
             name="item"
-            type="com.example.marvelverse.domain.entities.main.Event" />
+            type="com.example.marvelverse.domain.entities.Event" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -24,7 +24,7 @@
 
         <ImageView
             android:id="@+id/homeCardImage"
-            thumbnail="@{item.thumbnail}"
+            thumbnail="@{item.imageUrl}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/home_card_image"

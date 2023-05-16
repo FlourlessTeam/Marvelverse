@@ -6,7 +6,7 @@ import com.example.marvelverse.utilites.DataState
 import com.example.marvelverse.app.ui.base.BaseViewModel
 import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.utilites.SingleEventState
 
 class EventsViewModel : BaseViewModel(), EventInteractionListener {

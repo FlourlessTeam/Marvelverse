@@ -1,12 +1,11 @@
 package com.example.marvelverse.data.dataSources.remote
-
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Creator
-import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.main.Series
-import com.example.marvelverse.domain.entities.main.Story
-import com.example.marvelverse.domain.entities.wrappers.Response
+import com.example.marvelverse.data.dataSources.remote.reponses.BaseResponse
+import com.example.marvelverse.data.dataSources.remote.reponses.CharacterDto
+import com.example.marvelverse.data.dataSources.remote.reponses.ComicDto
+import com.example.marvelverse.data.dataSources.remote.reponses.CreatorsDto
+import com.example.marvelverse.data.dataSources.remote.reponses.EventDto
+import com.example.marvelverse.data.dataSources.remote.reponses.SeriesDto
+import com.example.marvelverse.data.dataSources.remote.reponses.StoriesDto
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -18,54 +17,54 @@ interface MarvelApiServices {
     fun fetchComics(
         @Query("limit") limit: Int?,
         @Query("titleStartsWith") title: String?
-    ): Single<Response<Comic>>
+    ): Single<BaseResponse<ComicDto>>
 
 
     @GET("events")
     fun fetchEvents(
         @Query("limit") limit: Int?,
         @Query("nameStartsWith") title: String?
-    ): Single<Response<Event>>
+    ): Single<BaseResponse<EventDto>>
 
     @GET("characters")
     fun fetchCharacters(
         @Query("limit") limit: Int?,
         @Query("nameStartsWith") title: String?
-    ): Single<Response<Character>>
+    ): Single<BaseResponse<CharacterDto>>
 
     @GET("stories")
     fun fetchStories(
         @Query("limit") limit: Int?,
         //@Query("titleStartsWith") title: String?
-    ): Single<Response<Story>>
+    ): Single<BaseResponse<StoriesDto>>
 
     @GET("creators")
     fun fetchCreators(
         @Query("limit") limit: Int?,
         @Query("nameStartsWith") title: String?
-    ): Single<Response<Creator>>
+    ): Single<BaseResponse<CreatorsDto>>
 
     @GET("series")
     fun fetchSeries(
         @Query("limit") limit: Int?,
         @Query("titleStartsWith") title: String?
-    ): Single<Response<Series>>
+    ): Single<BaseResponse<SeriesDto>>
 
     @GET
-    fun fetchComicsByUrl(@Url url: String): Single<Response<Comic>>
+    fun fetchComicsByUrl(@Url url: String): Single<BaseResponse<ComicDto>>
 
     @GET
-    fun fetchSeriesByUrl(@Url url: String): Single<Response<Series>>
+    fun fetchSeriesByUrl(@Url url: String): Single<BaseResponse<SeriesDto>>
 
     @GET
-    fun fetchStoriesByUrl(@Url url: String): Single<Response<Story>>
+    fun fetchStoriesByUrl(@Url url: String): Single<BaseResponse<StoriesDto>>
 
     @GET
-    fun fetchEventsByUrl(@Url url: String): Single<Response<Event>>
+    fun fetchEventsByUrl(@Url url: String): Single<BaseResponse<EventDto>>
 
     @GET
-    fun fetchCreatorsByUrl(@Url url: String): Single<Response<Creator>>
+    fun fetchCreatorsByUrl(@Url url: String): Single<BaseResponse<CreatorsDto>>
 
     @GET
-    fun fetchCharactersByUrl(@Url url: String): Single<Response<Character>>
+    fun fetchCharactersByUrl(@Url url: String): Single<BaseResponse<CharacterDto>>
 }

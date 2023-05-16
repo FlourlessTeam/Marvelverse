@@ -1,31 +1,34 @@
 package com.example.marvelverse.data.repositories
 
-import com.example.marvelverse.app.ui.home.HomeItem
 import com.example.marvelverse.data.dataSources.remote.RetrofitClient
 import com.example.marvelverse.data.local.FakeLocalData
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.main.Series
-import com.example.marvelverse.domain.entities.main.Character
-import io.reactivex.rxjava3.core.Single
+import com.example.marvelverse.domain.mapper.CharacterMapper
+import com.example.marvelverse.domain.mapper.ComicMapper
+import com.example.marvelverse.domain.mapper.EventMapper
+import com.example.marvelverse.domain.mapper.SeriesMapper
 
 
 object MarvelRepository {
     private val marvelApiServices by lazy {
         RetrofitClient.marvelApiServices
     }
-
+    private val characterMapper = CharacterMapper()
+    private val comicMapper = ComicMapper()
+    private val eventMapper = EventMapper()
+    private val seriesMapper = SeriesMapper()
     private val fakeLocalData = FakeLocalData()
 
     fun searchComics(limit: Int? = null, title: String? = null) =
-        marvelApiServices.fetchComics(limit, title).map { it.data.results }
+        marvelApiServices.fetchComics(limit, title).map { comicsDto ->
+            comicMapper.map(comicsDto)
+        }
 
     fun searchSeries(limit: Int? = null, title: String? = null) =
-        marvelApiServices.fetchSeries(limit, title).map { it.data.results }
+        marvelApiServices.fetchSeries(limit, title)
 
 
     fun searchCharacters(limit: Int? = null, title: String? = null) =
-        marvelApiServices.fetchCharacters(limit, title).map { it.data.results }
+        marvelApiServices.fetchCharacters(limit, title)
 
 
     fun searchEvents(limit: Int? = null, title: String? = null) =

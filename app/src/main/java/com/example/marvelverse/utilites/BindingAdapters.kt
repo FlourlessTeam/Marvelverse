@@ -1,7 +1,6 @@
 package com.example.marvelverse.app.ui.bindingAdapters
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.SearchView
@@ -9,28 +8,27 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.marvelverse.utilites.DataState
 import com.example.marvelverse.app.ui.base.BaseAdapter
+import com.example.marvelverse.app.ui.base.BaseInteractionListener
+import com.example.marvelverse.app.ui.base.BaseNestedRecyclerAdapter
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetFragment
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
 import com.example.marvelverse.app.ui.characters.CharactersAdapter
 import com.example.marvelverse.app.ui.comics.ComicAdapter
 import com.example.marvelverse.app.ui.events.EventsAdapter
-import com.example.marvelverse.app.ui.base.BaseInteractionListener
-import com.example.marvelverse.app.ui.base.BaseNestedRecyclerAdapter
 import com.example.marvelverse.app.ui.search.SearchFilter
 import com.example.marvelverse.app.ui.search.SearchFragment
 import com.example.marvelverse.app.ui.search.SearchViewModel
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.domain.entities.wrappers.Thumbnail
+import com.example.marvelverse.utilites.DataState
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
-
 
 
 @BindingAdapter(value = ["app:items"])
@@ -107,8 +105,9 @@ fun SearchView.searchViewListener(viewModel: SearchViewModel) {
             if (text.isNotEmpty()) {
                 when (viewModel.searchFilterOption.value!!) {
                     SearchFilter.Character -> viewModel.characterSearch(null, text)
-                    SearchFilter.Comic -> viewModel.comicSearch(null, text)
+                  //  SearchFilter.Comic -> viewModel.comicSearch(null, text)
                     SearchFilter.Event -> viewModel.eventSearch(null, text)
+                    else -> {}
                 }
             } else {
                 viewModel.setItemListStateEmpty()

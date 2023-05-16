@@ -8,10 +8,10 @@ import androidx.navigation.findNavController
 import com.example.marvelverse.app.ui.base.BottomNavFragment
 import com.example.marvelverse.app.ui.adapter.HomeAdapter
 import com.example.marvelverse.databinding.FragmentHomeBinding
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
+import com.example.marvelverse.domain.entities.Series
 
 class HomeFragment : BottomNavFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 

@@ -2,7 +2,7 @@ package com.example.marvelverse.app.ui.adapter
 
 import com.example.marvelverse.R
 import com.example.marvelverse.app.ui.base.BaseInteractionListener
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.app.ui.base.BaseAdapter
 
 class EventDetailsAdapter(private val listener: BaseInteractionListener): BaseAdapter<Event>(listener) {

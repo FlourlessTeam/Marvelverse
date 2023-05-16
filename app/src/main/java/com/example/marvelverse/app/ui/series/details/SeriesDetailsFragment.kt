@@ -10,9 +10,9 @@ import com.example.marvelverse.app.ui.adapter.CharactersAdapter
 import com.example.marvelverse.app.ui.adapter.ComicsAdapter
 import com.example.marvelverse.app.ui.adapter.EventDetailsAdapter
 import com.example.marvelverse.databinding.FragmentSeriesDetailsBinding
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
 
 class SeriesDetailsFragment :
     InnerFragment<FragmentSeriesDetailsBinding>(FragmentSeriesDetailsBinding::inflate) {
@@ -38,9 +38,9 @@ class SeriesDetailsFragment :
 
     private fun getRecyclerData() {
         viewModel.apply {
-            getCharacters(args.series.characters.collectionURI)
-            getEvents(args.series.events.collectionURI)
-            getComics(args.series.comics.collectionURI)
+            getCharacters(args.series.charactersUri.collectionURI)
+            getEvents(args.series.eventsUri.collectionURI)
+            getComics(args.series.comicsUri.collectionURI)
         }
     }
 

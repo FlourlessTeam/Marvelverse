@@ -11,7 +11,7 @@
 
         <variable
             name="item"
-            type="com.example.marvelverse.domain.entities.main.Event" />
+            type="com.example.marvelverse.domain.entities.Event" />
     </data>
 
     <ScrollView
@@ -36,7 +36,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/spider"
                 app:roundPercent="0.2"
-                app:thumbnail="@{item.thumbnail}" />
+                app:thumbnail="@{item.imageUrl}" />
 
             <TextView
                 android:id="@+id/event_title"

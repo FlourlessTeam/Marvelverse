@@ -5,16 +5,15 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.marvelverse.app.ui.base.InnerFragment
 import com.example.marvelverse.app.ui.adapter.ComicsAdapter
 import com.example.marvelverse.app.ui.adapter.EventDetailsAdapter
 import com.example.marvelverse.app.ui.adapter.SeriesAdapter
 import com.example.marvelverse.databinding.FragmentDetailsCharacterBinding
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
+import com.example.marvelverse.domain.entities.Series
 
 class DetailsCharacterFragment :
     InnerFragment<FragmentDetailsCharacterBinding>(FragmentDetailsCharacterBinding::inflate) {
@@ -39,9 +38,9 @@ class DetailsCharacterFragment :
 
     private fun getRecyclerData() {
         viewModel.apply {
-            getEvent(args.character.events.collectionURI)
-            getSeries(args.character.series.collectionURI)
-            getComics(args.character.comics.collectionURI)
+            getEvent(args.character.eventsUri.collectionURI)
+            getSeries(args.character.seriesUri.collectionURI)
+            getComics(args.character.comicsUri.collectionURI)
         }
     }
 

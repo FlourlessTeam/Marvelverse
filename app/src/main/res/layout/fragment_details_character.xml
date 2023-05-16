@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.example.marvelverse.domain.entities.main.Character" />
+            type="com.example.marvelverse.domain.entities.Character" />
 
         <variable
             name="viewModel"
@@ -33,7 +33,7 @@
                 android:layout_marginVertical="8dp"
                 android:scaleType="centerCrop"
                 app:roundPercent="0.1"
-                app:thumbnail="@{item.thumbnail}"
+                app:thumbnail="@{item.imageUrl}"
                 tools:src="@drawable/spider" />
 
             <TextView
