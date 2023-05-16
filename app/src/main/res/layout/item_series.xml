@@ -5,7 +5,7 @@
 
         <variable
             name="item"
-            type="com.example.marvelverse.domain.entities.main.Series" />
+            type="com.example.marvelverse.domain.entities.Series" />
 
         <variable
             name="listener"
@@ -29,7 +29,7 @@
 
             <ImageView
                 android:id="@+id/iv_series"
-                thumbnail="@{item.thumbnail}"
+                thumbnail="@{item.imageUrl}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:contentDescription="@string/series_cover"

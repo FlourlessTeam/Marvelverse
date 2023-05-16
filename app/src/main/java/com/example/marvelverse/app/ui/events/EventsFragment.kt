@@ -1,13 +1,12 @@
 package com.example.marvelverse.app.ui.events
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.marvelverse.app.ui.base.InnerFragment
 import com.example.marvelverse.databinding.FragmentEventsBinding
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Event
 
 
 class EventsFragment : InnerFragment<FragmentEventsBinding>(FragmentEventsBinding::inflate) {

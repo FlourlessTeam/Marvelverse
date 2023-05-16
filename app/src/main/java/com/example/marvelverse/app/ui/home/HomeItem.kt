@@ -1,9 +1,9 @@
 package com.example.marvelverse.app.ui.home
 
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
+import com.example.marvelverse.domain.entities.Series
 
 sealed class HomeItem(val rank:Int) {
     class EventsItem(val eventList: List<Event>): HomeItem(0)

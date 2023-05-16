@@ -1,13 +1,12 @@
 package com.example.marvelverse.app.ui.series
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.marvelverse.app.ui.base.InnerFragment
 import com.example.marvelverse.databinding.FragmentSeriesBinding
-import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.Series
 
 class SeriesFragment : InnerFragment<FragmentSeriesBinding>(FragmentSeriesBinding::inflate) {
     private val viewModel: SeriesViewModel by viewModels()

@@ -1,8 +1,8 @@
 package com.example.marvelverse.app.ui.search
 
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
 
 sealed interface SearchEvent {
 

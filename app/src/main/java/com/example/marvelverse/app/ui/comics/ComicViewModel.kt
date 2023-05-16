@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.marvelverse.utilites.DataState
 import com.example.marvelverse.app.ui.base.BaseViewModel
 import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
-import com.example.marvelverse.data.repositories.MarvelRepository
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.utilites.SingleEventState
 
 class ComicViewModel : BaseViewModel(), ComicInteractionListener {
@@ -24,7 +22,7 @@ class ComicViewModel : BaseViewModel(), ComicInteractionListener {
 
     private fun getComic() {
         _Comic.postValue(DataState.Loading)
-        MarvelRepository.searchComics().subscribeBy(::onComicSuccess, ::onComicError)
+        //MarvelRepository.searchComics().subscribeBy(::onComicSuccess, ::onComicError)
     }
     fun onComicSuccess(it: List<Comic>) {
         if (it.isEmpty()) {

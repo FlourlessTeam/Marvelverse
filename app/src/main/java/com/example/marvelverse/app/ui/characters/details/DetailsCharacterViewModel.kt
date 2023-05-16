@@ -4,15 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.marvelverse.utilites.DataState
 import com.example.marvelverse.app.ui.base.BaseViewModel
-import com.example.marvelverse.app.ui.events.details.EventDetailsEvents
 import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
 import com.example.marvelverse.app.ui.interfaces.SeriesInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
+import com.example.marvelverse.domain.entities.Series
 import com.example.marvelverse.utilites.SingleEventState
 
 

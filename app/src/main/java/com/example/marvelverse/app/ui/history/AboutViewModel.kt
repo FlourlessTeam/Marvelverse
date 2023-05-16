@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.marvelverse.app.ui.base.BaseViewModel
 import com.example.marvelverse.data.repositories.MarvelRepository
-import com.example.marvelverse.domain.entities.main.About
+import com.example.marvelverse.domain.entities.About
 import com.example.marvelverse.utilites.DataState
 
 class AboutViewModel : BaseViewModel() {

@@ -1,7 +1,7 @@
 package com.example.marvelverse.app.ui.interfaces
 
 import com.example.marvelverse.app.ui.base.BaseInteractionListener
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Event
 
 
 interface EventInteractionListener: BaseInteractionListener {

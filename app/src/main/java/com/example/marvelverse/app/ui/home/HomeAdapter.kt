@@ -11,10 +11,10 @@ import com.example.marvelverse.databinding.ListItemsCharacterBinding
 import com.example.marvelverse.databinding.ListItemsComicBinding
 import com.example.marvelverse.databinding.ListItemsEventBinding
 import com.example.marvelverse.databinding.ListItemsSeriesBinding
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
+import com.example.marvelverse.domain.entities.Series
 import com.example.marvelverse.app.ui.base.BaseAdapter
 import com.example.marvelverse.app.ui.base.BaseNestedRecyclerAdapter
 

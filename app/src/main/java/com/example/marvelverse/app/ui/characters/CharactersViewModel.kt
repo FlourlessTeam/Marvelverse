@@ -6,7 +6,7 @@ import com.example.marvelverse.utilites.DataState
 import com.example.marvelverse.app.ui.base.BaseViewModel
 import com.example.marvelverse.app.ui.interfaces.CharacterInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
-import com.example.marvelverse.domain.entities.main.Character
+import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.utilites.SingleEventState
 
 
