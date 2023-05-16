@@ -46,9 +46,9 @@ data class ComicDto(
 	@SerializedName("events")
 	val events: SubList? = null,
 	@SerializedName("dates")
-	val dates: List<Dates>? = null,
+	val dates: List<Date>? = null,
 	@SerializedName("prices")
-	val prices: List<Prices>? = null,
+	val prices: List<Price>? = null,
 	@SerializedName("creators")
 	val creators: SubList? = null,
 	@SerializedName("characters")

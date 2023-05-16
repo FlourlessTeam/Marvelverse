@@ -2,9 +2,9 @@ package com.example.marvelverse.data.dataSources.remote.reponses
 
 import com.google.gson.annotations.SerializedName
 
-data class Prices(
+data class Date(
 	@SerializedName("type")
 	val type: String? = null,
-	@SerializedName("price")
-	val price: Double? = null,
+	@SerializedName("date")
+	val date: String? = null,
 )
