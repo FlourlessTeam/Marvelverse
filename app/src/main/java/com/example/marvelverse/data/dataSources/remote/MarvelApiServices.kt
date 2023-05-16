@@ -2,10 +2,10 @@ package com.example.marvelverse.data.dataSources.remote
 import com.example.marvelverse.data.dataSources.remote.reponses.BaseResponse
 import com.example.marvelverse.data.dataSources.remote.reponses.CharacterDto
 import com.example.marvelverse.data.dataSources.remote.reponses.ComicDto
-import com.example.marvelverse.data.dataSources.remote.reponses.CreatorsDto
+import com.example.marvelverse.data.dataSources.remote.reponses.CreatorDto
 import com.example.marvelverse.data.dataSources.remote.reponses.EventDto
 import com.example.marvelverse.data.dataSources.remote.reponses.SeriesDto
-import com.example.marvelverse.data.dataSources.remote.reponses.StoriesDto
+import com.example.marvelverse.data.dataSources.remote.reponses.StoryDto
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -36,13 +36,13 @@ interface MarvelApiServices {
     fun fetchStories(
         @Query("limit") limit: Int?,
         //@Query("titleStartsWith") title: String?
-    ): Single<BaseResponse<StoriesDto>>
+    ): Single<BaseResponse<StoryDto>>
 
     @GET("creators")
     fun fetchCreators(
         @Query("limit") limit: Int?,
         @Query("nameStartsWith") title: String?
-    ): Single<BaseResponse<CreatorsDto>>
+    ): Single<BaseResponse<CreatorDto>>
 
     @GET("series")
     fun fetchSeries(
@@ -57,13 +57,13 @@ interface MarvelApiServices {
     fun fetchSeriesByUrl(@Url url: String): Single<BaseResponse<SeriesDto>>
 
     @GET
-    fun fetchStoriesByUrl(@Url url: String): Single<BaseResponse<StoriesDto>>
+    fun fetchStoriesByUrl(@Url url: String): Single<BaseResponse<StoryDto>>
 
     @GET
     fun fetchEventsByUrl(@Url url: String): Single<BaseResponse<EventDto>>
 
     @GET
-    fun fetchCreatorsByUrl(@Url url: String): Single<BaseResponse<CreatorsDto>>
+    fun fetchCreatorsByUrl(@Url url: String): Single<BaseResponse<CreatorDto>>
 
     @GET
     fun fetchCharactersByUrl(@Url url: String): Single<BaseResponse<CharacterDto>>
