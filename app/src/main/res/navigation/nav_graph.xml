@@ -87,7 +87,7 @@
             tools:layout="@layout/fragment_event_details">
             <argument
                 android:name="event"
-                app:argType="com.example.marvelverse.domain.entities.main.Event" />
+                app:argType="com.example.marvelverse.domain.entities.Event" />
             <action
                 android:id="@+id/action_eventDetailsFragment_to_comicDetailsFragment"
                 app:destination="@id/comicDetailsFragment" />
@@ -105,7 +105,7 @@
             tools:layout="@layout/fragment_comic_details">
             <argument
                 android:name="comic"
-                app:argType="com.example.marvelverse.domain.entities.main.Comic" />
+                app:argType="com.example.marvelverse.domain.entities.Comic" />
             <action
                 android:id="@+id/action_comicDetailsFragment_to_eventDetailsFragment"
                 app:destination="@id/eventDetailsFragment" />
@@ -123,7 +123,7 @@
             tools:layout="@layout/fragment_series_details">
             <argument
                 android:name="series"
-                app:argType="com.example.marvelverse.domain.entities.main.Series" />
+                app:argType="com.example.marvelverse.domain.entities.Series" />
             <action
                 android:id="@+id/action_seriesDetailsFragment_to_comicDetailsFragment"
                 app:destination="@id/comicDetailsFragment" />
@@ -142,7 +142,7 @@
             tools:layout="@layout/fragment_details_character">
             <argument
                 android:name="character"
-                app:argType="com.example.marvelverse.domain.entities.main.Character" />
+                app:argType="com.example.marvelverse.domain.entities.Character" />
             <action
                 android:id="@+id/action_detailsCharacterFragment_to_seriesDetailsFragment"
                 app:destination="@id/seriesDetailsFragment" />
@@ -171,7 +171,7 @@
             tools:layout="@layout/fragment_event_details">
             <argument
                 android:name="event"
-                app:argType="com.example.marvelverse.domain.entities.main.Event" />
+                app:argType="com.example.marvelverse.domain.entities.Event" />
             <action
                 android:id="@+id/action_eventDetailsFragment_to_comicDetailsFragment"
                 app:destination="@id/comicDetailsFragment" />
@@ -189,7 +189,7 @@
             tools:layout="@layout/fragment_comic_details">
             <argument
                 android:name="comic"
-                app:argType="com.example.marvelverse.domain.entities.main.Comic" />
+                app:argType="com.example.marvelverse.domain.entities.Comic" />
             <action
                 android:id="@+id/action_comicDetailsFragment_to_eventDetailsFragment"
                 app:destination="@id/eventDetailsFragment" />
@@ -207,7 +207,7 @@
             tools:layout="@layout/fragment_series_details">
             <argument
                 android:name="series"
-                app:argType="com.example.marvelverse.domain.entities.main.Series" />
+                app:argType="com.example.marvelverse.domain.entities.Series" />
             <action
                 android:id="@+id/action_seriesDetailsFragment_to_comicDetailsFragment"
                 app:destination="@id/comicDetailsFragment" />
@@ -226,7 +226,7 @@
             tools:layout="@layout/fragment_details_character">
             <argument
                 android:name="character"
-                app:argType="com.example.marvelverse.domain.entities.main.Character" />
+                app:argType="com.example.marvelverse.domain.entities.Character" />
             <action
                 android:id="@+id/action_detailsCharacterFragment_to_seriesDetailsFragment"
                 app:destination="@id/seriesDetailsFragment" />

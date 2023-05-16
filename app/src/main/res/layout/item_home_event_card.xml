@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.example.marvelverse.domain.entities.main.Event" />
+            type="com.example.marvelverse.domain.entities.Event" />
 
         <variable
             name="listener"
@@ -32,7 +32,7 @@
             android:contentDescription="@string/home_card_image"
             android:foreground="@drawable/home_card_gradiant"
             android:scaleType="fitXY"
-            thumbnail="@{item.thumbnail}"/>
+            thumbnail="@{item.imageUrl}"/>
 
         <TextView
             android:id="@+id/homeCardName"

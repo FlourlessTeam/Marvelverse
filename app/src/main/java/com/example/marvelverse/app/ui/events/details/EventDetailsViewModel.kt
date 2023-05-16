@@ -2,20 +2,16 @@ package com.example.marvelverse.app.ui.events.details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.marvelverse.app.ui.base.BaseViewModel
 import com.example.marvelverse.utilites.DataState
 import com.example.marvelverse.app.ui.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.interfaces.SeriesInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Series
 import com.example.marvelverse.utilites.SingleEventState
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 class EventDetailsViewModel : BaseViewModel(), CharacterInteractionListener,
     ComicInteractionListener,

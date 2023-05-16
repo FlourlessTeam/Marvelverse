@@ -10,9 +10,9 @@ import com.example.marvelverse.app.ui.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
 
 
 enum class SearchFilter {
@@ -43,13 +43,13 @@ class SearchViewModel :
         searchFilterOption.postValue(SearchFilter.Character)
     }
 
-    fun comicSearch(limit: Int?, title: String?) {
+  /*  fun comicSearch(limit: Int?, title: String?) {
         _itemList.postValue(DataState.Loading)
             repositry.searchComics(limit, title)
                 .applySchedulers()
                 .subscribe(::onComicsSearchSuccess, ::onSearchError)
                 .addTo(disposables)
-    }
+    }*/
 
     fun characterSearch(limit: Int?, title: String?) {
         _itemList.postValue(DataState.Loading)

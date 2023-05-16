@@ -1,13 +1,12 @@
 package com.example.marvelverse.app.ui.characters
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.marvelverse.app.ui.base.InnerFragment
 import com.example.marvelverse.databinding.FragmentCharactersBinding
-import com.example.marvelverse.domain.entities.main.Character
+import com.example.marvelverse.domain.entities.Character
 
 class CharactersFragment :
     InnerFragment<FragmentCharactersBinding>(FragmentCharactersBinding::inflate) {

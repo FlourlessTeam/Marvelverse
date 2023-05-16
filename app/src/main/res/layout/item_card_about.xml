@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.marvelverse.domain.entities.main.About" />
+            type="com.example.marvelverse.domain.entities.About" />
 
     </data>
 

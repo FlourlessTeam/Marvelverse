@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.marvelverse.domain.entities.main.Comic" />
+            type="com.example.marvelverse.domain.entities.Comic" />
         <variable
             name="listener"
             type="com.example.marvelverse.app.ui.interfaces.ComicInteractionListener" />
@@ -29,7 +29,7 @@
             android:background="@drawable/loading_anim"
             android:foreground="@drawable/home_card_gradiant"
             android:scaleType="fitXY"
-            thumbnail="@{item.thumbnail}"
+            thumbnail="@{item.imageUrl}"
             android:contentDescription="@string/home_card_image" />
 
         <TextView

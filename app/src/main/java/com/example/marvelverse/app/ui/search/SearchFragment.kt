@@ -6,9 +6,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.marvelverse.app.ui.base.BottomNavFragment
 import com.example.marvelverse.databinding.FragmentSearchBinding
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
 
 class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 

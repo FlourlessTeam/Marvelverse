@@ -1,6 +1,6 @@
 package com.example.marvelverse.data.local
 
-import com.example.marvelverse.domain.entities.main.About
+import com.example.marvelverse.domain.entities.About
 
 class FakeLocalData(){
 
