@@ -1,6 +1,6 @@
 package com.example.marvelverse.app.ui.search
 
-import android.annotation.SuppressLint
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,23 +9,17 @@ import com.example.marvelverse.app.ui.base.BaseViewModel
 import com.example.marvelverse.app.ui.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
+import com.example.marvelverse.app.ui.search.utils.SearchEvent
+import com.example.marvelverse.app.ui.search.utils.SearchFilter
+import com.example.marvelverse.app.ui.search.utils.SearchItems
 import com.example.marvelverse.data.repositories.MarvelRepository
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
 
 
-enum class SearchFilter {
-    Character, Comic, Event,
-}
 
-data class SearchItems(
-    val comics: DataState<Comic>,
-    val characters: DataState<Character>,
-    val events: DataState<Event>
-)
 
-@SuppressLint("CheckResult")
+
 class SearchViewModel : BaseViewModel(), CharacterInteractionListener,
     ComicInteractionListener, EventInteractionListener {
 
@@ -37,8 +31,8 @@ class SearchViewModel : BaseViewModel(), CharacterInteractionListener,
     val comicList: LiveData<DataState<Comic>>
         get() = _comicList
 
-    private val _characterList = MutableLiveData<DataState<Character>>()
-    val characterList: LiveData<DataState<Character>>
+    private val _characterList = MutableLiveData<DataState<com.example.marvelverse.domain.entities.Character>>()
+    val characterList: LiveData<DataState<com.example.marvelverse.domain.entities.Character>>
         get() = _characterList
 
     private val _eventList = MutableLiveData<DataState<Event>>()
@@ -54,15 +48,15 @@ class SearchViewModel : BaseViewModel(), CharacterInteractionListener,
     init {
         searchFilterOption.postValue(SearchFilter.Character)
         _searchResult.addSource(_comicList) { comics ->
-            _searchResult.value = SearchItems(comics, _characterList.value ?: DataState.NoResult, _eventList.value ?: DataState.NoResult)
+            _searchResult.value = SearchItems(comics, _characterList.value ?: DataState.Empty, _eventList.value ?: DataState.Empty)
         }
 
         _searchResult.addSource(_characterList) { characters ->
-            _searchResult.value = SearchItems(_comicList.value ?: DataState.NoResult, characters, _eventList.value ?: DataState.NoResult)
+            _searchResult.value = SearchItems(_comicList.value ?: DataState.Empty, characters, _eventList.value ?: DataState.Empty)
         }
 
         _searchResult.addSource(_eventList) { events ->
-            _searchResult.value = SearchItems(_comicList.value ?: DataState.NoResult, _characterList.value ?: DataState.NoResult, events)
+            _searchResult.value = SearchItems(_comicList.value ?: DataState.Empty, _characterList.value ?: DataState.Empty, events)
         }
 
     }
@@ -93,16 +87,16 @@ class SearchViewModel : BaseViewModel(), CharacterInteractionListener,
 
     private fun onComicsSearchSuccess(comics: List<Comic>) {
         if (comics.isEmpty()){
-            _comicList.postValue(DataState.NoResult)
+            _comicList.postValue(DataState.Empty)
         }else{
             _comicList.postValue(DataState.Success(comics))
         }
 
     }
 
-    private fun onCharacterSearchSuccess(characters: List<Character>) {
+    private fun onCharacterSearchSuccess(characters: List<com.example.marvelverse.domain.entities.Character>) {
         if (characters.isEmpty()){
-            _characterList.postValue(DataState.NoResult)
+            _characterList.postValue(DataState.Empty)
         }else{
             _characterList.postValue(DataState.Success(characters))
         }
@@ -110,13 +104,13 @@ class SearchViewModel : BaseViewModel(), CharacterInteractionListener,
 
     private fun onEventSearchSuccess(events: List<Event>) {
         if (events.isEmpty()){
-            _eventList.postValue(DataState.NoResult)
+            _eventList.postValue(DataState.Empty)
         }else{
             _eventList.postValue(DataState.Success(events))
         }
     }
 
-    override fun onCharacterClick(character: Character) {
+    override fun onCharacterClick(character: com.example.marvelverse.domain.entities.Character) {
         _searchEvent.postValue(SearchEvent.ClickCharacterEvent(character))
     }
 
@@ -134,10 +128,18 @@ class SearchViewModel : BaseViewModel(), CharacterInteractionListener,
 
     fun onSearchFilterOptionSelected(searchFilter: SearchFilter) {
         this.searchFilterOption.postValue(searchFilter)
-        _characterList.postValue(DataState.NoResult)
-        _comicList.postValue(DataState.NoResult)
-        _eventList.postValue(DataState.NoResult)
+        _characterList.postValue(DataState.Empty)
+        _comicList.postValue(DataState.Empty)
+        _eventList.postValue(DataState.Empty)
     }
+
+    fun showKeywordSuggests() {
+        _characterList.postValue(DataState.ShowKeywordSuggests)
+        _comicList.postValue(DataState.ShowKeywordSuggests)
+        _eventList.postValue(DataState.ShowKeywordSuggests)
+    }
+
+
 
 
 }

@@ -2,23 +2,15 @@ package com.example.marvelverse.app.ui.bindingAdapters
 
 import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
-import androidx.core.widget.doOnTextChanged
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.marvelverse.utilites.DataState
 import com.example.marvelverse.app.ui.base.BaseAdapter
 import com.example.marvelverse.app.ui.base.BaseNestedRecyclerAdapter
-import com.example.marvelverse.app.ui.search.SearchFilter
-import com.example.marvelverse.app.ui.search.SearchItems
-import com.example.marvelverse.app.ui.search.SearchViewModel
-import com.example.marvelverse.domain.entities.wrappers.Thumbnail
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
+import com.example.marvelverse.app.ui.search.utils.SearchItems
+
 
 
 @BindingAdapter(value = ["app:imageUrl"])
@@ -139,9 +131,9 @@ fun <T> showWhenSearchLoading(view: View, items: SearchItems?) {
 
 @BindingAdapter(value = ["app:showWhenSearchEmpty"])
 fun <T> showWhenSearchEmpty(view: View, items: SearchItems?) {
-    if (items?.characters is DataState.NoResult &&
-        items?.comics is DataState.NoResult &&
-        items?.events is DataState.NoResult
+    if (items?.characters is DataState.Empty &&
+        items?.comics is DataState.Empty &&
+        items?.events is DataState.Empty
     ) {
         view.visibility = View.VISIBLE
     } else {
@@ -150,9 +142,9 @@ fun <T> showWhenSearchEmpty(view: View, items: SearchItems?) {
 }
 
 @BindingAdapter("thumbnail")
-fun ImageView.bindThumbNail(thumbnail: Thumbnail) {
+fun ImageView.bindThumbNail(thumbnail: String) {
     thumbnail.let {
-        val validUrl = "${thumbnail.path}.${thumbnail.extension}"
+        val validUrl = thumbnail
         Glide.with(this)
             .load(validUrl)
             .into(this)
