@@ -1,19 +1,19 @@
-package com.example.marvelverse.data.local
+package com.example.marvelverse.data.dataSources.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.marvelverse.data.local.dao.CharacterDao
-import com.example.marvelverse.data.local.dao.ComicDao
-import com.example.marvelverse.data.local.dao.EventDao
-import com.example.marvelverse.data.local.dao.SearchKeywordDao
-import com.example.marvelverse.data.local.dao.SeriesDao
-import com.example.marvelverse.data.local.entities.CharacterEntity
-import com.example.marvelverse.data.local.entities.ComicEntity
-import com.example.marvelverse.data.local.entities.EventEntity
-import com.example.marvelverse.data.local.entities.SearchKeywordEntity
-import com.example.marvelverse.data.local.entities.SeriesEntity
+import com.example.marvelverse.data.dataSources.local.dao.CharacterDao
+import com.example.marvelverse.data.dataSources.local.dao.ComicDao
+import com.example.marvelverse.data.dataSources.local.dao.EventDao
+import com.example.marvelverse.data.dataSources.local.dao.SearchKeywordDao
+import com.example.marvelverse.data.dataSources.local.dao.SeriesDao
+import com.example.marvelverse.data.dataSources.local.entities.CharacterEntity
+import com.example.marvelverse.data.dataSources.local.entities.ComicEntity
+import com.example.marvelverse.data.dataSources.local.entities.EventEntity
+import com.example.marvelverse.data.dataSources.local.entities.SearchKeywordEntity
+import com.example.marvelverse.data.dataSources.local.entities.SeriesEntity
 
 
 @Database(

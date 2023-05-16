@@ -1,7 +1,7 @@
 package com.example.marvelverse.data.repositories
 
 import com.example.marvelverse.data.dataSources.remote.RetrofitClient
-import com.example.marvelverse.data.local.FakeLocalData
+import com.example.marvelverse.data.dataSources.local.FakeLocalData
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event

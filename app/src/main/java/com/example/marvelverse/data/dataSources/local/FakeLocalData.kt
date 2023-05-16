@@ -1,4 +1,4 @@
-package com.example.marvelverse.data.local
+package com.example.marvelverse.data.dataSources.local
 
 import com.example.marvelverse.domain.entities.About
 

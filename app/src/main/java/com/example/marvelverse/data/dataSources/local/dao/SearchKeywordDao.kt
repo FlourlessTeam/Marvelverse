@@ -1,11 +1,11 @@
-package com.example.marvelverse.data.local.dao
+package com.example.marvelverse.data.dataSources.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.marvelverse.data.local.entities.SearchKeywordEntity
+import com.example.marvelverse.data.dataSources.local.entities.SearchKeywordEntity
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
