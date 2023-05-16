@@ -9,73 +9,104 @@ import com.example.marvelverse.domain.mapper.SeriesMapper
 
 
 object MarvelRepository {
-    private val marvelApiServices by lazy {
-        RetrofitClient.marvelApiServices
-    }
-    private val characterMapper = CharacterMapper()
-    private val comicMapper = ComicMapper()
-    private val eventMapper = EventMapper()
-    private val seriesMapper = SeriesMapper()
-    private val fakeLocalData = FakeLocalData()
+	private val marvelApiServices by lazy {
+		RetrofitClient.marvelApiServices
+	}
+	private val characterMapper = CharacterMapper()
+	private val comicMapper = ComicMapper()
+	private val eventMapper = EventMapper()
+	private val seriesMapper = SeriesMapper()
+	private val fakeLocalData = FakeLocalData()
 
-    fun searchComics(limit: Int? = null, title: String? = null) =
-        marvelApiServices.fetchComics(limit, title).map { comicsDto ->
-            comicMapper.map(comicsDto)
-        }
-
-    fun searchSeries(limit: Int? = null, title: String? = null) =
-        marvelApiServices.fetchSeries(limit, title)
-
-
-    fun searchCharacters(limit: Int? = null, title: String? = null) =
-        marvelApiServices.fetchCharacters(limit, title)
+	fun searchComics(limit: Int? = null, title: String? = null) =
+		marvelApiServices.fetchComics(limit, title).map { baseResponse ->
+			baseResponse.data?.results?.map { comicDto ->
+				comicMapper.map(comicDto)
+			} ?: emptyList()
+		}
 
 
-    fun searchEvents(limit: Int? = null, title: String? = null) =
-        marvelApiServices.fetchEvents(limit, title).map { it.data.results }
+	fun searchSeries(limit: Int? = null, title: String? = null) =
+		marvelApiServices.fetchSeries(limit, title).map { baseResponse ->
+			baseResponse.data?.results?.map { seriesDto ->
+				seriesMapper.map(seriesDto)
+			} ?: emptyList()
+		}
 
 
-    fun searchStories(limit: Int? = null) =
-        marvelApiServices.fetchStories(limit).map { it.data.results }
+	fun searchCharacters(limit: Int? = null, title: String? = null) =
+		marvelApiServices.fetchCharacters(limit, title).map { baseResponse ->
+			baseResponse.data?.results?.map { characterDto ->
+				characterMapper.map(characterDto)
+			} ?: emptyList()
+		}
 
 
-    fun searchCreators(limit: Int? = null, title: String? = null) =
-        marvelApiServices.fetchCreators(limit, title).map { it.data.results }
+	fun searchEvents(limit: Int? = null, title: String? = null) =
+		marvelApiServices.fetchEvents(limit, title).map { baseResponse ->
+			baseResponse.data?.results?.map { eventDto ->
+				eventMapper.map(eventDto)
+			} ?: emptyList()
+		}
 
-    fun getComicsByUrl(url: String) =
-        marvelApiServices.fetchComicsByUrl(url).map { it.data.results }
+	fun getComicsByUrl(url: String) =
+		marvelApiServices.fetchComicsByUrl(url).map { baseResponse ->
+			baseResponse.data?.results?.map { comicDto ->
+				comicMapper.map(comicDto)
+			} ?: emptyList()
+		}
 
-    fun getStoriesByUrl(url: String) =
-        marvelApiServices.fetchStoriesByUrl(url).map { it.data.results }
+	fun getSeriesByUrl(url: String) =
+		marvelApiServices.fetchSeriesByUrl(url).map { baseResponse ->
+			baseResponse.data?.results?.map { seriesDto ->
+				seriesMapper.map(seriesDto)
+			} ?: emptyList()
+		}
 
-    fun getSeriesByUrl(url: String) =
-        marvelApiServices.fetchSeriesByUrl(url).map { it.data.results }
+	fun getCharactersByUrl(url: String) =
+		marvelApiServices.fetchCharactersByUrl(url).map { baseResponse ->
+			baseResponse.data?.results?.map { characterDto ->
+				characterMapper.map(characterDto)
+			} ?: emptyList()
+		}
 
-    fun getCharactersByUrl(url: String) =
-        marvelApiServices.fetchCharactersByUrl(url).map { it.data.results }
-
-    fun getCreatorsByUrl(url: String) =
-        marvelApiServices.fetchCreatorsByUrl(url).map { it.data.results }
-
-    fun getEventsByUrl(url: String) =
-        marvelApiServices.fetchEventsByUrl(url).map { it.data.results }
-
-
-    fun getRandomCharacters() =
-        marvelApiServices.fetchCharacters(80, null).map { it.data.results.shuffled().take(20) }
-
-    fun getRandomComics() =
-        marvelApiServices.fetchComics(50, null).map { it.data.results.shuffled().take(10) }
-
-
-    fun getRandomSeries() =
-        marvelApiServices.fetchSeries(50, null).map { it.data.results.shuffled().take(10) }
-
-
-    fun getRandomEvents() =
-        marvelApiServices.fetchEvents(50, null).map { it.data.results.shuffled().take(10) }
-
-    fun getItems() = fakeLocalData.getAboutItems()
+	fun getEventsByUrl(url: String) =
+		marvelApiServices.fetchEventsByUrl(url).map { baseResponse ->
+			baseResponse.data?.results?.map { eventDto ->
+				eventMapper.map(eventDto)
+			} ?: emptyList()
+		}
 
 
+	fun getRandomCharacters() =
+		marvelApiServices.fetchCharacters(80, null).map { baseResponse ->
+			baseResponse.data?.results?.shuffled()?.take(20)?.map { characterDto ->
+				characterMapper.map(characterDto)
+			} ?: emptyList()
+		}
+
+	fun getRandomComics() =
+		marvelApiServices.fetchComics(50, null).map { baseResponse ->
+			baseResponse.data?.results?.shuffled()?.take(10)?.map { comicDto ->
+				comicMapper.map(comicDto)
+			} ?: emptyList()
+		}
+
+
+	fun getRandomSeries() =
+		marvelApiServices.fetchSeries(50, null).map { baseResponse ->
+			baseResponse.data?.results?.shuffled()?.take(10)?.map { seriesDto ->
+				seriesMapper.map(seriesDto)
+			} ?: emptyList()
+		}
+
+
+	fun getRandomEvents() =
+		marvelApiServices.fetchEvents(50, null).map { baseResponse ->
+			baseResponse.data?.results?.shuffled()?.take(10)?.map { eventDto ->
+				eventMapper.map(eventDto)
+			} ?: emptyList()
+		}
+
+	fun getItems() = fakeLocalData.getAboutItems()
 }

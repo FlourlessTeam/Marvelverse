@@ -38,9 +38,9 @@ class EventDetailsFragment :
 
     private fun getRecyclerData() {
         viewModel.apply {
-            getCharacters(args.event.charactersUri.collectionURI)
-            getSeries(args.event.seriesUri.collectionURI)
-            getComics(args.event.comicsUri.collectionURI)
+            getCharacters(args.event.charactersUri!!)
+            getSeries(args.event.seriesUri!!)
+            getComics(args.event.comicsUri!!)
         }
     }
 

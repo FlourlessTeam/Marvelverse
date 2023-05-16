@@ -33,8 +33,8 @@ class ComicDetailsFragment :
     }
 
     private fun getRecyclerData() {
-        viewModel.getEvent(args.comic.eventsUri.collectionURI)
-        viewModel.getCharacter(args.comic.charactersUri.collectionURI)
+        viewModel.getEvent(args.comic.eventsUri!!)
+        viewModel.getCharacter(args.comic.charactersUri!!)
     }
 
     private fun observeEvents() {
