@@ -18,7 +18,7 @@ import com.example.marvelverse.utilites.SingleEventState
 class DetailsCharacterViewModel : BaseViewModel(), ComicInteractionListener,
     EventInteractionListener,
     SeriesInteractionListener {
-
+    private val repositry = MarvelRepository()
     private val _character: MutableLiveData<DataState<Character>> = MutableLiveData()
     private val _comics: MutableLiveData<DataState<Comic>> = MutableLiveData()
     private val _events: MutableLiveData<DataState<Event>> = MutableLiveData()
@@ -39,7 +39,7 @@ class DetailsCharacterViewModel : BaseViewModel(), ComicInteractionListener,
 
     fun getEvent(url: String) {
         _events.postValue(DataState.Loading)
-        MarvelRepository.getEventsByUrl(url).subscribeBy(::OnEventSuccess, ::OnEventError)
+        repositry.getEventsByUrl(url).subscribeBy(::OnEventSuccess, ::OnEventError)
     }
 
     fun OnEventSuccess(it: List<Event>) {
@@ -56,7 +56,7 @@ class DetailsCharacterViewModel : BaseViewModel(), ComicInteractionListener,
 
     fun getComics(url: String) {
         _comics.postValue(DataState.Loading)
-        val single = MarvelRepository.getComicsByUrl(url)
+        val single = repositry.getComicsByUrl(url)
         single.subscribeBy(::OnComiesSuccess, ::OnComiesError)
     }
 
@@ -74,7 +74,7 @@ class DetailsCharacterViewModel : BaseViewModel(), ComicInteractionListener,
 
     fun getSeries(url: String) {
         _series.postValue(DataState.Loading)
-        MarvelRepository.getSeriesByUrl(url).subscribeBy(::OnSeriesSuccess, ::OnSeriesError)
+        repositry.getSeriesByUrl(url).subscribeBy(::OnSeriesSuccess, ::OnSeriesError)
     }
 
     fun OnSeriesSuccess(it: List<Series>) {

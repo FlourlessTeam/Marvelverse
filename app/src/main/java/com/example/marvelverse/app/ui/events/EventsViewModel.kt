@@ -11,6 +11,7 @@ import com.example.marvelverse.utilites.SingleEventState
 
 class EventsViewModel : BaseViewModel(), EventInteractionListener {
 
+    private val repositry = MarvelRepository()
 
     private var _event = MutableLiveData<DataState<Event>>()
     val event: LiveData<DataState<Event>> get() = _event
@@ -24,7 +25,7 @@ class EventsViewModel : BaseViewModel(), EventInteractionListener {
 
     private fun getEvent() {
         _event.postValue(DataState.Loading)
-        MarvelRepository.searchEvents().subscribeBy(::onEventSuccess, ::onEventError)
+        repositry.searchEvents().subscribeBy(::onEventSuccess, ::onEventError)
     }
     fun onEventSuccess(it: List<Event>) {
         if (it.isEmpty()) {

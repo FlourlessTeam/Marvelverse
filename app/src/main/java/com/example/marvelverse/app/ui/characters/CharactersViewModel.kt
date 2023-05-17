@@ -11,7 +11,7 @@ import com.example.marvelverse.utilites.SingleEventState
 
 
 class CharactersViewModel : BaseViewModel(), CharacterInteractionListener {
-
+    private val repositry = MarvelRepository()
     private var _characters = MutableLiveData<DataState<Character>>()
     val characters: LiveData<DataState<Character>> get() = _characters
 
@@ -24,7 +24,7 @@ class CharactersViewModel : BaseViewModel(), CharacterInteractionListener {
 
     private fun getCharacters() {
         _characters.postValue(DataState.Loading)
-        MarvelRepository.searchCharacters().subscribeBy(::onCharactersSuccess, ::onCharactersError)
+        repositry.searchCharacters().subscribeBy(::onCharactersSuccess, ::onCharactersError)
     }
     fun onCharactersSuccess(it: List<Character>) {
         if (it.isEmpty()) {

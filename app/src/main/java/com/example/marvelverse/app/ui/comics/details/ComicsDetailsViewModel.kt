@@ -14,6 +14,7 @@ import com.example.marvelverse.utilites.SingleEventState
 
 class ComicsDetailsViewModel : BaseViewModel(), CharacterInteractionListener,
     EventInteractionListener {
+    private val repositry = MarvelRepository()
     private var _character = MutableLiveData<DataState<Character>>()
     private var _event = MutableLiveData<DataState<Event>>()
     private var _comicsDetailsEvent = MutableLiveData<SingleEventState<ComicDetailsEvents>>()
@@ -21,7 +22,7 @@ class ComicsDetailsViewModel : BaseViewModel(), CharacterInteractionListener,
     val event: LiveData<DataState<Event>> get() = _event
     val comicsDetailsEvent: LiveData<SingleEventState<ComicDetailsEvents>> get() = _comicsDetailsEvent
     fun getCharacter(url: String) {
-        MarvelRepository.getCharactersByUrl(url).subscribeBy(::onCharacterSuccess, ::onCharacterError)
+        repositry.getCharactersByUrl(url).subscribeBy(::onCharacterSuccess, ::onCharacterError)
     }
     fun onCharacterSuccess(it: List<Character>) {
         if (it.isEmpty()) {
@@ -35,7 +36,7 @@ class ComicsDetailsViewModel : BaseViewModel(), CharacterInteractionListener,
     }
 
     fun getEvent(url: String) {
-        MarvelRepository.getEventsByUrl(url).subscribeBy(::onEventSuccess, ::onEventError)
+        repositry.getEventsByUrl(url).subscribeBy(::onEventSuccess, ::onEventError)
     }
     fun onEventSuccess(it: List<Event>) {
         if (it.isEmpty()) {

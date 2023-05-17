@@ -1,5 +1,6 @@
 package com.example.marvelverse.data.repositories
 
+import com.example.marvelverse.app.ui.home.HomeItem
 import com.example.marvelverse.data.dataSources.local.FakeLocalData
 import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.data.dataSources.remote.RetrofitClient
@@ -22,9 +23,10 @@ import com.example.marvelverse.domain.mapper.EventSearchEntityToEventMapper
 import com.example.marvelverse.domain.mapper.EventToEventSearchEntityMapper
 import com.example.marvelverse.domain.mapper.SeriesMapper
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 
-object MarvelRepository {
+class MarvelRepository() {
     private val marvelApiServices by lazy {
         RetrofitClient.marvelApiServices
     }
@@ -39,7 +41,7 @@ object MarvelRepository {
     private val eventMapper = EventMapper()
     private val seriesMapper = SeriesMapper()
     private val fakeLocalData = FakeLocalData()
-
+    private val disposables = CompositeDisposable()
     // TODO: Remove
     lateinit var db: MarvelDatabase
 
@@ -221,6 +223,22 @@ object MarvelRepository {
         }
     }
 
+    fun getHomeItems(): Single<List<HomeItem>> {
+        return Single.zip(
+            getRandomCharacters(),
+            getRandomComics(),
+            getRandomSeries(),
+            getRandomEvents()
+        ) { characters, comics, series, events ->
+            listOf(
+                HomeItem.CharactersItem(characters),
+                HomeItem.ComicsItem(comics),
+                HomeItem.EventsItem(events),
+                HomeItem.SeriesItem(series)
+            )
+        }
+    }
+
     fun getItems() = fakeLocalData.getAboutItems()
     private fun ComicDto.mapToComic(): Comic = comicMapper.map(this)
 
@@ -228,6 +246,10 @@ object MarvelRepository {
 
     private fun CharacterDto.mapToCharacter(): Character = characterMapper.map(this)
     private fun EventDto.mapToEvent(): Event = eventMapper.map(this)
+
+    fun clearDisposables() {
+        disposables.clear()
+    }
 
 
 }
