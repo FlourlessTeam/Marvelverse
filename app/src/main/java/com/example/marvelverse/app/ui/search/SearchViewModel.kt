@@ -9,6 +9,7 @@ import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
 import com.example.marvelverse.app.ui.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
+import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
@@ -43,6 +44,10 @@ class SearchViewModel :
         searchFilterOption.postValue(SearchFilter.Character)
     }
 
+    // TODO: Remove
+    fun initDb(db:MarvelDatabase){
+        MarvelRepository.db = db
+    }
   /*  fun comicSearch(limit: Int?, title: String?) {
         _itemList.postValue(DataState.Loading)
             repositry.searchComics(limit, title)
@@ -51,17 +56,17 @@ class SearchViewModel :
                 .addTo(disposables)
     }*/
 
-    fun characterSearch(limit: Int?, title: String?) {
+    fun characterSearch(limit: Int?, title: String) {
         _itemList.postValue(DataState.Loading)
-            repositry.searchCharacters(limit, title)
+            repositry.searchCacheCharacters(limit, title)
                 .applySchedulers()
                 .subscribe(::onCharacterSearchSuccess, ::onSearchError)
                 .addTo(disposables)
     }
 
-    fun eventSearch(limit: Int?, title: String?) {
+    fun eventSearch(limit: Int?, title: String) {
         _itemList.postValue(DataState.Loading)
-            repositry.searchEvents(limit, title)
+            repositry.searchCachedEvents(limit, title)
                 .applySchedulers()
                 .subscribe(::onEventSearchSuccess, ::onSearchError)
                 .addTo(disposables)
