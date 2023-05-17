@@ -43,98 +43,116 @@ object MarvelRepository {
     // TODO: Remove
     lateinit var db: MarvelDatabase
 
-    fun searchComics(limit: Int? = null, title: String? = null): Single<List<Comic>> {
-        return marvelApiServices.fetchComics(limit, title).map { baseResponse ->
-            baseResponse.data?.results?.map { comicDto ->
-                comicDto.mapToComic()
-            } ?: emptyList()
+    fun searchCharacters(limit: Int? = null, title: String? = null): Single<List<Character>> {
+        return marvelApiServices.fetchCharacters(limit, title)
+            .map { baseResponse ->
+                baseResponse.data?.results?.map { characterDto ->
+                    characterDto.mapToCharacter()
+                } ?: emptyList()
+            }
+    }
+
+    fun searchCacheCharacters(limit: Int? = null, name: String): Single<List<Character>> {
+        val savedCharacters = getCachedCharacters(name)
+
+        return if (savedCharacters.isNotEmpty()) {
+            Single.just(savedCharacters)
+        } else {
+            try {
+                val response = searchCharacters(limit, name)
+                cacheCharacters(response)
+                response
+            } catch (e: Exception) {
+                Single.just(emptyList())
+            }
         }
     }
+
+    private fun getCachedCharacters(name: String): List<Character> {
+        val savedEntities = db.searchDao.getAllCharacters(name).blockingGet()
+        return savedEntities.map { charSearchEntityToCharMapper.map(it) }
+    }
+
+    private fun cacheCharacters(characters: Single<List<Character>>) {
+        val cachedResponse = characters.blockingGet().map { charToCharSearchEntityMapper.map(it) }
+        db.searchDao.insertCharacters(cachedResponse).subscribe()
+    }
+
+    fun searchComics(limit: Int? = null, title: String? = null): Single<List<Comic>> {
+        return marvelApiServices.fetchComics(limit, title)
+            .map { baseResponse ->
+                baseResponse.data?.results?.map { comicDto ->
+                    comicDto.mapToComic()
+                } ?: emptyList()
+            }
+    }
+
+    fun searchCachedComics(limit: Int? = null, title: String): Single<List<Comic>> {
+        val savedComics = getCachedComics(title)
+
+        return if (savedComics.isNotEmpty()) {
+            Single.just(savedComics)
+        } else {
+            try {
+                val response = searchComics(limit, title)
+                cacheComics(response)
+                response
+            } catch (e: Exception) {
+                Single.just(emptyList())
+            }
+        }
+    }
+
+    private fun getCachedComics(title: String): List<Comic> {
+        val savedEntities = db.searchDao.getAllComics(title).blockingGet()
+        return savedEntities.map { comicSearchEntityToComicMapper.map(it) }
+    }
+
+    private fun cacheComics(comics: Single<List<Comic>>) {
+        val cachedResponse = comics.blockingGet().map { comicToComicSearchEntityMapper.map(it) }
+        db.searchDao.insertComics(cachedResponse).subscribe()
+    }
+
+    fun searchEvents(limit: Int? = null, title: String? = null): Single<List<Event>> {
+        return marvelApiServices.fetchEvents(limit, title)
+            .map { baseResponse ->
+                baseResponse.data?.results?.map { eventDto ->
+                    eventDto.mapToEvent()
+                } ?: emptyList()
+            }
+    }
+
+    fun searchCachedEvents(limit: Int? = null, title: String): Single<List<Event>> {
+        val savedEvents = getCachedEvents(title)
+
+        return if (savedEvents.isNotEmpty()) {
+            Single.just(savedEvents)
+        } else {
+            try {
+                val response = searchEvents(limit, title)
+                cacheEvents(response)
+                response
+            } catch (e: Exception) {
+                Single.just(emptyList())
+            }
+        }
+    }
+
+    private fun getCachedEvents(title: String): List<Event> {
+        val savedEntities = db.searchDao.getAllEvents(title).blockingGet()
+        return savedEntities.map { eventSearchEntityToEventMapper.map(it) }
+    }
+
+    private fun cacheEvents(events: Single<List<Event>>) {
+        val cachedResponse = events.blockingGet().map { eventToEventSearchEntity.map(it) }
+        db.searchDao.insertEvents(cachedResponse).subscribe()
+    }
+
 
     fun searchSeries(limit: Int? = null, title: String? = null): Single<List<Series>> {
         return marvelApiServices.fetchSeries(limit, title).map { baseResponse ->
             baseResponse.data?.results?.map { seriesDto ->
                 seriesDto.mapToSeries()
-            } ?: emptyList()
-        }
-    }
-
-    fun searchCharacters(limit: Int? = null, title: String? = null): Single<List<Character>> {
-        return marvelApiServices.fetchCharacters(limit, title).map { baseResponse ->
-            baseResponse.data?.results?.map { characterDto ->
-                characterDto.mapToCharacter()
-            } ?: emptyList()
-        }
-    }
-
-    fun searchCacheCharacters(limit: Int? = null, name: String): Single<List<Character>> {
-        val savedChars = db.searchDao.getAllCharacters(name).blockingGet()
-        return if (savedChars.isNotEmpty()) {
-            Single.just(savedChars.map {
-                charSearchEntityToCharMapper.map(it)
-            })
-        } else {
-            try {
-                val response = searchCharacters(limit, name)
-                val cachedResponse = response.blockingGet().map {
-                    charToCharSearchEntityMapper.map(it)
-                }
-                db.searchDao.insertCharacters(cachedResponse).subscribe()
-                return response
-            } catch (e: Exception) {
-                return Single.just(emptyList())
-            }
-
-        }
-    }
-
-    fun searchCachedComics(limit: Int? = null, title: String): Single<List<Comic>> {
-        val savedComics = db.searchDao.getAllComics(title).blockingGet()
-        return if (savedComics.isNotEmpty()) {
-            Single.just(savedComics.map {
-                comicSearchEntityToComicMapper.map(it)
-            })
-        } else {
-            try {
-                val response = searchComics(limit, title)
-                val cachedResponse = response.blockingGet().map {
-                    comicToComicSearchEntityMapper.map(it)
-                }
-                db.searchDao.insertComics(cachedResponse).subscribe()
-                return response
-            } catch (e: Exception) {
-                return Single.just(emptyList())
-            }
-
-        }
-    }
-
-
-    fun searchCachedEvents(limit: Int? = null, title: String): Single<List<Event>> {
-        val savedEvents = db.searchDao.getAllEvents(title).blockingGet()
-        return if (savedEvents.isNotEmpty()) {
-            Single.just(savedEvents.map {
-                eventSearchEntityToEventMapper.map(it)
-            })
-        } else {
-            try {
-                val response = searchEvents(limit, title)
-                val cachedResponse = response.blockingGet().map {
-                    eventToEventSearchEntity.map(it)
-                }
-                db.searchDao.insertEvents(cachedResponse).subscribe()
-                return response
-            } catch (e: Exception) {
-                return Single.just(emptyList())
-            }
-        }
-    }
-
-
-    fun searchEvents(limit: Int? = null, title: String? = null): Single<List<Event>> {
-        return marvelApiServices.fetchEvents(limit, title).map { baseResponse ->
-            baseResponse.data?.results?.map { eventDto ->
-                eventDto.mapToEvent()
             } ?: emptyList()
         }
     }
