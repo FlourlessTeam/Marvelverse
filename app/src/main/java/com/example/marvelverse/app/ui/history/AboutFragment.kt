@@ -6,7 +6,9 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.example.marvelverse.app.ui.base.BottomNavFragment
 import com.example.marvelverse.databinding.AboutScreenBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AboutFragment :
     BottomNavFragment<AboutScreenBinding>(AboutScreenBinding::inflate) {
 

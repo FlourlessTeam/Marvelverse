@@ -12,27 +12,27 @@ import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface HomeDao {
-    @Insert
+    @Insert(onConflict = androidx.room.OnConflictStrategy.REPLACE)
     fun insertCharacters(characters: List<CharacterEntity>): Completable
 
 
     @Query("SELECT * FROM CHARACTER_TABLE")
     fun getAllCharacters(): Single<List<CharacterEntity>>
 
-    @Insert
+    @Insert(onConflict = androidx.room.OnConflictStrategy.REPLACE)
     fun insertComics(comics: List<ComicEntity>): Completable
 
 
     @Query("SELECT * FROM COMIC_TABLE")
     fun getAllComics(): Single<List<ComicEntity>>
 
-    @Insert
+    @Insert(onConflict = androidx.room.OnConflictStrategy.REPLACE)
     fun insertEvents(events: List<EventEntity>): Completable
 
     @Query("SELECT * FROM EVENT_TABLE")
     fun getAllEvents(): Single<List<EventEntity>>
 
-    @Insert
+    @Insert(onConflict = androidx.room.OnConflictStrategy.REPLACE)
     fun insertSeries(series: List<SeriesEntity>): Completable
 
 

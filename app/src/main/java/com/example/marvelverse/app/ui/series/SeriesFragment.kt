@@ -7,7 +7,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.marvelverse.app.ui.base.InnerFragment
 import com.example.marvelverse.databinding.FragmentSeriesBinding
 import com.example.marvelverse.domain.entities.Series
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SeriesFragment : InnerFragment<FragmentSeriesBinding>(FragmentSeriesBinding::inflate) {
     private val viewModel: SeriesViewModel by viewModels()
     private val adapter by lazy { SeriesAdapter(viewModel) }
@@ -23,13 +25,13 @@ class SeriesFragment : InnerFragment<FragmentSeriesBinding>(FragmentSeriesBindin
         }
     }
 
-    fun handleEvent(event: SeriesEvent) {
+    private fun handleEvent(event: SeriesEvent) {
         when (event) {
             is SeriesEvent.ClickSeriesEvent -> navigateToDetails(event.series)
         }
     }
 
-    fun navigateToDetails(series: Series) {
+    private fun navigateToDetails(series: Series) {
         val direction = SeriesFragmentDirections.actionSeriesFragmentToSeriesDetailsFragment(series)
         findNavController().navigate(direction)
     }

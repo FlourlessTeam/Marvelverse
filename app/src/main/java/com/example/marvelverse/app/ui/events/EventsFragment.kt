@@ -7,8 +7,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.marvelverse.app.ui.base.InnerFragment
 import com.example.marvelverse.databinding.FragmentEventsBinding
 import com.example.marvelverse.domain.entities.Event
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class EventsFragment : InnerFragment<FragmentEventsBinding>(FragmentEventsBinding::inflate) {
 
     private val viewModel: EventsViewModel by viewModels()

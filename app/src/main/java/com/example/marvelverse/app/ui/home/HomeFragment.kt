@@ -7,12 +7,15 @@ import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.example.marvelverse.app.ui.base.BottomNavFragment
 import com.example.marvelverse.app.ui.adapter.HomeAdapter
+import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.databinding.FragmentHomeBinding
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.domain.entities.Series
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BottomNavFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private val viewModel: HomeViewModel by viewModels()

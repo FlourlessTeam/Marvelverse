@@ -10,40 +10,41 @@ import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
 import com.example.marvelverse.app.ui.interfaces.ParentInteractionListener
 import com.example.marvelverse.app.ui.interfaces.SeriesInteractionListener
+import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.domain.entities.Series
 import com.example.marvelverse.utilites.SingleEventState
-import io.reactivex.rxjava3.core.Single
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel : BaseViewModel(), ParentInteractionListener,
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val repository: MarvelRepository) : BaseViewModel(),
+    ParentInteractionListener,
     CharacterInteractionListener, EventInteractionListener, ComicInteractionListener,
     SeriesInteractionListener {
-    private val repositry = MarvelRepository()
 
     private val _homeItems: MutableLiveData<DataState<HomeItem>> = MutableLiveData()
     val homeItems: LiveData<DataState<HomeItem>> = _homeItems
 
     private val _homeEvent: MutableLiveData<SingleEventState<HomeEvent>> = MutableLiveData()
     val homeEvent: LiveData<SingleEventState<HomeEvent>> = _homeEvent
-
     init {
         getDataForHomeItems()
     }
-
     @SuppressLint("CheckResult")
     fun getDataForHomeItems() {
         _homeItems.postValue(DataState.Loading)
-        repositry.getHomeItems().subscribeBy(::OnSuccess, ::OnError)
+        repository.getHomeItems().subscribeBy(this::onSuccess, ::onError)
     }
 
-    fun OnSuccess(homeItem: List<HomeItem>) {
+    private fun onSuccess(homeItem: List<HomeItem>) {
         _homeItems.postValue(DataState.Success(homeItem))
     }
 
-    fun OnError(error: Throwable) {
+    private fun onError(error: Throwable) {
         _homeItems.postValue(DataState.Error(error))
     }
 

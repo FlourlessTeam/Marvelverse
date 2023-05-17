@@ -12,17 +12,21 @@ import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.utilites.SingleEventState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SeriesDetailsViewModel() : BaseViewModel(), ComicInteractionListener,
+@HiltViewModel
+class SeriesDetailsViewModel @Inject constructor(
+    private val repository: MarvelRepository
+) : BaseViewModel(), ComicInteractionListener,
     EventInteractionListener,
     CharacterInteractionListener {
-    private val repositry = MarvelRepository()
 
 
     private val _characters: MutableLiveData<DataState<Character>> = MutableLiveData()
     private val _comics: MutableLiveData<DataState<Comic>> = MutableLiveData()
     private val _events: MutableLiveData<DataState<Event>> = MutableLiveData()
-    private val _detailsSeries: MutableLiveData<SingleEventState<DetailsSeries>> = MutableLiveData()
+    private val _detailsSeries: MutableLiveData<SingleEventState<SeriesDetailsEvents>> = MutableLiveData()
 
     val characters: LiveData<DataState<Character>>
         get() = _characters
@@ -30,27 +34,27 @@ class SeriesDetailsViewModel() : BaseViewModel(), ComicInteractionListener,
         get() = _comics
     val events: LiveData<DataState<Event>>
         get() = _events
-    val detailsSeries: LiveData<SingleEventState<DetailsSeries>>
+    val detailsSeries: LiveData<SingleEventState<SeriesDetailsEvents>>
         get() = _detailsSeries
 
     fun getCharacters(url: String) {
-        repositry.getCharactersByUrl(url)
-            .subscribeBy(::OnCharacterSuccess, ::OnCharacterError)
+        repository.getCharactersByUrl(url)
+            .subscribeBy(::onCharacterSuccess, ::onCharacterError)
     }
 
-    fun OnCharacterSuccess(character: List<Character>) {
+    private fun onCharacterSuccess(character: List<Character>) {
         _characters.postValue(DataState.Success(character))
     }
 
-    fun OnCharacterError(error: Throwable) {
+    private fun onCharacterError(error: Throwable) {
         _characters.postValue(DataState.Error(error))
     }
 
     fun getComics(url: String) {
-        repositry.getComicsByUrl(url).subscribeBy(::OnComicSuccess, ::OnComicError)
+        repository.getComicsByUrl(url).subscribeBy(::onComicSuccess, ::onComicError)
     }
 
-    fun OnComicSuccess(comic: List<Comic>) {
+    private fun onComicSuccess(comic: List<Comic>) {
         if (comic.isEmpty()) {
             _comics.postValue(DataState.Empty)
         } else {
@@ -58,33 +62,35 @@ class SeriesDetailsViewModel() : BaseViewModel(), ComicInteractionListener,
         }
     }
 
-    fun OnComicError(error: Throwable) {
+    private fun onComicError(error: Throwable) {
         _comics.postValue(DataState.Error(error))
     }
 
     fun getEvents(url: String) {
-        repositry.getEventsByUrl(url).subscribeBy(::OnEventSuccess, ::OnEventError)
+        repository.getEventsByUrl(url).subscribeBy(::onEventSuccess, ::onEventError)
     }
-    fun OnEventSuccess(event: List<Event>) {
+
+    private fun onEventSuccess(event: List<Event>) {
         if (event.isEmpty()) {
             _events.postValue(DataState.Empty)
         } else {
             _events.postValue(DataState.Success(event))
         }
     }
-    fun OnEventError(error: Throwable) {
+
+    private fun onEventError(error: Throwable) {
         _events.postValue(DataState.Error(error))
     }
 
     override fun onCharacterClick(character: Character) {
-        _detailsSeries.postValue(SingleEventState(DetailsSeries.ClickCharacterSeries(character)))
+        _detailsSeries.postValue(SingleEventState(SeriesDetailsEvents.ClickCharacterSeries(character)))
     }
 
     override fun onComicClick(comic: Comic) {
-        _detailsSeries.postValue(SingleEventState(DetailsSeries.ClickComicSeries(comic)))
+        _detailsSeries.postValue(SingleEventState(SeriesDetailsEvents.ClickComicSeries(comic)))
     }
 
     override fun onEventClick(event: Event) {
-        _detailsSeries.postValue(SingleEventState(DetailsSeries.ClickEventSeries(event)))
+        _detailsSeries.postValue(SingleEventState(SeriesDetailsEvents.ClickEventSeries(event)))
     }
 }

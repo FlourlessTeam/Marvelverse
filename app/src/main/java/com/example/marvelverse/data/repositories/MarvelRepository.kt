@@ -2,8 +2,12 @@ package com.example.marvelverse.data.repositories
 
 import com.example.marvelverse.app.ui.home.HomeItem
 import com.example.marvelverse.data.dataSources.local.FakeLocalData
-import com.example.marvelverse.data.dataSources.local.MarvelDatabase
-import com.example.marvelverse.data.dataSources.remote.RetrofitClient
+import com.example.marvelverse.data.dataSources.local.dao.HomeDao
+import com.example.marvelverse.data.dataSources.local.dao.SearchDao
+import com.example.marvelverse.data.dataSources.local.entities.search.CharacterSearchEntity
+import com.example.marvelverse.data.dataSources.local.entities.search.ComicSearchEntity
+import com.example.marvelverse.data.dataSources.local.entities.search.EventSearchEntity
+import com.example.marvelverse.data.dataSources.remote.MarvelApiServices
 import com.example.marvelverse.data.dataSources.remote.reponses.CharacterDto
 import com.example.marvelverse.data.dataSources.remote.reponses.ComicDto
 import com.example.marvelverse.data.dataSources.remote.reponses.EventDto
@@ -12,49 +16,25 @@ import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.domain.entities.Series
-import com.example.marvelverse.domain.mapper.CharacterMapper
-import com.example.marvelverse.domain.mapper.CharacterSearchEntityToCharacterMapper
-import com.example.marvelverse.domain.mapper.CharacterToCharacterSearchEntityMapper
-import com.example.marvelverse.domain.mapper.ComicMapper
-import com.example.marvelverse.domain.mapper.ComicSearchEntityToComicMapper
-import com.example.marvelverse.domain.mapper.ComicToComicSearchEntityMapper
-import com.example.marvelverse.domain.mapper.EventMapper
-import com.example.marvelverse.domain.mapper.EventSearchEntityToEventMapper
-import com.example.marvelverse.domain.mapper.EventToEventSearchEntityMapper
-import com.example.marvelverse.domain.mapper.SeriesMapper
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Scheduler
+import com.example.marvelverse.domain.mapper.MappersContainer
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
 
-class MarvelRepository() {
-    private val marvelApiServices by lazy {
-        RetrofitClient.marvelApiServices
-    }
-    private val characterMapper = CharacterMapper()
-    private val charToCharSearchEntityMapper = CharacterToCharacterSearchEntityMapper()
-    private val charSearchEntityToCharMapper = CharacterSearchEntityToCharacterMapper()
-    private val comicToComicSearchEntityMapper = ComicToComicSearchEntityMapper()
-    private val comicSearchEntityToComicMapper = ComicSearchEntityToComicMapper()
-    private val eventToEventSearchEntity = EventToEventSearchEntityMapper()
-    private val eventSearchEntityToEventMapper = EventSearchEntityToEventMapper()
-    private val comicMapper = ComicMapper()
-    private val eventMapper = EventMapper()
-    private val seriesMapper = SeriesMapper()
-    private val fakeLocalData = FakeLocalData()
-    private val disposables = CompositeDisposable()
-    // TODO: Remove
-    lateinit var db: MarvelDatabase
+class MarvelRepository @Inject constructor(
+    private val marvelApiServices: MarvelApiServices,
+    private val dataMapper: MappersContainer,
+    private val fakeLocalData: FakeLocalData,
+    private val homeDao: HomeDao,
+    private val searchDao: SearchDao,
+) {
 
     fun searchCharacters(limit: Int? = null, title: String? = null): Single<List<Character>> {
-        return marvelApiServices.fetchCharacters(limit, title)
-            .map { baseResponse ->
-                baseResponse.data?.results?.map { characterDto ->
-                    characterDto.mapToCharacter()
-                } ?: emptyList()
-            }
+        return marvelApiServices.fetchCharacters(limit, title).map { baseResponse ->
+            baseResponse.data?.results?.map { characterDto ->
+                characterDto.mapToCharacter()
+            } ?: emptyList()
+        }
     }
 
     fun searchCacheCharacters(limit: Int? = null, name: String): Single<List<Character>> {
@@ -74,23 +54,25 @@ class MarvelRepository() {
     }
 
     private fun getCachedCharacters(name: String): List<Character> {
-        val savedEntities = db.searchDao.getAllCharacters(name).blockingGet()
-        return savedEntities.map { charSearchEntityToCharMapper.map(it) }
+        val savedEntities = searchDao.getAllCharacters(name).blockingGet()
+        return savedEntities.map { characterSearchEntity ->
+            characterSearchEntity.mapToCharacter()
+        }
     }
 
     private fun cacheCharacters(characters: Single<List<Character>>) {
-        val cachedResponse = characters.blockingGet().map { charToCharSearchEntityMapper.map(it) }
-        db.searchDao.insertCharacters(cachedResponse).subscribeOn(Schedulers.io()).observeOn(
-            AndroidSchedulers.mainThread()).subscribe()
+        val cachedResponse = characters.blockingGet().map { character ->
+            character.MapToCharacterEntity()
+        }
+        searchDao.insertCharacters(cachedResponse).subscribe().dispose()
     }
 
     fun searchComics(limit: Int? = null, title: String? = null): Single<List<Comic>> {
-        return marvelApiServices.fetchComics(limit, title)
-            .map { baseResponse ->
-                baseResponse.data?.results?.map { comicDto ->
-                    comicDto.mapToComic()
-                } ?: emptyList()
-            }
+        return marvelApiServices.fetchComics(limit, title).map { baseResponse ->
+            baseResponse.data?.results?.map { comicDto ->
+                comicDto.mapToComic()
+            } ?: emptyList()
+        }
     }
 
     fun searchCachedComics(limit: Int? = null, title: String): Single<List<Comic>> {
@@ -110,23 +92,21 @@ class MarvelRepository() {
     }
 
     private fun getCachedComics(title: String): List<Comic> {
-        val savedEntities = db.searchDao.getAllComics(title).blockingGet()
-        return savedEntities.map { comicSearchEntityToComicMapper.map(it) }
+        val savedEntities = searchDao.getAllComics(title).blockingGet()
+        return savedEntities.map { comicSearchEntity -> comicSearchEntity.mapToComic() }
     }
 
     private fun cacheComics(comics: Single<List<Comic>>) {
-        val cachedResponse = comics.blockingGet().map { comicToComicSearchEntityMapper.map(it) }
-        db.searchDao.insertComics(cachedResponse).subscribeOn(Schedulers.io()).observeOn(
-            AndroidSchedulers.mainThread()).subscribe()
+        val cachedResponse = comics.blockingGet().map { comic -> comic.MapToComicEntity() }
+        searchDao.insertComics(cachedResponse).subscribe().dispose()
     }
 
     fun searchEvents(limit: Int? = null, title: String? = null): Single<List<Event>> {
-        return marvelApiServices.fetchEvents(limit, title)
-            .map { baseResponse ->
-                baseResponse.data?.results?.map { eventDto ->
-                    eventDto.mapToEvent()
-                } ?: emptyList()
-            }
+        return marvelApiServices.fetchEvents(limit, title).map { baseResponse ->
+            baseResponse.data?.results?.map { eventDto ->
+                eventDto.mapToEvent()
+            } ?: emptyList()
+        }
     }
 
     fun searchCachedEvents(limit: Int? = null, title: String): Single<List<Event>> {
@@ -146,14 +126,13 @@ class MarvelRepository() {
     }
 
     private fun getCachedEvents(title: String): List<Event> {
-        val savedEntities = db.searchDao.getAllEvents(title).blockingGet()
-        return savedEntities.map { eventSearchEntityToEventMapper.map(it) }
+        val savedEntities = searchDao.getAllEvents(title).blockingGet()
+        return savedEntities.map { eventSearchEntity -> eventSearchEntity.mapToEvent() }
     }
 
     private fun cacheEvents(events: Single<List<Event>>) {
-        val cachedResponse = events.blockingGet().map { eventToEventSearchEntity.map(it) }
-        db.searchDao.insertEvents(cachedResponse).subscribeOn(Schedulers.io()).observeOn(
-            AndroidSchedulers.mainThread()).subscribe()
+        val cachedResponse = events.blockingGet().map { event -> event.MapToEventEntity() }
+        searchDao.insertEvents(cachedResponse).subscribe().dispose()
     }
 
 
@@ -231,10 +210,7 @@ class MarvelRepository() {
 
     fun getHomeItems(): Single<List<HomeItem>> {
         return Single.zip(
-            getRandomCharacters(),
-            getRandomComics(),
-            getRandomSeries(),
-            getRandomEvents()
+            getRandomCharacters(), getRandomComics(), getRandomSeries(), getRandomEvents()
         ) { characters, comics, series, events ->
             listOf(
                 HomeItem.CharactersItem(characters),
@@ -246,16 +222,28 @@ class MarvelRepository() {
     }
 
     fun getItems() = fakeLocalData.getAboutItems()
-    private fun ComicDto.mapToComic(): Comic = comicMapper.map(this)
+    private fun ComicDto.mapToComic(): Comic = dataMapper.comicMapper.map(this)
+    private fun SeriesDto.mapToSeries(): Series = dataMapper.seriesMapper.map(this)
+    private fun CharacterDto.mapToCharacter(): Character = dataMapper.characterMapper.map(this)
+    private fun EventDto.mapToEvent(): Event = dataMapper.eventMapper.map(this)
 
-    private fun SeriesDto.mapToSeries(): Series = seriesMapper.map(this)
+    private fun Character.MapToCharacterEntity(): CharacterSearchEntity =
+        dataMapper.charToCharSearchEntityMapper.map(this)
 
-    private fun CharacterDto.mapToCharacter(): Character = characterMapper.map(this)
-    private fun EventDto.mapToEvent(): Event = eventMapper.map(this)
+    private fun Comic.MapToComicEntity(): ComicSearchEntity =
+        dataMapper.comicToComicSearchEntityMapper.map(this)
 
-    fun clearDisposables() {
-        disposables.clear()
-    }
+    private fun Event.MapToEventEntity(): EventSearchEntity =
+        dataMapper.eventToEventSearchEntity.map(this)
+
+    private fun CharacterSearchEntity.mapToCharacter(): Character =
+        dataMapper.charSearchEntityToCharMapper.map(this)
+
+    private fun ComicSearchEntity.mapToComic(): Comic =
+        dataMapper.comicSearchEntityToComicMapper.map(this)
+
+    private fun EventSearchEntity.mapToEvent(): Event =
+        dataMapper.eventSearchEntityToEventMapper.map(this)
 
 
 }
