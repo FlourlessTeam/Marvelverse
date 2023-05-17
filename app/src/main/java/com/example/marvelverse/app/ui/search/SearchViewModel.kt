@@ -3,16 +3,17 @@ package com.example.marvelverse.app.ui.search
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.marvelverse.utilites.DataState
 import com.example.marvelverse.app.ui.base.BaseViewModel
 import com.example.marvelverse.app.ui.bottomSheet.BottomSheetListener
 import com.example.marvelverse.app.ui.interfaces.CharacterInteractionListener
 import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
+import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
+import com.example.marvelverse.utilites.DataState
 
 
 enum class SearchFilter {
@@ -43,40 +44,56 @@ class SearchViewModel :
         searchFilterOption.postValue(SearchFilter.Character)
     }
 
-  /*  fun comicSearch(limit: Int?, title: String?) {
-        _itemList.postValue(DataState.Loading)
-            repositry.searchComics(limit, title)
-                .applySchedulers()
-                .subscribe(::onComicsSearchSuccess, ::onSearchError)
-                .addTo(disposables)
-    }*/
+    // TODO: Remove
+    fun initDb(db: MarvelDatabase) {
+        MarvelRepository.db = db
+    }
+      fun comicSearch(limit: Int?, title: String?) {
+          _itemList.postValue(DataState.Loading)
+              repositry.searchComics(limit, title)
+                  .applySchedulers()
+                  .subscribe(::onComicsSearchSuccess, ::onSearchError)
+                  .addTo(disposables)
+      }
 
-    fun characterSearch(limit: Int?, title: String?) {
+    fun characterSearch(limit: Int?, title: String) {
         _itemList.postValue(DataState.Loading)
-            repositry.searchCharacters(limit, title)
-                .applySchedulers()
-                .subscribe(::onCharacterSearchSuccess, ::onSearchError)
-                .addTo(disposables)
+        repositry.searchCacheCharacters(limit, title)
+            .applySchedulers()
+            .subscribe(::onCharacterSearchSuccess, ::onSearchError)
+            .addTo(disposables)
     }
 
-    fun eventSearch(limit: Int?, title: String?) {
+    fun eventSearch(limit: Int?, title: String) {
         _itemList.postValue(DataState.Loading)
-            repositry.searchEvents(limit, title)
-                .applySchedulers()
-                .subscribe(::onEventSearchSuccess, ::onSearchError)
-                .addTo(disposables)
+        repositry.searchCachedEvents(limit, title)
+            .applySchedulers()
+            .subscribe(::onEventSearchSuccess, ::onSearchError)
+            .addTo(disposables)
     }
 
     private fun onComicsSearchSuccess(comics: List<Comic>) {
-        _itemList.postValue(DataState.Success(comics))
+        if (comics.isEmpty()) {
+            _itemList.postValue(DataState.Empty)
+        } else {
+            _itemList.postValue(DataState.Success(comics))
+        }
     }
 
     private fun onCharacterSearchSuccess(characters: List<Character>) {
-        _itemList.postValue(DataState.Success(characters))
+        if (characters.isEmpty()) {
+            _itemList.postValue(DataState.Empty)
+        } else {
+            _itemList.postValue(DataState.Success(characters))
+        }
     }
 
     private fun onEventSearchSuccess(events: List<Event>) {
-        _itemList.postValue(DataState.Success(events))
+        if (events.isEmpty()) {
+            _itemList.postValue(DataState.Empty)
+        } else {
+            _itemList.postValue(DataState.Success(events))
+        }
     }
 
     private fun onSearchError(throwable: Throwable) {
@@ -99,12 +116,13 @@ class SearchViewModel :
     override fun onEventClick(event: Event) {
         _searchEvent.postValue(SearchEvent.ClickEventEvent(event))
     }
+
     fun clearEvents() {
         if (_searchEvent.value != SearchEvent.ReadyState)
             _searchEvent.postValue(SearchEvent.ReadyState)
     }
 
-    fun setItemListStateEmpty(){
+    fun setItemListStateEmpty() {
         _itemList.postValue(DataState.Empty)
     }
 }

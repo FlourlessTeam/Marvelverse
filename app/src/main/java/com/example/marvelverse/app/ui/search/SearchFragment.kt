@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.marvelverse.app.ui.base.BottomNavFragment
+import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.databinding.FragmentSearchBinding
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
@@ -17,7 +18,9 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-
+        val db = MarvelDatabase.getInstance(requireContext())
+        // TODO: Remove
+        viewModel.initDb(db)
         viewModel.searchEvent.observe(viewLifecycleOwner) {
             it?.let {
                 handleEvent(it)
