@@ -3,6 +3,10 @@ package com.example.marvelverse.data.repositories
 import com.example.marvelverse.data.dataSources.local.FakeLocalData
 import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.data.dataSources.remote.RetrofitClient
+import com.example.marvelverse.data.dataSources.remote.reponses.CharacterDto
+import com.example.marvelverse.data.dataSources.remote.reponses.ComicDto
+import com.example.marvelverse.data.dataSources.remote.reponses.EventDto
+import com.example.marvelverse.data.dataSources.remote.reponses.SeriesDto
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
@@ -42,7 +46,7 @@ object MarvelRepository {
     fun searchComics(limit: Int? = null, title: String? = null): Single<List<Comic>> {
         return marvelApiServices.fetchComics(limit, title).map { baseResponse ->
             baseResponse.data?.results?.map { comicDto ->
-                comicMapper.map(comicDto)
+                comicDto.mapToComic()
             } ?: emptyList()
         }
     }
@@ -50,7 +54,7 @@ object MarvelRepository {
     fun searchSeries(limit: Int? = null, title: String? = null): Single<List<Series>> {
         return marvelApiServices.fetchSeries(limit, title).map { baseResponse ->
             baseResponse.data?.results?.map { seriesDto ->
-                seriesMapper.map(seriesDto)
+                seriesDto.mapToSeries()
             } ?: emptyList()
         }
     }
@@ -58,13 +62,13 @@ object MarvelRepository {
     fun searchCharacters(limit: Int? = null, title: String? = null): Single<List<Character>> {
         return marvelApiServices.fetchCharacters(limit, title).map { baseResponse ->
             baseResponse.data?.results?.map { characterDto ->
-                characterMapper.map(characterDto)
+                characterDto.mapToCharacter()
             } ?: emptyList()
         }
     }
 
     fun searchCacheCharacters(limit: Int? = null, name: String): Single<List<Character>> {
-        val savedChars = db.searchCharacterDao.getAllCharacters(name).blockingGet()
+        val savedChars = db.searchDao.getAllCharacters(name).blockingGet()
         return if (savedChars.isNotEmpty()) {
             Single.just(savedChars.map {
                 charSearchEntityToCharMapper.map(it)
@@ -75,7 +79,7 @@ object MarvelRepository {
                 val cachedResponse = response.blockingGet().map {
                     charToCharSearchEntityMapper.map(it)
                 }
-                db.searchCharacterDao.insertCharacters(cachedResponse).subscribe()
+                db.searchDao.insertCharacters(cachedResponse).subscribe()
                 return response
             } catch (e: Exception) {
                 return Single.just(emptyList())
@@ -85,7 +89,7 @@ object MarvelRepository {
     }
 
     fun searchCachedComics(limit: Int? = null, title: String): Single<List<Comic>> {
-        val savedComics = db.searchComicDao.getAllComics(title).blockingGet()
+        val savedComics = db.searchDao.getAllComics(title).blockingGet()
         return if (savedComics.isNotEmpty()) {
             Single.just(savedComics.map {
                 comicSearchEntityToComicMapper.map(it)
@@ -96,7 +100,7 @@ object MarvelRepository {
                 val cachedResponse = response.blockingGet().map {
                     comicToComicSearchEntityMapper.map(it)
                 }
-                db.searchComicDao.insertComics(cachedResponse).subscribe()
+                db.searchDao.insertComics(cachedResponse).subscribe()
                 return response
             } catch (e: Exception) {
                 return Single.just(emptyList())
@@ -107,7 +111,7 @@ object MarvelRepository {
 
 
     fun searchCachedEvents(limit: Int? = null, title: String): Single<List<Event>> {
-        val savedEvents = db.searchEventDao.getAllEvents(title).blockingGet()
+        val savedEvents = db.searchDao.getAllEvents(title).blockingGet()
         return if (savedEvents.isNotEmpty()) {
             Single.just(savedEvents.map {
                 eventSearchEntityToEventMapper.map(it)
@@ -118,7 +122,7 @@ object MarvelRepository {
                 val cachedResponse = response.blockingGet().map {
                     eventToEventSearchEntity.map(it)
                 }
-                db.searchEventDao.insertEvents(cachedResponse).subscribe()
+                db.searchDao.insertEvents(cachedResponse).subscribe()
                 return response
             } catch (e: Exception) {
                 return Single.just(emptyList())
@@ -130,7 +134,7 @@ object MarvelRepository {
     fun searchEvents(limit: Int? = null, title: String? = null): Single<List<Event>> {
         return marvelApiServices.fetchEvents(limit, title).map { baseResponse ->
             baseResponse.data?.results?.map { eventDto ->
-                eventMapper.map(eventDto)
+                eventDto.mapToEvent()
             } ?: emptyList()
         }
     }
@@ -138,7 +142,7 @@ object MarvelRepository {
     fun getComicsByUrl(url: String): Single<List<Comic>> {
         return marvelApiServices.fetchComicsByUrl(url).map { baseResponse ->
             baseResponse.data?.results?.map { comicDto ->
-                comicMapper.map(comicDto)
+                comicDto.mapToComic()
             } ?: emptyList()
         }
     }
@@ -146,7 +150,7 @@ object MarvelRepository {
     fun getSeriesByUrl(url: String): Single<List<Series>> {
         return marvelApiServices.fetchSeriesByUrl(url).map { baseResponse ->
             baseResponse.data?.results?.map { seriesDto ->
-                seriesMapper.map(seriesDto)
+                seriesDto.mapToSeries()
             } ?: emptyList()
         }
     }
@@ -154,7 +158,7 @@ object MarvelRepository {
     fun getCharactersByUrl(url: String): Single<List<Character>> {
         return marvelApiServices.fetchCharactersByUrl(url).map { baseResponse ->
             baseResponse.data?.results?.map { characterDto ->
-                characterMapper.map(characterDto)
+                characterDto.mapToCharacter()
             } ?: emptyList()
         }
     }
@@ -162,7 +166,7 @@ object MarvelRepository {
     fun getEventsByUrl(url: String): Single<List<Event>> {
         return marvelApiServices.fetchEventsByUrl(url).map { baseResponse ->
             baseResponse.data?.results?.map { eventDto ->
-                eventMapper.map(eventDto)
+                eventDto.mapToEvent()
             } ?: emptyList()
         }
     }
@@ -170,7 +174,7 @@ object MarvelRepository {
     fun getRandomCharacters(): Single<List<Character>> {
         return marvelApiServices.fetchCharacters(80, null).map { baseResponse ->
             baseResponse.data?.results?.shuffled()?.take(20)?.map { characterDto ->
-                characterMapper.map(characterDto)
+                characterDto.mapToCharacter()
             } ?: emptyList()
         }
     }
@@ -178,7 +182,7 @@ object MarvelRepository {
     fun getRandomComics(): Single<List<Comic>> {
         return marvelApiServices.fetchComics(50, null).map { baseResponse ->
             baseResponse.data?.results?.shuffled()?.take(10)?.map { comicDto ->
-                comicMapper.map(comicDto)
+                comicDto.mapToComic()
             } ?: emptyList()
         }
     }
@@ -186,7 +190,7 @@ object MarvelRepository {
     fun getRandomSeries(): Single<List<Series>> {
         return marvelApiServices.fetchSeries(50, null).map { baseResponse ->
             baseResponse.data?.results?.shuffled()?.take(10)?.map { seriesDto ->
-                seriesMapper.map(seriesDto)
+                seriesDto.mapToSeries()
             } ?: emptyList()
         }
     }
@@ -194,10 +198,18 @@ object MarvelRepository {
     fun getRandomEvents(): Single<List<Event>> {
         return marvelApiServices.fetchEvents(50, null).map { baseResponse ->
             baseResponse.data?.results?.shuffled()?.take(10)?.map { eventDto ->
-                eventMapper.map(eventDto)
+                eventDto.mapToEvent()
             } ?: emptyList()
         }
     }
 
     fun getItems() = fakeLocalData.getAboutItems()
+    private fun ComicDto.mapToComic(): Comic = comicMapper.map(this)
+
+    private fun SeriesDto.mapToSeries(): Series = seriesMapper.map(this)
+
+    private fun CharacterDto.mapToCharacter(): Character = characterMapper.map(this)
+    private fun EventDto.mapToEvent(): Event = eventMapper.map(this)
+
+
 }
