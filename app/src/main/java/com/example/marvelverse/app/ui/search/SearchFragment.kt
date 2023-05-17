@@ -13,6 +13,7 @@ import com.example.marvelverse.app.ui.comics.ComicAdapter
 import com.example.marvelverse.app.ui.events.EventsAdapter
 import com.example.marvelverse.app.ui.search.utils.SearchEvent
 import com.example.marvelverse.app.ui.search.utils.SearchFilter
+import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.databinding.FragmentSearchBinding
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
@@ -38,7 +39,11 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
                 handleEvent(it)
             }
         }
-        viewModel.searchFilterOption.observe(viewLifecycleOwner){
+
+        val db = MarvelDatabase.getInstance(requireContext())
+        // TODO: Remove
+        viewModel.initDb(db)
+        viewModel.searchFilterOption.observe(viewLifecycleOwner) {
             handleRecyclerAdapters()
 
         }
@@ -56,6 +61,7 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
         }
         viewModel.clearEvents()
     }
+
     private fun <T> navigateToDetails(element: T) {
         when (element) {
             is Character -> findNavController().navigate(
@@ -90,17 +96,17 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
         val text = binding.searchViewLayout.editText?.text.toString()
         when (viewModel.searchFilterOption.value!!) {
             SearchFilter.Character -> {
-                makeSearch(text , SearchFilter.Character)
+                makeSearch(text, SearchFilter.Character)
                 setupRecyclerView(viewModel.characterList, charactersAdapter)
             }
 
             SearchFilter.Comic -> {
-                makeSearch(text , SearchFilter.Comic)
+                makeSearch(text, SearchFilter.Comic)
                 setupRecyclerView(viewModel.comicList, comicAdapter)
             }
 
             SearchFilter.Event -> {
-                makeSearch(text , SearchFilter.Event)
+                makeSearch(text, SearchFilter.Event)
                 setupRecyclerView(viewModel.eventList, eventsAdapter)
             }
 
@@ -111,15 +117,16 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
 
     private fun <T> setupRecyclerView(items: LiveData<DataState<T>>, adapter: BaseAdapter<T>) {
         val recyclerView = binding.recyclerView
-        items.observe(viewLifecycleOwner){
+        items.observe(viewLifecycleOwner) {
             if (it is DataState.Success) {
                 adapter.setItems(it.toData()!!)
                 recyclerView.adapter = adapter
             }
         }
     }
+
     private fun onChangeSelectedChip() {
-        binding.chipGroupSearchOption.setOnCheckedStateChangeListener{ group, checkedIds ->
+        binding.chipGroupSearchOption.setOnCheckedStateChangeListener { group, checkedIds ->
             val selectedSearchFilter = when (group.checkedChipId) {
                 binding.chipCharacter.id -> SearchFilter.Character
                 binding.chipComics.id -> SearchFilter.Comic
@@ -130,12 +137,13 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
 
         }
     }
+
     private fun searchViewListener() {
-        val observable= Observable.create<String> { emitter ->
+        val observable = Observable.create<String> { emitter ->
             binding.searchViewLayout.editText?.doOnTextChanged { text, start, before, count ->
-                if (text.isNullOrBlank()){
+                if (text.isNullOrBlank()) {
                     viewModel.showKeywordSuggests()
-                }else {
+                } else {
                     emitter.onNext(text.toString())
                 }
             }
@@ -143,11 +151,11 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(1, TimeUnit.SECONDS)
             .subscribe { text ->
-               makeSearch(text , viewModel.searchFilterOption.value!!)
+                makeSearch(text, viewModel.searchFilterOption.value!!)
             }
     }
 
-    private fun makeSearch(text:String? , searchFilter: SearchFilter){
+    private fun makeSearch(text: String?, searchFilter: SearchFilter) {
         if (!text.isNullOrEmpty()) {
             when (searchFilter) {
                 SearchFilter.Character -> viewModel.characterSearch(null, text)

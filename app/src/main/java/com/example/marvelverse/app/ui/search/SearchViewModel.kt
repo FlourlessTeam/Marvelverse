@@ -12,6 +12,7 @@ import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
 import com.example.marvelverse.app.ui.search.utils.SearchEvent
 import com.example.marvelverse.app.ui.search.utils.SearchFilter
 import com.example.marvelverse.app.ui.search.utils.SearchItems
+import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
@@ -23,7 +24,7 @@ import com.example.marvelverse.domain.entities.Event
 class SearchViewModel : BaseViewModel(), CharacterInteractionListener,
     ComicInteractionListener, EventInteractionListener {
 
-    private val repositry = MarvelRepository
+    private val repositry = MarvelRepository()
 
     val searchFilterOption = MutableLiveData(SearchFilter.Character)
 
@@ -38,6 +39,11 @@ class SearchViewModel : BaseViewModel(), CharacterInteractionListener,
     private val _eventList = MutableLiveData<DataState<Event>>()
     val eventList: LiveData<DataState<Event>>
         get() = _eventList
+
+    // TODO: Remove
+    fun initDb(db: MarvelDatabase) {
+        repositry.db = db
+    }
 
 
     private val _searchEvent = MutableLiveData<SearchEvent>()
@@ -61,15 +67,15 @@ class SearchViewModel : BaseViewModel(), CharacterInteractionListener,
 
     }
 
-    fun comicSearch(limit: Int?, title: String?) {
+    fun comicSearch(limit: Int?, title: String) {
         _comicList.postValue(DataState.Loading)
-        repositry.searchComics(limit, title).applySchedulers()
+        repositry.searchCachedComics(limit, title).applySchedulers()
             .subscribe(::onComicsSearchSuccess, ::onSearchError).addTo(disposables)
     }
 
-    fun characterSearch(limit: Int?, title: String?) {
+    fun characterSearch(limit: Int?, title: String) {
         _characterList.postValue(DataState.Loading)
-        repositry.searchCharacters(limit, title).applySchedulers()
+        repositry.searchCacheCharacters(limit, title).applySchedulers()
             .subscribe(::onCharacterSearchSuccess, ::onSearchError).addTo(disposables)
     }
 
@@ -79,9 +85,9 @@ class SearchViewModel : BaseViewModel(), CharacterInteractionListener,
         _eventList.postValue(DataState.Error(throwable))
     }
 
-    fun eventSearch(limit: Int?, title: String?) {
+    fun eventSearch(limit: Int?, title: String) {
         _eventList.postValue(DataState.Loading)
-        repositry.searchEvents(limit, title).applySchedulers()
+        repositry.searchCachedEvents(limit, title).applySchedulers()
             .subscribe(::onEventSearchSuccess, ::onSearchError).addTo(disposables)
     }
 
@@ -138,6 +144,8 @@ class SearchViewModel : BaseViewModel(), CharacterInteractionListener,
         _comicList.postValue(DataState.ShowKeywordSuggests)
         _eventList.postValue(DataState.ShowKeywordSuggests)
     }
+
+
 
 
 

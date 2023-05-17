@@ -22,8 +22,11 @@ import com.example.marvelverse.domain.mapper.EventMapper
 import com.example.marvelverse.domain.mapper.EventSearchEntityToEventMapper
 import com.example.marvelverse.domain.mapper.EventToEventSearchEntityMapper
 import com.example.marvelverse.domain.mapper.SeriesMapper
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 
 class MarvelRepository() {
@@ -77,7 +80,8 @@ class MarvelRepository() {
 
     private fun cacheCharacters(characters: Single<List<Character>>) {
         val cachedResponse = characters.blockingGet().map { charToCharSearchEntityMapper.map(it) }
-        db.searchDao.insertCharacters(cachedResponse).subscribe()
+        db.searchDao.insertCharacters(cachedResponse).subscribeOn(Schedulers.io()).observeOn(
+            AndroidSchedulers.mainThread()).subscribe()
     }
 
     fun searchComics(limit: Int? = null, title: String? = null): Single<List<Comic>> {
@@ -112,7 +116,8 @@ class MarvelRepository() {
 
     private fun cacheComics(comics: Single<List<Comic>>) {
         val cachedResponse = comics.blockingGet().map { comicToComicSearchEntityMapper.map(it) }
-        db.searchDao.insertComics(cachedResponse).subscribe()
+        db.searchDao.insertComics(cachedResponse).subscribeOn(Schedulers.io()).observeOn(
+            AndroidSchedulers.mainThread()).subscribe()
     }
 
     fun searchEvents(limit: Int? = null, title: String? = null): Single<List<Event>> {
@@ -147,7 +152,8 @@ class MarvelRepository() {
 
     private fun cacheEvents(events: Single<List<Event>>) {
         val cachedResponse = events.blockingGet().map { eventToEventSearchEntity.map(it) }
-        db.searchDao.insertEvents(cachedResponse).subscribe()
+        db.searchDao.insertEvents(cachedResponse).subscribeOn(Schedulers.io()).observeOn(
+            AndroidSchedulers.mainThread()).subscribe()
     }
 
 
