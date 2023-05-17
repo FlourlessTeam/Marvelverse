@@ -70,12 +70,17 @@ object MarvelRepository {
                 charSearchEntityToCharMapper.map(it)
             })
         } else {
-            val response = searchCharacters(limit, name)
-            val cachedResponse = response.blockingGet().map {
-                charToCharSearchEntityMapper.map(it)
+            try {
+                val response = searchCharacters(limit, name)
+                val cachedResponse = response.blockingGet().map {
+                    charToCharSearchEntityMapper.map(it)
+                }
+                db.searchCharacterDao.insertCharacters(cachedResponse).subscribe()
+                return response
+            } catch (e: Exception) {
+                return Single.just(emptyList())
             }
-            db.searchCharacterDao.insertCharacters(cachedResponse).subscribe()
-            return response
+
         }
     }
 
@@ -86,12 +91,17 @@ object MarvelRepository {
                 comicSearchEntityToComicMapper.map(it)
             })
         } else {
-            val response = searchComics(limit, title)
-            val cachedResponse = response.blockingGet().map {
-                comicToComicSearchEntityMapper.map(it)
+            try {
+                val response = searchComics(limit, title)
+                val cachedResponse = response.blockingGet().map {
+                    comicToComicSearchEntityMapper.map(it)
+                }
+                db.searchComicDao.insertComics(cachedResponse).subscribe()
+                return response
+            } catch (e: Exception) {
+                return Single.just(emptyList())
             }
-            db.searchComicDao.insertComics(cachedResponse).subscribe()
-            return response
+
         }
     }
 
@@ -103,12 +113,16 @@ object MarvelRepository {
                 eventSearchEntityToEventMapper.map(it)
             })
         } else {
-            val response = searchEvents(limit, title)
-            val cachedResponse = response.blockingGet().map {
-                eventToEventSearchEntity.map(it)
+            try {
+                val response = searchEvents(limit, title)
+                val cachedResponse = response.blockingGet().map {
+                    eventToEventSearchEntity.map(it)
+                }
+                db.searchEventDao.insertEvents(cachedResponse).subscribe()
+                return response
+            } catch (e: Exception) {
+                return Single.just(emptyList())
             }
-            db.searchEventDao.insertEvents(cachedResponse).subscribe()
-            return response
         }
     }
 
