@@ -21,6 +21,8 @@ import io.reactivex.rxjava3.core.Single
 class HomeViewModel : BaseViewModel(), ParentInteractionListener,
     CharacterInteractionListener, EventInteractionListener, ComicInteractionListener,
     SeriesInteractionListener {
+    private val repositry = MarvelRepository()
+
     private val _homeItems: MutableLiveData<DataState<HomeItem>> = MutableLiveData()
     val homeItems: LiveData<DataState<HomeItem>> = _homeItems
 
@@ -34,19 +36,7 @@ class HomeViewModel : BaseViewModel(), ParentInteractionListener,
     @SuppressLint("CheckResult")
     fun getDataForHomeItems() {
         _homeItems.postValue(DataState.Loading)
-        Single.zip(
-            MarvelRepository.getRandomComics(),
-            MarvelRepository.getRandomEvents(),
-            MarvelRepository.getRandomCharacters(),
-            MarvelRepository.getRandomSeries()
-        ) { comics, events, characters, series ->
-            listOf(
-                HomeItem.CharactersItem(characters),
-                HomeItem.ComicsItem(comics),
-                HomeItem.EventsItem(events),
-                HomeItem.SeriesItem(series)
-            )
-        }.subscribeBy(::OnSuccess, ::OnError)
+        repositry.getHomeItems().subscribeBy(::OnSuccess, ::OnError)
     }
 
     fun OnSuccess(homeItem: List<HomeItem>) {

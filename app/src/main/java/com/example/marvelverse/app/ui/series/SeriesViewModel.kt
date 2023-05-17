@@ -11,6 +11,7 @@ import com.example.marvelverse.domain.entities.Series
 import com.example.marvelverse.utilites.SingleEventState
 
 class SeriesViewModel : BaseViewModel(), SeriesInteractionListener {
+    private val repositry = MarvelRepository()
 
     private var _series = MutableLiveData<DataState<Series>>()
     val series: LiveData<DataState<Series>> get() = _series
@@ -24,7 +25,7 @@ class SeriesViewModel : BaseViewModel(), SeriesInteractionListener {
 
     private fun getSeries() {
         _series.postValue(DataState.Loading)
-        MarvelRepository.searchSeries().subscribeBy(::onSeriesSuccess, ::onSeriesError)
+        repositry.searchSeries().subscribeBy(::onSeriesSuccess, ::onSeriesError)
     }
     fun onSeriesSuccess(it: List<Series>) {
         if (it.isEmpty()) {
