@@ -2,17 +2,20 @@ package com.example.marvelverse.data.repositories
 
 import com.example.marvelverse.data.dataSources.local.FakeLocalData
 import com.example.marvelverse.data.dataSources.local.MarvelDatabase
-import com.example.marvelverse.data.dataSources.local.entities.search.CharacterSearchEntity
-import com.example.marvelverse.data.dataSources.local.entities.search.ComicSearchEntity
-import com.example.marvelverse.data.dataSources.local.entities.search.EventSearchEntity
 import com.example.marvelverse.data.dataSources.remote.RetrofitClient
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.domain.entities.Series
 import com.example.marvelverse.domain.mapper.CharacterMapper
+import com.example.marvelverse.domain.mapper.CharacterSearchEntityToCharacterMapper
+import com.example.marvelverse.domain.mapper.CharacterToCharacterSearchEntityMapper
 import com.example.marvelverse.domain.mapper.ComicMapper
+import com.example.marvelverse.domain.mapper.ComicSearchEntityToComicMapper
+import com.example.marvelverse.domain.mapper.ComicToComicSearchEntityMapper
 import com.example.marvelverse.domain.mapper.EventMapper
+import com.example.marvelverse.domain.mapper.EventSearchEntityToEventMapper
+import com.example.marvelverse.domain.mapper.EventToEventSearchEntityMapper
 import com.example.marvelverse.domain.mapper.SeriesMapper
 import io.reactivex.rxjava3.core.Single
 
@@ -22,10 +25,17 @@ object MarvelRepository {
         RetrofitClient.marvelApiServices
     }
     private val characterMapper = CharacterMapper()
+    private val charToCharSearchEntityMapper = CharacterToCharacterSearchEntityMapper()
+    private val charSearchEntityToCharMapper = CharacterSearchEntityToCharacterMapper()
+    private val comicToComicSearchEntityMapper = ComicToComicSearchEntityMapper()
+    private val comicSearchEntityToComicMapper = ComicSearchEntityToComicMapper()
+    private val eventToEventSearchEntity = EventToEventSearchEntityMapper()
+    private val eventSearchEntityToEventMapper = EventSearchEntityToEventMapper()
     private val comicMapper = ComicMapper()
     private val eventMapper = EventMapper()
     private val seriesMapper = SeriesMapper()
     private val fakeLocalData = FakeLocalData()
+
     // TODO: Remove
     lateinit var db: MarvelDatabase
 
@@ -57,30 +67,12 @@ object MarvelRepository {
         val savedChars = db.searchCharacterDao.getAllCharacters(name).blockingGet()
         return if (savedChars.isNotEmpty()) {
             Single.just(savedChars.map {
-                Character(
-                    it.id,
-                    it.name,
-                    it.description,
-                    it.series,
-                    it.comics,
-                    it.stories,
-                    it.events,
-                    it.thumbnail
-                )
+                charSearchEntityToCharMapper.map(it)
             })
         } else {
             val response = searchCharacters(limit, name)
             val cachedResponse = response.blockingGet().map {
-                CharacterSearchEntity(
-                    it.id,
-                    it.name,
-                    it.description,
-                    it.seriesUri,
-                    it.comicsUri,
-                    it.storiesUri,
-                    it.eventsUri,
-                    it.imageUrl
-                )
+                charToCharSearchEntityMapper.map(it)
             }
             db.searchCharacterDao.insertCharacters(cachedResponse).subscribe()
             return response
@@ -91,36 +83,12 @@ object MarvelRepository {
         val savedComics = db.searchComicDao.getAllComics(title).blockingGet()
         return if (savedComics.isNotEmpty()) {
             Single.just(savedComics.map {
-                Comic(
-                    it.id,
-                    it.title,
-                    it.description,
-                    it.resourceURI,
-                    it.pageCount,
-                    it.series,
-                    it.characters,
-                    it.creators,
-                    it.stories,
-                    it.events,
-                    it.thumbnail
-                )
+                comicSearchEntityToComicMapper.map(it)
             })
         } else {
             val response = searchComics(limit, title)
             val cachedResponse = response.blockingGet().map {
-                ComicSearchEntity(
-                    it.id,
-                    it.title,
-                    it.description,
-                    it.resourceURI,
-                    it.pageCount,
-                    it.seriesUri,
-                    it.charactersUri,
-                    it.creatorsUri,
-                    it.storiesUri,
-                    it.eventsUri,
-                    it.imageUrl
-                )
+                comicToComicSearchEntityMapper.map(it)
             }
             db.searchComicDao.insertComics(cachedResponse).subscribe()
             return response
@@ -132,32 +100,12 @@ object MarvelRepository {
         val savedEvents = db.searchEventDao.getAllEvents(title).blockingGet()
         return if (savedEvents.isNotEmpty()) {
             Single.just(savedEvents.map {
-                Event(
-                    it.id,
-                    it.title,
-                    it.description,
-                    it.series,
-                    it.comics,
-                    it.creators,
-                    it.stories,
-                    it.characters,
-                    it.thumbnail
-                )
+                eventSearchEntityToEventMapper.map(it)
             })
         } else {
             val response = searchEvents(limit, title)
             val cachedResponse = response.blockingGet().map {
-                EventSearchEntity(
-                    it.id,
-                    it.title,
-                    it.description,
-                    it.seriesUri,
-                    it.comicsUri,
-                    it.creatorsUri,
-                    it.storiesUri,
-                    it.charactersUri,
-                    it.imageUrl
-                )
+                eventToEventSearchEntity.map(it)
             }
             db.searchEventDao.insertEvents(cachedResponse).subscribe()
             return response
