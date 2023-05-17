@@ -14,7 +14,9 @@ import com.example.marvelverse.databinding.FragmentDetailsCharacterBinding
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.domain.entities.Series
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailsCharacterFragment :
     InnerFragment<FragmentDetailsCharacterBinding>(FragmentDetailsCharacterBinding::inflate) {
     private val viewModel: DetailsCharacterViewModel by viewModels()

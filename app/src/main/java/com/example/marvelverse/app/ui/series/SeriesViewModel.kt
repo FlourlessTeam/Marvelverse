@@ -9,9 +9,11 @@ import com.example.marvelverse.app.ui.interfaces.SeriesInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.Series
 import com.example.marvelverse.utilites.SingleEventState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SeriesViewModel : BaseViewModel(), SeriesInteractionListener {
-    private val repositry = MarvelRepository()
+@HiltViewModel
+class SeriesViewModel @Inject constructor(private val repository : MarvelRepository) : BaseViewModel(), SeriesInteractionListener {
 
     private var _series = MutableLiveData<DataState<Series>>()
     val series: LiveData<DataState<Series>> get() = _series
@@ -25,16 +27,16 @@ class SeriesViewModel : BaseViewModel(), SeriesInteractionListener {
 
     private fun getSeries() {
         _series.postValue(DataState.Loading)
-        repositry.searchSeries().subscribeBy(::onSeriesSuccess, ::onSeriesError)
+        repository.searchSeries().subscribeBy(::onSeriesSuccess, ::onSeriesError)
     }
-    fun onSeriesSuccess(it: List<Series>) {
+    private fun onSeriesSuccess(it: List<Series>) {
         if (it.isEmpty()) {
             _series.postValue(DataState.Empty)
         } else {
             _series.postValue(DataState.Success(it))
         }
     }
-    fun onSeriesError(it: Throwable) {
+    private fun onSeriesError(it: Throwable) {
         _series.postValue(DataState.Error(it))
     }
 

@@ -13,7 +13,9 @@ import com.example.marvelverse.databinding.FragmentSeriesDetailsBinding
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SeriesDetailsFragment :
     InnerFragment<FragmentSeriesDetailsBinding>(FragmentSeriesDetailsBinding::inflate) {
     private val viewModel: SeriesDetailsViewModel by viewModels()
@@ -54,11 +56,11 @@ class SeriesDetailsFragment :
 
     }
 
-    fun handleEvent(event: DetailsSeries) {
+    fun handleEvent(event: SeriesDetailsEvents) {
         when (event) {
-            is DetailsSeries.ClickCharacterSeries -> navigateToCharacterDetails(event.character)
-            is DetailsSeries.ClickComicSeries -> navigateToComicDetails(event.comic)
-            is DetailsSeries.ClickEventSeries -> navigateToEventDetails(event.event)
+            is SeriesDetailsEvents.ClickCharacterSeries -> navigateToCharacterDetails(event.character)
+            is SeriesDetailsEvents.ClickComicSeries -> navigateToComicDetails(event.comic)
+            is SeriesDetailsEvents.ClickEventSeries -> navigateToEventDetails(event.event)
         }
     }
 

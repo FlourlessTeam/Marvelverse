@@ -7,7 +7,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.marvelverse.app.ui.base.InnerFragment
 import com.example.marvelverse.databinding.FragmentCharactersBinding
 import com.example.marvelverse.domain.entities.Character
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CharactersFragment :
     InnerFragment<FragmentCharactersBinding>(FragmentCharactersBinding::inflate) {
     private val viewModel: CharactersViewModel by viewModels()
