@@ -20,12 +20,13 @@ import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
 
 import com.example.marvelverse.utilites.DataState
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
-
+@AndroidEntryPoint
 class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
     private val viewModel: SearchViewModel by viewModels()
@@ -40,9 +41,6 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
             }
         }
 
-        val db = MarvelDatabase.getInstance(requireContext())
-        // TODO: Remove
-        viewModel.initDb(db)
         viewModel.searchFilterOption.observe(viewLifecycleOwner) {
             handleRecyclerAdapters()
 

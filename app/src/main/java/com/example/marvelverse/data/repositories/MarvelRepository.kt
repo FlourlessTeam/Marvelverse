@@ -18,6 +18,7 @@ import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.domain.entities.Series
 import com.example.marvelverse.domain.mapper.MappersContainer
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 
@@ -54,7 +55,7 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun getCachedCharacters(name: String): List<Character> {
-        val savedEntities = searchDao.getAllCharacters(name).blockingGet()
+        val savedEntities = searchDao.getAllCharacters(name).subscribeOn(Schedulers.io()).blockingGet()
         return savedEntities.map { characterSearchEntity ->
             characterSearchEntity.mapToCharacter()
         }
@@ -64,7 +65,7 @@ class MarvelRepository @Inject constructor(
         val cachedResponse = characters.blockingGet().map { character ->
             character.MapToCharacterEntity()
         }
-        searchDao.insertCharacters(cachedResponse).subscribe().dispose()
+        searchDao.insertCharacters(cachedResponse).subscribeOn(Schedulers.io()).subscribe().dispose()
     }
 
     fun searchComics(limit: Int? = null, title: String? = null): Single<List<Comic>> {
@@ -92,13 +93,13 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun getCachedComics(title: String): List<Comic> {
-        val savedEntities = searchDao.getAllComics(title).blockingGet()
+        val savedEntities = searchDao.getAllComics(title).subscribeOn(Schedulers.io()).blockingGet()
         return savedEntities.map { comicSearchEntity -> comicSearchEntity.mapToComic() }
     }
 
     private fun cacheComics(comics: Single<List<Comic>>) {
         val cachedResponse = comics.blockingGet().map { comic -> comic.MapToComicEntity() }
-        searchDao.insertComics(cachedResponse).subscribe().dispose()
+        searchDao.insertComics(cachedResponse).subscribeOn(Schedulers.io()).subscribe().dispose()
     }
 
     fun searchEvents(limit: Int? = null, title: String? = null): Single<List<Event>> {
@@ -126,13 +127,13 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun getCachedEvents(title: String): List<Event> {
-        val savedEntities = searchDao.getAllEvents(title).blockingGet()
+        val savedEntities = searchDao.getAllEvents(title).subscribeOn(Schedulers.io()).blockingGet()
         return savedEntities.map { eventSearchEntity -> eventSearchEntity.mapToEvent() }
     }
 
     private fun cacheEvents(events: Single<List<Event>>) {
         val cachedResponse = events.blockingGet().map { event -> event.MapToEventEntity() }
-        searchDao.insertEvents(cachedResponse).subscribe().dispose()
+        searchDao.insertEvents(cachedResponse).subscribeOn(Schedulers.io()).subscribe().dispose()
     }
 
 
