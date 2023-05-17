@@ -75,8 +75,6 @@ fun RecyclerView.setRecyclerAdapter(
 				adapter.setItems((items as List<Event>))
 				this.adapter = adapter
 			}
-
-			else -> {}
 		}
 	}
 }
@@ -104,9 +102,8 @@ fun SearchView.searchViewListener(viewModel: SearchViewModel) {
 			if (text.isNotEmpty()) {
 				when (viewModel.searchFilterOption.value!!) {
 					SearchFilter.Character -> viewModel.characterSearch(null, text)
-					//  SearchFilter.Comic -> viewModel.comicSearch(null, text)
+					SearchFilter.Comic -> viewModel.comicSearch(null, text)
 					SearchFilter.Event -> viewModel.eventSearch(null, text)
-					else -> {}
 				}
 			} else {
 				viewModel.setItemListStateEmpty()

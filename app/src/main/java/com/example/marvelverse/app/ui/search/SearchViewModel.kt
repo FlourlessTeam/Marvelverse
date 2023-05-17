@@ -48,9 +48,9 @@ class SearchViewModel :
     fun initDb(db: MarvelDatabase) {
         MarvelRepository.db = db
     }
-      fun comicSearch(limit: Int?, title: String?) {
+      fun comicSearch(limit: Int?, title: String) {
           _itemList.postValue(DataState.Loading)
-              repositry.searchComics(limit, title)
+              repositry.searchCachedComics(limit, title)
                   .applySchedulers()
                   .subscribe(::onComicsSearchSuccess, ::onSearchError)
                   .addTo(disposables)
