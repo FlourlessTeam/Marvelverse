@@ -31,21 +31,4 @@ import com.example.marvelverse.data.dataSources.local.entities.search.EventSearc
 abstract class MarvelDatabase : RoomDatabase() {
     abstract val searchDao: SearchDao
     abstract val homeDao: HomeDao
-
-    companion object {
-        @Volatile
-        private var instance: MarvelDatabase? = null
-        fun getInstance(context: Context): MarvelDatabase {
-            return instance ?: synchronized(this) {
-                buildDatabase(context).also { instance = it }
-            }
-
-        }
-
-        private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context, MarvelDatabase::class.java, "app_database").build()
-
-
-    }
-
 }

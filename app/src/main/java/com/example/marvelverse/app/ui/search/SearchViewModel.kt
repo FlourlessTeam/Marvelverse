@@ -45,11 +45,6 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
 		searchFilterOption.postValue(SearchFilter.Character)
 	}
 
-	// TODO: Remove
-	fun initDb(db: MarvelDatabase) {
-		repository.db = db
-	}
-
 	fun comicSearch(limit: Int?, title: String) {
 		_itemList.postValue(DataState.Loading)
 		repository.searchCachedComics(limit, title)
