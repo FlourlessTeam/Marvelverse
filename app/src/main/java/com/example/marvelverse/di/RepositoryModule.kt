@@ -33,15 +33,13 @@ object RepositoryModule {
 		fakeLocalData: FakeLocalData,
         homeDao: HomeDao,
         searchDao: SearchDao,
-		disposables: CompositeDisposable,
 	): MarvelRepository {
         return MarvelRepository(
             marvelApiServices,
             dataMapper,
             fakeLocalData,
             homeDao,
-            searchDao,
-            disposables
+            searchDao
         )
     }
 
@@ -100,9 +98,4 @@ object RepositoryModule {
         return FakeLocalData()
     }
 
-
-    @Provides
-    fun provideCompositeDisposable(): CompositeDisposable {
-        return CompositeDisposable()
-    }
 }
