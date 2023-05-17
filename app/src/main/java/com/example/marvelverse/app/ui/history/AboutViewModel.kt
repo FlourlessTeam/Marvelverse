@@ -9,7 +9,7 @@ import com.example.marvelverse.utilites.DataState
 
 class AboutViewModel : BaseViewModel() {
 
-    private val repository = MarvelRepository
+    private val repository = MarvelRepository()
 
     private val _currentItem = MutableLiveData<DataState<About>>()
     val currentItem: LiveData<DataState<About>>

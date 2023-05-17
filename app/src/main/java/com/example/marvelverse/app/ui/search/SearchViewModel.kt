@@ -27,7 +27,7 @@ class SearchViewModel :
     BaseViewModel(), BottomSheetListener, CharacterInteractionListener,
     ComicInteractionListener, EventInteractionListener {
 
-    private val repositry = MarvelRepository
+    private val repositry = MarvelRepository()
 
     var searchFilterOption: MutableLiveData<SearchFilter> =
         MutableLiveData<SearchFilter>(SearchFilter.Character)
@@ -46,7 +46,7 @@ class SearchViewModel :
 
     // TODO: Remove
     fun initDb(db: MarvelDatabase) {
-        MarvelRepository.db = db
+        repositry.db = db
     }
       fun comicSearch(limit: Int?, title: String) {
           _itemList.postValue(DataState.Loading)
