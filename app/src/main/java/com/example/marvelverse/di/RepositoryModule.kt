@@ -1,6 +1,9 @@
 package com.example.marvelverse.di
 
 import com.example.marvelverse.data.dataSources.local.FakeLocalData
+import com.example.marvelverse.data.dataSources.local.MarvelDatabase
+import com.example.marvelverse.data.dataSources.local.dao.HomeDao
+import com.example.marvelverse.data.dataSources.local.dao.SearchDao
 import com.example.marvelverse.data.dataSources.remote.MarvelApiServices
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.mapper.CharacterMapper
@@ -12,98 +15,94 @@ import com.example.marvelverse.domain.mapper.ComicToComicSearchEntityMapper
 import com.example.marvelverse.domain.mapper.EventMapper
 import com.example.marvelverse.domain.mapper.EventSearchEntityToEventMapper
 import com.example.marvelverse.domain.mapper.EventToEventSearchEntityMapper
+import com.example.marvelverse.domain.mapper.MappersContainer
 import com.example.marvelverse.domain.mapper.SeriesMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
-	@Provides
-	fun provideMarvelRepository(
+    @Provides
+    fun provideMarvelRepository(
 		marvelApiServices: MarvelApiServices,
-		characterMapper: CharacterMapper,
-		comicMapper: ComicMapper,
-		eventMapper: EventMapper,
-		seriesMapper: SeriesMapper,
-		charToCharSearchEntityMapper: CharacterToCharacterSearchEntityMapper,
-		charSearchEntityToCharMapper: CharacterSearchEntityToCharacterMapper,
-		comicToComicSearchEntityMapper: ComicToComicSearchEntityMapper,
-		comicSearchEntityToComicMapper: ComicSearchEntityToComicMapper,
-		eventToEventSearchEntity: EventToEventSearchEntityMapper,
-		eventSearchEntityToEventMapper: EventSearchEntityToEventMapper,
-		fakeLocalData: FakeLocalData
+		dataMapper: MappersContainer,
+		fakeLocalData: FakeLocalData,
+        homeDao: HomeDao,
+        searchDao: SearchDao,
+		disposables: CompositeDisposable,
 	): MarvelRepository {
-		return MarvelRepository(
-			marvelApiServices,
-			characterMapper,
-			comicMapper,
-			eventMapper,
-			seriesMapper,
-			charToCharSearchEntityMapper,
-			charSearchEntityToCharMapper,
-			comicToComicSearchEntityMapper,
-			comicSearchEntityToComicMapper,
-			eventToEventSearchEntity,
-			eventSearchEntityToEventMapper,
-			fakeLocalData
-		)
-	}
+        return MarvelRepository(
+            marvelApiServices,
+            dataMapper,
+            fakeLocalData,
+            homeDao,
+            searchDao,
+            disposables
+        )
+    }
 
-	@Provides
-	fun provideCharacterMapper(): CharacterMapper {
-		return CharacterMapper()
-	}
+    @Provides
+    fun provideCharacterMapper(): CharacterMapper {
+        return CharacterMapper()
+    }
 
-	@Provides
-	fun provideCharToCharSearchEntityMapper(): CharacterToCharacterSearchEntityMapper {
-		return CharacterToCharacterSearchEntityMapper()
-	}
+    @Provides
+    fun provideCharToCharSearchEntityMapper(): CharacterToCharacterSearchEntityMapper {
+        return CharacterToCharacterSearchEntityMapper()
+    }
 
-	@Provides
-	fun provideCharSearchEntityToCharMapper(): CharacterSearchEntityToCharacterMapper {
-		return CharacterSearchEntityToCharacterMapper()
-	}
+    @Provides
+    fun provideCharSearchEntityToCharMapper(): CharacterSearchEntityToCharacterMapper {
+        return CharacterSearchEntityToCharacterMapper()
+    }
 
-	@Provides
-	fun provideComicToComicSearchEntityMapper(): ComicToComicSearchEntityMapper {
-		return ComicToComicSearchEntityMapper()
-	}
+    @Provides
+    fun provideComicToComicSearchEntityMapper(): ComicToComicSearchEntityMapper {
+        return ComicToComicSearchEntityMapper()
+    }
 
-	@Provides
-	fun provideComicSearchEntityToComicMapper(): ComicSearchEntityToComicMapper {
-		return ComicSearchEntityToComicMapper()
-	}
+    @Provides
+    fun provideComicSearchEntityToComicMapper(): ComicSearchEntityToComicMapper {
+        return ComicSearchEntityToComicMapper()
+    }
 
-	@Provides
-	fun provideEventToEventSearchEntityMapper(): EventToEventSearchEntityMapper {
-		return EventToEventSearchEntityMapper()
-	}
+    @Provides
+    fun provideEventToEventSearchEntityMapper(): EventToEventSearchEntityMapper {
+        return EventToEventSearchEntityMapper()
+    }
 
-	@Provides
-	fun provideEventSearchEntityToEventMapper(): EventSearchEntityToEventMapper {
-		return EventSearchEntityToEventMapper()
-	}
+    @Provides
+    fun provideEventSearchEntityToEventMapper(): EventSearchEntityToEventMapper {
+        return EventSearchEntityToEventMapper()
+    }
 
-	@Provides
-	fun provideComicMapper(): ComicMapper {
-		return ComicMapper()
-	}
+    @Provides
+    fun provideComicMapper(): ComicMapper {
+        return ComicMapper()
+    }
 
-	@Provides
-	fun provideEventMapper(): EventMapper {
-		return EventMapper()
-	}
+    @Provides
+    fun provideEventMapper(): EventMapper {
+        return EventMapper()
+    }
 
-	@Provides
-	fun provideSeriesMapper(): SeriesMapper {
-		return SeriesMapper()
-	}
+    @Provides
+    fun provideSeriesMapper(): SeriesMapper {
+        return SeriesMapper()
+    }
 
-	@Provides
-	fun provideFakeLocalData(): FakeLocalData {
-		return FakeLocalData()
-	}
+    @Provides
+    fun provideFakeLocalData(): FakeLocalData {
+        return FakeLocalData()
+    }
+
+
+    @Provides
+    fun provideCompositeDisposable(): CompositeDisposable {
+        return CompositeDisposable()
+    }
 }

@@ -10,6 +10,7 @@ import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
 import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
 import com.example.marvelverse.app.ui.interfaces.ParentInteractionListener
 import com.example.marvelverse.app.ui.interfaces.SeriesInteractionListener
+import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
@@ -30,11 +31,9 @@ class HomeViewModel @Inject constructor(private val repository: MarvelRepository
 
     private val _homeEvent: MutableLiveData<SingleEventState<HomeEvent>> = MutableLiveData()
     val homeEvent: LiveData<SingleEventState<HomeEvent>> = _homeEvent
-
     init {
         getDataForHomeItems()
     }
-
     @SuppressLint("CheckResult")
     fun getDataForHomeItems() {
         _homeItems.postValue(DataState.Loading)

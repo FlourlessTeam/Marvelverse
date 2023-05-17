@@ -20,9 +20,6 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        val db = MarvelDatabase.getInstance(requireContext())
-        // TODO: Remove
-        viewModel.initDb(db)
         viewModel.searchEvent.observe(viewLifecycleOwner) {
             it?.let {
                 handleEvent(it)
