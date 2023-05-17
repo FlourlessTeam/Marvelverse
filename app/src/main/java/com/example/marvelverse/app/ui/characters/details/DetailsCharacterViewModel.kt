@@ -13,12 +13,15 @@ import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.domain.entities.Series
 import com.example.marvelverse.utilites.SingleEventState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 
-class DetailsCharacterViewModel : BaseViewModel(), ComicInteractionListener,
+@HiltViewModel
+class DetailsCharacterViewModel @Inject constructor(private val repository :MarvelRepository): BaseViewModel(), ComicInteractionListener,
     EventInteractionListener,
     SeriesInteractionListener {
-    private val repositry = MarvelRepository()
+
     private val _character: MutableLiveData<DataState<Character>> = MutableLiveData()
     private val _comics: MutableLiveData<DataState<Comic>> = MutableLiveData()
     private val _events: MutableLiveData<DataState<Event>> = MutableLiveData()
@@ -39,10 +42,10 @@ class DetailsCharacterViewModel : BaseViewModel(), ComicInteractionListener,
 
     fun getEvent(url: String) {
         _events.postValue(DataState.Loading)
-        repositry.getEventsByUrl(url).subscribeBy(::OnEventSuccess, ::OnEventError)
+        repository.getEventsByUrl(url).subscribeBy(::onEventSuccess, ::onEventError)
     }
 
-    fun OnEventSuccess(it: List<Event>) {
+    private fun onEventSuccess(it: List<Event>) {
         if (it.isEmpty()) {
             _events.postValue(DataState.Empty)
         } else {
@@ -50,17 +53,17 @@ class DetailsCharacterViewModel : BaseViewModel(), ComicInteractionListener,
         }
     }
 
-    fun OnEventError(it: Throwable) {
+    private fun onEventError(it: Throwable) {
         _events.postValue(DataState.Error(it))
     }
 
     fun getComics(url: String) {
         _comics.postValue(DataState.Loading)
-        val single = repositry.getComicsByUrl(url)
-        single.subscribeBy(::OnComiesSuccess, ::OnComiesError)
+        val single = repository.getComicsByUrl(url)
+        single.subscribeBy(::onComicSuccess, ::onComicError)
     }
 
-    fun OnComiesSuccess(it: List<Comic>) {
+    private fun onComicSuccess(it: List<Comic>) {
         if (it.isEmpty()) {
             _comics.postValue(DataState.Empty)
         } else {
@@ -68,16 +71,16 @@ class DetailsCharacterViewModel : BaseViewModel(), ComicInteractionListener,
         }
     }
 
-    fun OnComiesError(it: Throwable) {
+    private fun onComicError(it: Throwable) {
         _comics.postValue(DataState.Error(it))
     }
 
     fun getSeries(url: String) {
         _series.postValue(DataState.Loading)
-        repositry.getSeriesByUrl(url).subscribeBy(::OnSeriesSuccess, ::OnSeriesError)
+        repository.getSeriesByUrl(url).subscribeBy(::onSeriesSuccess, ::onSeriesError)
     }
 
-    fun OnSeriesSuccess(it: List<Series>) {
+    private fun onSeriesSuccess(it: List<Series>) {
         if (it.isEmpty()) {
             _series.postValue(DataState.Empty)
         } else {
@@ -85,7 +88,7 @@ class DetailsCharacterViewModel : BaseViewModel(), ComicInteractionListener,
         }
     }
 
-    fun OnSeriesError(it: Throwable) {
+    private fun onSeriesError(it: Throwable) {
         _series.postValue(DataState.Error(it))
     }
 

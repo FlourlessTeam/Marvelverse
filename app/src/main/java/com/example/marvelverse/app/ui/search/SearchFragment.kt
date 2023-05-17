@@ -10,7 +10,9 @@ import com.example.marvelverse.databinding.FragmentSearchBinding
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
     private val viewModel: SearchViewModel by viewModels()

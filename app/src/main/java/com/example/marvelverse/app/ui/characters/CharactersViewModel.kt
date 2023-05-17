@@ -8,10 +8,12 @@ import com.example.marvelverse.app.ui.interfaces.CharacterInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.utilites.SingleEventState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
+@HiltViewModel
+class CharactersViewModel @Inject constructor(private val repository:MarvelRepository): BaseViewModel(), CharacterInteractionListener {
 
-class CharactersViewModel : BaseViewModel(), CharacterInteractionListener {
-    private val repositry = MarvelRepository()
     private var _characters = MutableLiveData<DataState<Character>>()
     val characters: LiveData<DataState<Character>> get() = _characters
 
@@ -24,16 +26,16 @@ class CharactersViewModel : BaseViewModel(), CharacterInteractionListener {
 
     private fun getCharacters() {
         _characters.postValue(DataState.Loading)
-        repositry.searchCharacters().subscribeBy(::onCharactersSuccess, ::onCharactersError)
+        repository.searchCharacters().subscribeBy(::onCharactersSuccess, ::onCharactersError)
     }
-    fun onCharactersSuccess(it: List<Character>) {
+    private fun onCharactersSuccess(it: List<Character>) {
         if (it.isEmpty()) {
             _characters.postValue(DataState.Empty)
         } else {
             _characters.postValue(DataState.Success(it))
         }
     }
-    fun onCharactersError(it: Throwable) {
+    private fun onCharactersError(it: Throwable) {
         _characters.postValue(DataState.Error(it))
     }
 

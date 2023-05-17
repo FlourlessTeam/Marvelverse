@@ -8,10 +8,13 @@ import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.utilites.SingleEventState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class EventsViewModel : BaseViewModel(), EventInteractionListener {
-
-    private val repositry = MarvelRepository()
+@HiltViewModel
+class EventsViewModel @Inject constructor(
+    private val repository:MarvelRepository
+): BaseViewModel(), EventInteractionListener {
 
     private var _event = MutableLiveData<DataState<Event>>()
     val event: LiveData<DataState<Event>> get() = _event
@@ -25,16 +28,16 @@ class EventsViewModel : BaseViewModel(), EventInteractionListener {
 
     private fun getEvent() {
         _event.postValue(DataState.Loading)
-        repositry.searchEvents().subscribeBy(::onEventSuccess, ::onEventError)
+        repository.searchEvents().subscribeBy(::onEventSuccess, ::onEventError)
     }
-    fun onEventSuccess(it: List<Event>) {
+    private fun onEventSuccess(it: List<Event>) {
         if (it.isEmpty()) {
             _event.postValue(DataState.Empty)
         } else {
             _event.postValue(DataState.Success(it))
         }
     }
-    fun onEventError(it: Throwable) {
+    private fun onEventError(it: Throwable) {
         _event.postValue(DataState.Error(it))
     }
 

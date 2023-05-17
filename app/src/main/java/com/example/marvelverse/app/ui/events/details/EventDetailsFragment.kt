@@ -14,8 +14,9 @@ import com.example.marvelverse.databinding.FragmentEventDetailsBinding
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Series
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class EventDetailsFragment :
     InnerFragment<FragmentEventDetailsBinding>(FragmentEventDetailsBinding::inflate) {
     private val args: EventDetailsFragmentArgs by navArgs()
