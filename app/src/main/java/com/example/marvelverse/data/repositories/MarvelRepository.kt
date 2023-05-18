@@ -200,15 +200,6 @@ class MarvelRepository @Inject constructor(
             } ?: emptyList()
         }
     }
-
-    fun getRandomEvents(): Single<List<Event>> {
-        return marvelApiServices.fetchEvents(50, null).map { baseResponse ->
-            baseResponse.data?.results?.shuffled()?.take(10)?.map { eventDto ->
-                eventDto.mapToEvent()
-            } ?: emptyList()
-        }
-    }
-
     fun getHomeItems(): Single<List<HomeItem>> {
         return Single.zip(
             getRandomCharacters(), getRandomComics(), getRandomSeries(), getRandomEvents()
@@ -221,6 +212,16 @@ class MarvelRepository @Inject constructor(
             )
         }
     }
+
+    fun getRandomEvents(): Single<List<Event>> {
+        return marvelApiServices.fetchEvents(50, null).map { baseResponse ->
+            baseResponse.data?.results?.shuffled()?.take(10)?.map { eventDto ->
+                eventDto.mapToEvent()
+            } ?: emptyList()
+        }
+    }
+
+
 
     fun getItems() = fakeLocalData.getAboutItems()
     private fun ComicDto.mapToComic(): Comic = dataMapper.comicMapper.map(this)
