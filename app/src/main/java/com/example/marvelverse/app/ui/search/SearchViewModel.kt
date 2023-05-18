@@ -16,6 +16,7 @@ import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.SearchKeyword
 import com.example.marvelverse.utilites.SingleEventState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -138,6 +139,10 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
         super.onCleared()
         disposables.dispose()
         repository.clearDisposables()
+    }
+
+    fun cacheKeyword(keyword: SearchKeyword) {
+        repository.saveKeyword(keyword)
     }
 
 }
