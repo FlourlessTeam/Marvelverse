@@ -13,15 +13,17 @@ import com.example.marvelverse.app.ui.comics.ComicAdapter
 import com.example.marvelverse.app.ui.events.EventsAdapter
 import com.example.marvelverse.app.ui.search.utils.SearchEvent
 import com.example.marvelverse.app.ui.search.utils.SearchFilter
+import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.databinding.FragmentSearchBinding
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
-import com.example.marvelverse.domain.entities.SearchKeyword
+
 import com.example.marvelverse.utilites.DataState
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 @AndroidEntryPoint
@@ -105,6 +107,9 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
                 makeSearch(text, SearchFilter.Event)
                 setupRecyclerView(viewModel.eventList, eventsAdapter)
             }
+
+            else -> {}
+
         }
     }
 
@@ -119,7 +124,7 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
     }
 
     private fun onChangeSelectedChip() {
-        binding.chipGroupSearchOption.setOnCheckedStateChangeListener { group, _ ->
+        binding.chipGroupSearchOption.setOnCheckedStateChangeListener { group, checkedIds ->
             val selectedSearchFilter = when (group.checkedChipId) {
                 binding.chipCharacter.id -> SearchFilter.Character
                 binding.chipComics.id -> SearchFilter.Comic
@@ -132,8 +137,8 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
     }
 
     private fun searchViewListener() {
-        Observable.create { emitter ->
-            binding.searchViewLayout.editText?.doOnTextChanged { text, _, _, _ ->
+        val observable = Observable.create<String> { emitter ->
+            binding.searchViewLayout.editText?.doOnTextChanged { text, start, before, count ->
                 if (text.isNullOrBlank()) {
                     viewModel.showKeywordSuggests()
                 } else {
@@ -144,9 +149,8 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(1, TimeUnit.SECONDS)
             .subscribe { text ->
-                viewModel.cacheKeyword(SearchKeyword(text))
                 makeSearch(text, viewModel.searchFilterOption.value!!)
-            }.dispose()
+            }
     }
 
     private fun makeSearch(text: String?, searchFilter: SearchFilter) {

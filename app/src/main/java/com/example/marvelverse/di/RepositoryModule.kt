@@ -20,8 +20,6 @@ import com.example.marvelverse.domain.mapper.EventMapper
 import com.example.marvelverse.domain.mapper.EventSearchEntityToEventMapper
 import com.example.marvelverse.domain.mapper.EventToEventEntityMapper
 import com.example.marvelverse.domain.mapper.EventToEventSearchEntityMapper
-import com.example.marvelverse.domain.mapper.KeywordEntityToKeywordMapper
-import com.example.marvelverse.domain.mapper.KeywordToKeywordEntityMapper
 import com.example.marvelverse.domain.mapper.MappersContainer
 import com.example.marvelverse.domain.mapper.SeriesEntityToSeriesMapper
 import com.example.marvelverse.domain.mapper.SeriesMapper
@@ -144,11 +142,5 @@ object RepositoryModule {
     fun provideFakeLocalData(): FakeLocalData {
         return FakeLocalData()
     }
-
-    @Provides
-    fun provideKeywordEntityToKeywordMapper() = KeywordEntityToKeywordMapper()
-
-    @Provides
-    fun provideKeywordToKeywordEntityMapper() = KeywordToKeywordEntityMapper()
 
 }
