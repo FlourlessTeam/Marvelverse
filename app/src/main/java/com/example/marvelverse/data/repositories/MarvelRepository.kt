@@ -4,6 +4,10 @@ import com.example.marvelverse.app.ui.home.HomeItem
 import com.example.marvelverse.data.dataSources.local.FakeLocalData
 import com.example.marvelverse.data.dataSources.local.dao.HomeDao
 import com.example.marvelverse.data.dataSources.local.dao.SearchDao
+import com.example.marvelverse.data.dataSources.local.entities.CharacterEntity
+import com.example.marvelverse.data.dataSources.local.entities.ComicEntity
+import com.example.marvelverse.data.dataSources.local.entities.EventEntity
+import com.example.marvelverse.data.dataSources.local.entities.SeriesEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.CharacterSearchEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.ComicSearchEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.EventSearchEntity
@@ -177,7 +181,7 @@ class MarvelRepository @Inject constructor(
         }
     }
 
-    fun getRandomCharacters(): Single<List<Character>> {
+    private fun getRandomCharacters(): Single<List<Character>> {
         return marvelApiServices.fetchCharacters(80, null).map { baseResponse ->
             baseResponse.data?.results?.shuffled()?.take(20)?.map { characterDto ->
                 characterDto.mapToCharacter()
@@ -185,7 +189,7 @@ class MarvelRepository @Inject constructor(
         }
     }
 
-    fun getRandomComics(): Single<List<Comic>> {
+    private fun getRandomComics(): Single<List<Comic>> {
         return marvelApiServices.fetchComics(50, null).map { baseResponse ->
             baseResponse.data?.results?.shuffled()?.take(10)?.map { comicDto ->
                 comicDto.mapToComic()
@@ -193,7 +197,7 @@ class MarvelRepository @Inject constructor(
         }
     }
 
-    fun getRandomSeries(): Single<List<Series>> {
+    private fun getRandomSeries(): Single<List<Series>> {
         return marvelApiServices.fetchSeries(50, null).map { baseResponse ->
             baseResponse.data?.results?.shuffled()?.take(10)?.map { seriesDto ->
                 seriesDto.mapToSeries()
@@ -204,16 +208,39 @@ class MarvelRepository @Inject constructor(
         return Single.zip(
             getRandomCharacters(), getRandomComics(), getRandomSeries(), getRandomEvents()
         ) { characters, comics, series, events ->
+            homeDao.insertCharacters(characters.map { it.mapToCharacterEntity() })
+            homeDao.insertComics(comics.map { it.mapToComicEntity() })
+            homeDao.insertSeries(series.map { it.mapToSeriesEntity() })
+            homeDao.insertEvents(events.map { it.mapToEventEntity() })
             listOf(
                 HomeItem.CharactersItem(characters),
                 HomeItem.ComicsItem(comics),
                 HomeItem.EventsItem(events),
                 HomeItem.SeriesItem(series)
             )
+        }.onErrorReturn {
+            val chars = homeDao.getAllCharacters().map { it.map { it.mapToChar() } }.blockingGet()
+            val comics = homeDao.getAllComics().map { it.map { it.mapToComic() } }.blockingGet()
+            val events = homeDao.getAllEvents().map { it.map { it.mapToEvent() } }.blockingGet()
+            val series = homeDao.getAllSeries().map { it.map { it.mapToSeries() } }.blockingGet()
+            if (chars.isEmpty() &&
+                comics.isEmpty() &&
+                events.isEmpty() &&
+                series.isEmpty()
+            ) {
+                throw it
+            } else {
+                listOf(
+                    HomeItem.CharactersItem(chars),
+                    HomeItem.ComicsItem(comics),
+                    HomeItem.EventsItem(events),
+                    HomeItem.SeriesItem(series)
+                )
+            }
         }
     }
 
-    fun getRandomEvents(): Single<List<Event>> {
+    private fun getRandomEvents(): Single<List<Event>> {
         return marvelApiServices.fetchEvents(50, null).map { baseResponse ->
             baseResponse.data?.results?.shuffled()?.take(10)?.map { eventDto ->
                 eventDto.mapToEvent()
@@ -246,6 +273,20 @@ class MarvelRepository @Inject constructor(
 
     private fun EventSearchEntity.mapToEvent(): Event =
         dataMapper.eventSearchEntityToEventMapper.map(this)
+
+    private fun CharacterEntity.mapToChar() = dataMapper.characterEntityToCharacterMapper.map(this)
+    private fun ComicEntity.mapToComic() = dataMapper.comicEntityToComicMapper.map(this)
+    private fun SeriesEntity.mapToSeries() = dataMapper.seriesEntityToSeriesMapper.map(this)
+    private fun EventEntity.mapToEvent() = dataMapper.eventEntityToEventMapper.map(this)
+    private fun Series.mapToSeriesEntity() = dataMapper.seriesToSeriesEntityMapper.map(this)
+
+    private fun Event.mapToEventEntity() = dataMapper.eventToEventEntityMapper.map(this)
+    private fun Character.mapToCharacterEntity(): CharacterEntity =
+        dataMapper.characterToCharacterEntityMapper.map(this)
+
+    private fun Comic.mapToComicEntity(): ComicEntity =
+        dataMapper.comicToComicEntityMapper.map(this)
+
 
 
 }
