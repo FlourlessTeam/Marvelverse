@@ -13,30 +13,29 @@ import com.example.marvelverse.app.ui.comics.ComicAdapter
 import com.example.marvelverse.app.ui.events.EventsAdapter
 import com.example.marvelverse.app.ui.search.utils.SearchEvent
 import com.example.marvelverse.app.ui.search.utils.SearchFilter
-import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.databinding.FragmentSearchBinding
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
-
 import com.example.marvelverse.utilites.DataState
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 @AndroidEntryPoint
 class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
     private val viewModel: SearchViewModel by viewModels()
+    private val disposable= CompositeDisposable()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.searchEvent.observe(viewLifecycleOwner) {
-            it?.let {
+        viewModel.searchEvent.observe(viewLifecycleOwner) { event ->
+            event.getUnHandledData()?.let {
                 handleEvent(it)
             }
         }
@@ -55,9 +54,7 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
             is SearchEvent.ClickCharacterEvent -> navigateToDetails(event.character)
             is SearchEvent.ClickComicEvent -> navigateToDetails(event.comic)
             is SearchEvent.ClickEventEvent -> navigateToDetails(event.event)
-            else -> {}
         }
-        viewModel.clearEvents()
     }
 
     private fun <T> navigateToDetails(element: T) {
@@ -79,8 +76,6 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
                     element
                 )
             )
-
-            else -> {}
         }
 
     }
@@ -108,8 +103,6 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
                 setupRecyclerView(viewModel.eventList, eventsAdapter)
             }
 
-            else -> {}
-
         }
     }
 
@@ -124,7 +117,7 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
     }
 
     private fun onChangeSelectedChip() {
-        binding.chipGroupSearchOption.setOnCheckedStateChangeListener { group, checkedIds ->
+        binding.chipGroupSearchOption.setOnCheckedStateChangeListener { group, _ ->
             val selectedSearchFilter = when (group.checkedChipId) {
                 binding.chipCharacter.id -> SearchFilter.Character
                 binding.chipComics.id -> SearchFilter.Comic
@@ -137,8 +130,8 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
     }
 
     private fun searchViewListener() {
-        val observable = Observable.create<String> { emitter ->
-            binding.searchViewLayout.editText?.doOnTextChanged { text, start, before, count ->
+        val observable = Observable.create{ emitter ->
+            binding.searchViewLayout.editText?.doOnTextChanged { text, _, _, _ ->
                 if (text.isNullOrBlank()) {
                     viewModel.showKeywordSuggests()
                 } else {
@@ -151,6 +144,7 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
             .subscribe { text ->
                 makeSearch(text, viewModel.searchFilterOption.value!!)
             }
+        disposable.add(observable)
     }
 
     private fun makeSearch(text: String?, searchFilter: SearchFilter) {
@@ -161,6 +155,11 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
                 SearchFilter.Event -> viewModel.eventSearch(null, text)
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
     }
 
 }

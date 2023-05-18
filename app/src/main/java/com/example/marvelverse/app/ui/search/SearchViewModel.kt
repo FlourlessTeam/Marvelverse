@@ -12,10 +12,11 @@ import com.example.marvelverse.app.ui.interfaces.EventInteractionListener
 import com.example.marvelverse.app.ui.search.utils.SearchEvent
 import com.example.marvelverse.app.ui.search.utils.SearchFilter
 import com.example.marvelverse.app.ui.search.utils.SearchItems
-import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.data.repositories.MarvelRepository
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.utilites.SingleEventState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -30,8 +31,8 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
     val comicList: LiveData<DataState<Comic>>
         get() = _comicList
 
-    private val _characterList = MutableLiveData<DataState<com.example.marvelverse.domain.entities.Character>>()
-    val characterList: LiveData<DataState<com.example.marvelverse.domain.entities.Character>>
+    private val _characterList = MutableLiveData<DataState<Character>>()
+    val characterList: LiveData<DataState<Character>>
         get() = _characterList
 
     private val _eventList = MutableLiveData<DataState<Event>>()
@@ -39,8 +40,8 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
         get() = _eventList
 
 
-    private val _searchEvent = MutableLiveData<SearchEvent>()
-    val searchEvent: LiveData<SearchEvent> get() = _searchEvent
+    private val _searchEvent = MutableLiveData<SingleEventState<SearchEvent>>()
+    val searchEvent: LiveData<SingleEventState<SearchEvent>> get() = _searchEvent
 
     private val _searchResult = MediatorLiveData<SearchItems>()
     val searchResult: LiveData<SearchItems> = _searchResult
@@ -62,14 +63,14 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
 
     fun comicSearch(limit: Int?, title: String) {
         _comicList.postValue(DataState.Loading)
-        repository.searchCachedComics(limit, title).applySchedulers()
-            .subscribe(::onComicsSearchSuccess, ::onSearchError).addTo(disposables)
+        repository.searchCachedComics(limit, title)
+            .subscribeBy(::onComicsSearchSuccess, ::onSearchError)
     }
 
     fun characterSearch(limit: Int?, title: String) {
         _characterList.postValue(DataState.Loading)
-        repository.searchCacheCharacters(limit, title).applySchedulers()
-            .subscribe(::onCharacterSearchSuccess, ::onSearchError).addTo(disposables)
+        repository.searchCacheCharacters(limit, title)
+            .subscribeBy(::onCharacterSearchSuccess, ::onSearchError)
     }
 
     private fun onSearchError(throwable: Throwable) {
@@ -80,8 +81,8 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
 
     fun eventSearch(limit: Int?, title: String) {
         _eventList.postValue(DataState.Loading)
-        repository.searchCachedEvents(limit, title).applySchedulers()
-            .subscribe(::onEventSearchSuccess, ::onSearchError).addTo(disposables)
+        repository.searchCachedEvents(limit, title)
+            .subscribeBy(::onEventSearchSuccess, ::onSearchError)
     }
 
     private fun onComicsSearchSuccess(comics: List<Comic>) {
@@ -93,7 +94,7 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
 
     }
 
-    private fun onCharacterSearchSuccess(characters: List<com.example.marvelverse.domain.entities.Character>) {
+    private fun onCharacterSearchSuccess(characters: List<Character>) {
         if (characters.isEmpty()){
             _characterList.postValue(DataState.Empty)
         }else{
@@ -109,20 +110,16 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
         }
     }
 
-    override fun onCharacterClick(character: com.example.marvelverse.domain.entities.Character) {
-        _searchEvent.postValue(SearchEvent.ClickCharacterEvent(character))
+    override fun onCharacterClick(character:Character) {
+        _searchEvent.postValue(SingleEventState(SearchEvent.ClickCharacterEvent(character)))
     }
 
     override fun onComicClick(comic: Comic) {
-        _searchEvent.postValue(SearchEvent.ClickComicEvent(comic))
+        _searchEvent.postValue(SingleEventState(SearchEvent.ClickComicEvent(comic)))
     }
 
     override fun onEventClick(event: Event) {
-        _searchEvent.postValue(SearchEvent.ClickEventEvent(event))
-    }
-
-    fun clearEvents() {
-        if (_searchEvent.value != SearchEvent.ReadyState) _searchEvent.postValue(SearchEvent.ReadyState)
+        _searchEvent.postValue(SingleEventState(SearchEvent.ClickEventEvent(event)))
     }
 
     fun onSearchFilterOptionSelected(searchFilter: SearchFilter) {
@@ -136,6 +133,11 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
         _characterList.postValue(DataState.ShowKeywordSuggests)
         _comicList.postValue(DataState.ShowKeywordSuggests)
         _eventList.postValue(DataState.ShowKeywordSuggests)
+    }
+    override fun onCleared() {
+        super.onCleared()
+        disposables.dispose()
+        repository.clearDisposables()
     }
 
 }
