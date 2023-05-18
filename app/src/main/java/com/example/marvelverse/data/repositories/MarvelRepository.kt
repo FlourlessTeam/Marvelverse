@@ -4,6 +4,10 @@ import com.example.marvelverse.app.ui.home.HomeItem
 import com.example.marvelverse.data.dataSources.local.FakeLocalData
 import com.example.marvelverse.data.dataSources.local.dao.HomeDao
 import com.example.marvelverse.data.dataSources.local.dao.SearchDao
+import com.example.marvelverse.data.dataSources.local.entities.CharacterEntity
+import com.example.marvelverse.data.dataSources.local.entities.ComicEntity
+import com.example.marvelverse.data.dataSources.local.entities.EventEntity
+import com.example.marvelverse.data.dataSources.local.entities.SeriesEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.CharacterSearchEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.ComicSearchEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.EventSearchEntity
@@ -62,9 +66,9 @@ class MarvelRepository @Inject constructor(
 
     private fun cacheCharacters(characters: Single<List<Character>>) {
         val cachedResponse = characters.blockingGet().map { character ->
-            character.MapToCharacterEntity()
+            character.mapToCharacterSearchEntity()
         }
-        searchDao.insertCharacters(cachedResponse).subscribe().dispose()
+        searchDao.insertCharacters(cachedResponse)
     }
 
     fun searchComics(limit: Int? = null, title: String? = null): Single<List<Comic>> {
@@ -97,8 +101,8 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun cacheComics(comics: Single<List<Comic>>) {
-        val cachedResponse = comics.blockingGet().map { comic -> comic.MapToComicEntity() }
-        searchDao.insertComics(cachedResponse).subscribe().dispose()
+        val cachedResponse = comics.blockingGet().map { comic -> comic.mapToComicSearchEntity() }
+        searchDao.insertComics(cachedResponse)
     }
 
     fun searchEvents(limit: Int? = null, title: String? = null): Single<List<Event>> {
@@ -131,8 +135,8 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun cacheEvents(events: Single<List<Event>>) {
-        val cachedResponse = events.blockingGet().map { event -> event.MapToEventEntity() }
-        searchDao.insertEvents(cachedResponse).subscribe().dispose()
+        val cachedResponse = events.blockingGet().map { event -> event.mapToEventSearchEntity() }
+        searchDao.insertEvents(cachedResponse)
     }
 
 
@@ -212,12 +216,35 @@ class MarvelRepository @Inject constructor(
         return Single.zip(
             getRandomCharacters(), getRandomComics(), getRandomSeries(), getRandomEvents()
         ) { characters, comics, series, events ->
+            homeDao.insertCharacters(characters.map { it.mapToCharacterEntity() })
+            homeDao.insertComics(comics.map { it.mapToComicEntity() })
+            homeDao.insertSeries(series.map { it.mapToSeriesEntity() })
+            homeDao.insertEvents(events.map { it.mapToEventEntity() })
             listOf(
                 HomeItem.CharactersItem(characters),
                 HomeItem.ComicsItem(comics),
                 HomeItem.EventsItem(events),
                 HomeItem.SeriesItem(series)
             )
+        }.onErrorReturn {
+            val chars = homeDao.getAllCharacters().map { it.map { it.mapToChar() } }.blockingGet()
+            val comics = homeDao.getAllComics().map { it.map { it.mapToComic() } }.blockingGet()
+            val events = homeDao.getAllEvents().map { it.map { it.mapToEvent() } }.blockingGet()
+            val series = homeDao.getAllSeries().map { it.map { it.mapToSeries() } }.blockingGet()
+            if (chars.isEmpty() &&
+                comics.isEmpty() &&
+                events.isEmpty() &&
+                series.isEmpty()
+            ) {
+                throw it
+            } else {
+                listOf(
+                    HomeItem.CharactersItem(chars),
+                    HomeItem.ComicsItem(comics),
+                    HomeItem.EventsItem(events),
+                    HomeItem.SeriesItem(series)
+                )
+            }
         }
     }
 
@@ -227,13 +254,19 @@ class MarvelRepository @Inject constructor(
     private fun CharacterDto.mapToCharacter(): Character = dataMapper.characterMapper.map(this)
     private fun EventDto.mapToEvent(): Event = dataMapper.eventMapper.map(this)
 
-    private fun Character.MapToCharacterEntity(): CharacterSearchEntity =
+    private fun Character.mapToCharacterSearchEntity(): CharacterSearchEntity =
         dataMapper.charToCharSearchEntityMapper.map(this)
 
-    private fun Comic.MapToComicEntity(): ComicSearchEntity =
+    private fun Character.mapToCharacterEntity(): CharacterEntity =
+        dataMapper.characterToCharacterEntityMapper.map(this)
+
+    private fun Comic.mapToComicSearchEntity(): ComicSearchEntity =
         dataMapper.comicToComicSearchEntityMapper.map(this)
 
-    private fun Event.MapToEventEntity(): EventSearchEntity =
+    private fun Comic.mapToComicEntity(): ComicEntity =
+        dataMapper.comicToComicEntityMapper.map(this)
+
+    private fun Event.mapToEventSearchEntity(): EventSearchEntity =
         dataMapper.eventToEventSearchEntity.map(this)
 
     private fun CharacterSearchEntity.mapToCharacter(): Character =
@@ -245,5 +278,12 @@ class MarvelRepository @Inject constructor(
     private fun EventSearchEntity.mapToEvent(): Event =
         dataMapper.eventSearchEntityToEventMapper.map(this)
 
+    private fun CharacterEntity.mapToChar() = dataMapper.characterEntityToCharacterMapper.map(this)
+    private fun ComicEntity.mapToComic() = dataMapper.comicEntityToComicMapper.map(this)
+    private fun SeriesEntity.mapToSeries() = dataMapper.seriesEntityToSeriesMapper.map(this)
+    private fun EventEntity.mapToEvent() = dataMapper.eventEntityToEventMapper.map(this)
+    private fun Series.mapToSeriesEntity() = dataMapper.seriesToSeriesEntityMapper.map(this)
+
+    private fun Event.mapToEventEntity() = dataMapper.eventToEventEntityMapper.map(this)
 
 }
