@@ -1,8 +1,9 @@
 package com.example.marvelverse.data.dataSources.local
 
 import com.example.marvelverse.domain.entities.About
+import javax.inject.Inject
 
-class FakeLocalData(){
+class FakeLocalData @Inject constructor(){
 
     fun getAboutItems(): List<About>{
         return listOf(About(HISTORY1), About(HISTORY2), About(HISTORY3), About(HISTORY4))

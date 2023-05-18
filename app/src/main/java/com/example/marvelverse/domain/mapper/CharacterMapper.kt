@@ -4,8 +4,9 @@ import com.example.marvelverse.data.dataSources.local.entities.CharacterEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.CharacterSearchEntity
 import com.example.marvelverse.data.dataSources.remote.reponses.CharacterDto
 import com.example.marvelverse.domain.entities.Character
+import javax.inject.Inject
 
-class CharacterMapper : Mapper<CharacterDto, Character> {
+class CharacterMapper  @Inject constructor(): Mapper<CharacterDto, Character> {
     override fun map(input: CharacterDto): Character {
         return Character(
             id = input.id,
@@ -20,7 +21,7 @@ class CharacterMapper : Mapper<CharacterDto, Character> {
     }
 }
 
-class CharacterSearchEntityToCharacterMapper : Mapper<CharacterSearchEntity, Character> {
+class CharacterSearchEntityToCharacterMapper @Inject constructor() : Mapper<CharacterSearchEntity, Character> {
     override fun map(input: CharacterSearchEntity): Character {
         return Character(
             id = input.id,
@@ -35,7 +36,7 @@ class CharacterSearchEntityToCharacterMapper : Mapper<CharacterSearchEntity, Cha
     }
 }
 
-class CharacterToCharacterSearchEntityMapper : Mapper<Character, CharacterSearchEntity> {
+class CharacterToCharacterSearchEntityMapper @Inject constructor() : Mapper<Character, CharacterSearchEntity> {
     override fun map(input: Character): CharacterSearchEntity {
         return CharacterSearchEntity(
             id = input.id,
@@ -49,7 +50,7 @@ class CharacterToCharacterSearchEntityMapper : Mapper<Character, CharacterSearch
         )
     }
 }
-class CharacterEntityToCharacterMapper : Mapper<CharacterEntity, Character> {
+class CharacterEntityToCharacterMapper @Inject constructor() : Mapper<CharacterEntity, Character> {
     override fun map(input: CharacterEntity): Character {
         return Character(
             id = input.id,
@@ -64,7 +65,7 @@ class CharacterEntityToCharacterMapper : Mapper<CharacterEntity, Character> {
     }
 }
 
-class CharacterToCharacterEntityMapper : Mapper<Character, CharacterEntity> {
+class CharacterToCharacterEntityMapper @Inject constructor() : Mapper<Character, CharacterEntity> {
     override fun map(input: Character): CharacterEntity {
         return CharacterEntity(
             id = input.id,
