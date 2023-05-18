@@ -4,8 +4,9 @@ import com.example.marvelverse.data.dataSources.local.entities.EventEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.EventSearchEntity
 import com.example.marvelverse.data.dataSources.remote.reponses.EventDto
 import com.example.marvelverse.domain.entities.Event
+import javax.inject.Inject
 
-class EventMapper : Mapper<EventDto, Event> {
+class EventMapper  @Inject constructor(): Mapper<EventDto, Event> {
     override fun map(input: EventDto): Event {
         return Event(
             id = input.id,
@@ -21,7 +22,7 @@ class EventMapper : Mapper<EventDto, Event> {
     }
 }
 
-class EventSearchEntityToEventMapper : Mapper<EventSearchEntity, Event> {
+class EventSearchEntityToEventMapper @Inject constructor() : Mapper<EventSearchEntity, Event> {
     override fun map(input: EventSearchEntity): Event {
         return Event(
             id = input.id,
@@ -37,7 +38,7 @@ class EventSearchEntityToEventMapper : Mapper<EventSearchEntity, Event> {
     }
 }
 
-class EventToEventSearchEntityMapper : Mapper<Event, EventSearchEntity> {
+class EventToEventSearchEntityMapper  @Inject constructor(): Mapper<Event, EventSearchEntity> {
     override fun map(input: Event): EventSearchEntity {
         return EventSearchEntity(
             id = input.id,
@@ -54,7 +55,7 @@ class EventToEventSearchEntityMapper : Mapper<Event, EventSearchEntity> {
 }
 
 
-class EventEntityToEventMapper : Mapper<EventEntity, Event> {
+class EventEntityToEventMapper  @Inject constructor() : Mapper<EventEntity, Event> {
     override fun map(input: EventEntity): Event {
         return Event(
             id = input.id,
@@ -70,7 +71,7 @@ class EventEntityToEventMapper : Mapper<EventEntity, Event> {
     }
 }
 
-class EventToEventEntityMapper : Mapper<Event, EventEntity> {
+class EventToEventEntityMapper  @Inject constructor() : Mapper<Event, EventEntity> {
     override fun map(input: Event): EventEntity {
         return EventEntity(
             id = input.id,

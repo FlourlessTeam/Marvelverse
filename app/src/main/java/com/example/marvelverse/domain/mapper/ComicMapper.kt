@@ -4,8 +4,9 @@ import com.example.marvelverse.data.dataSources.local.entities.ComicEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.ComicSearchEntity
 import com.example.marvelverse.data.dataSources.remote.reponses.ComicDto
 import com.example.marvelverse.domain.entities.Comic
+import javax.inject.Inject
 
-class ComicMapper : Mapper<ComicDto, Comic> {
+class ComicMapper  @Inject constructor() : Mapper<ComicDto, Comic> {
     override fun map(input: ComicDto): Comic {
         return Comic(
             id = input.id,
@@ -23,7 +24,7 @@ class ComicMapper : Mapper<ComicDto, Comic> {
     }
 }
 
-class ComicSearchEntityToComicMapper : Mapper<ComicSearchEntity, Comic> {
+class ComicSearchEntityToComicMapper  @Inject constructor(): Mapper<ComicSearchEntity, Comic> {
     override fun map(input: ComicSearchEntity): Comic {
         return Comic(
             id = input.id,
@@ -41,7 +42,7 @@ class ComicSearchEntityToComicMapper : Mapper<ComicSearchEntity, Comic> {
     }
 }
 
-class ComicToComicSearchEntityMapper : Mapper<Comic, ComicSearchEntity> {
+class ComicToComicSearchEntityMapper  @Inject constructor(): Mapper<Comic, ComicSearchEntity> {
     override fun map(input: Comic): ComicSearchEntity {
         return ComicSearchEntity(
             id = input.id,
@@ -60,7 +61,7 @@ class ComicToComicSearchEntityMapper : Mapper<Comic, ComicSearchEntity> {
 }
 
 
-class ComicEntityToComicMapper : Mapper<ComicEntity, Comic> {
+class ComicEntityToComicMapper  @Inject constructor() : Mapper<ComicEntity, Comic> {
     override fun map(input: ComicEntity): Comic {
         return Comic(
             id = input.id,
@@ -78,7 +79,7 @@ class ComicEntityToComicMapper : Mapper<ComicEntity, Comic> {
     }
 }
 
-class ComicToComicEntityMapper : Mapper<Comic, ComicEntity> {
+class ComicToComicEntityMapper  @Inject constructor() : Mapper<Comic, ComicEntity> {
     override fun map(input: Comic): ComicEntity {
         return ComicEntity(
             id = input.id,

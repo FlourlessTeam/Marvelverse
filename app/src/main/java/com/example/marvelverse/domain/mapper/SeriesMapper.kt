@@ -3,8 +3,9 @@ package com.example.marvelverse.domain.mapper
 import com.example.marvelverse.data.dataSources.local.entities.SeriesEntity
 import com.example.marvelverse.data.dataSources.remote.reponses.SeriesDto
 import com.example.marvelverse.domain.entities.Series
+import javax.inject.Inject
 
-class SeriesMapper : Mapper<SeriesDto, Series> {
+class SeriesMapper  @Inject constructor() : Mapper<SeriesDto, Series> {
     override fun map(input: SeriesDto): Series {
         return Series(
             id = input.id,
@@ -21,7 +22,7 @@ class SeriesMapper : Mapper<SeriesDto, Series> {
     }
 }
 
-class SeriesToSeriesEntityMapper : Mapper<Series, SeriesEntity> {
+class SeriesToSeriesEntityMapper  @Inject constructor() : Mapper<Series, SeriesEntity> {
     override fun map(input: Series): SeriesEntity {
         return SeriesEntity(
             input.id,
@@ -38,7 +39,7 @@ class SeriesToSeriesEntityMapper : Mapper<Series, SeriesEntity> {
     }
 }
 
-class SeriesEntityToSeriesMapper : Mapper<SeriesEntity, Series> {
+class SeriesEntityToSeriesMapper  @Inject constructor(): Mapper<SeriesEntity, Series> {
     override fun map(input: SeriesEntity): Series {
         return Series(
             input.id,

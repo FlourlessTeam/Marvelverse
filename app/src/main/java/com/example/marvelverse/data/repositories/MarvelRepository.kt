@@ -54,7 +54,7 @@ class MarvelRepository @Inject constructor(
                 cacheCharacters(response)
                 response
             } catch (e: Exception) {
-                Single.just(emptyList())
+                Single.error(e)
             }
         }
     }
@@ -94,7 +94,7 @@ class MarvelRepository @Inject constructor(
                 cacheComics(response)
                 response
             } catch (e: Exception) {
-                Single.just(emptyList())
+                Single.error(e)
             }
         }
     }
@@ -129,7 +129,7 @@ class MarvelRepository @Inject constructor(
                 cacheEvents(response)
                 response
             } catch (e: Exception) {
-                Single.just(emptyList())
+                Single.error(e)
             }
         }
     }
@@ -168,7 +168,7 @@ class MarvelRepository @Inject constructor(
     }
 
     fun getSearchKeywords(): Single<List<SearchKeyword>> {
-        return searchDao.getAllKeywords().map { it.map { it.mapToSearchKeyword() } }
+        return searchDao.getAllKeywords().map { searchKeywordEntities -> searchKeywordEntities.map { it.mapToSearchKeyword() } }
     }
 
     /**
@@ -212,10 +212,10 @@ class MarvelRepository @Inject constructor(
      */
     fun getHomeItems(): Single<List<HomeItem>> {
         return Single.zip(
-            getCharacters(),
-            getComics(),
-            getSeries(),
-            getEvents()
+            getCharacters().onErrorResumeNext { getCharactersFromDatabase() },
+            getComics().onErrorResumeNext { getComicsFromDatabase() },
+            getSeries().onErrorResumeNext { getSeriesFromDatabase() },
+            getEvents().onErrorResumeNext { getEventsFromDatabase() }
         ) { characters, comics, series, events ->
             listOf(
                 HomeItem.CharactersItem(characters),
@@ -223,8 +223,7 @@ class MarvelRepository @Inject constructor(
                 HomeItem.EventsItem(events),
                 HomeItem.SeriesItem(series)
             )
-        }.subscribeOn(Schedulers.io())
-
+        }
     }
 
     private fun getCharacters(): Single<List<Character>> {
@@ -259,7 +258,7 @@ class MarvelRepository @Inject constructor(
                 if (characters.isNotEmpty()) {
                     Single.just(characters)
                 } else {
-                    Single.just(emptyList())
+                    Single.error(Exception("No characters in database"))
 
                 }
             }
@@ -297,7 +296,8 @@ class MarvelRepository @Inject constructor(
                 if (comics.isNotEmpty()) {
                     Single.just(comics)
                 } else {
-                    Single.just(emptyList())
+                    Single.error(Exception("No comics in database"))
+
                 }
             }
     }
@@ -334,7 +334,7 @@ class MarvelRepository @Inject constructor(
                 if (series.isNotEmpty()) {
                     Single.just(series)
                 } else {
-                    Single.just(emptyList())
+                    Single.error(Exception("No series in database"))
 
                 }
             }
@@ -372,7 +372,7 @@ class MarvelRepository @Inject constructor(
                 if (events.isNotEmpty()) {
                     Single.just(events)
                 } else {
-                    Single.just(emptyList())
+                    Single.error(Exception("No events in database"))
                 }
             }
     }
