@@ -14,7 +14,6 @@ open class BaseViewModel : ViewModel() {
         disposables.dispose()
         super.onCleared()
     }
-
     fun <T : Any> Single<T>.subscribeBy(
         onSuccess: (T) -> Unit,
         onError: (Throwable) -> Unit,
@@ -24,12 +23,6 @@ open class BaseViewModel : ViewModel() {
             onError
         ).addTo(disposables)
     }
-
-    fun <T : Any> Single<T>.applySchedulers(): Single<T> {
-        return subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-    }
-
     fun Disposable.addTo(compositeDisposable: CompositeDisposable) {
         compositeDisposable.add(this)
     }

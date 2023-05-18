@@ -81,5 +81,11 @@ class HomeViewModel @Inject constructor(private val repository: MarvelRepository
         _homeEvent.postValue(SingleEventState(HomeEvent.ClickSeeAllSeriesEvent))
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        disposables.dispose()
+        //repository.clearDisposables()
+    }
+
 
 }

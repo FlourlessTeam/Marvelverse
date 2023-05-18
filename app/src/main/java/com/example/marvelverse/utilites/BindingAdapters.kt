@@ -1,6 +1,5 @@
 package com.example.marvelverse.app.ui.bindingAdapters
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -11,18 +10,6 @@ import com.example.marvelverse.app.ui.base.BaseAdapter
 import com.example.marvelverse.app.ui.base.BaseNestedRecyclerAdapter
 import com.example.marvelverse.app.ui.search.utils.SearchItems
 
-
-
-@BindingAdapter(value = ["app:imageUrl"])
-fun setImageUrl(imageView: ImageView, url: String?) {
-    if (url != null) {
-        Log.d("BindingAdapter", "setImageUrl: $url")
-        Glide.with(imageView.context)
-            .load(url)
-            .into(imageView)
-
-    }
-}
 
 @BindingAdapter(value = ["app:items"])
 fun <T> bindRecyclerView(recyclerView: RecyclerView, state: DataState<T>?) {
@@ -43,12 +30,6 @@ fun <T> bindNestedRecyclerView(recyclerView: RecyclerView, items: DataState<T>?)
     }
 }
 
-@BindingAdapter("availableItemsVisibility")
-fun setAvailableItemsVisibility(view: View, state: DataState<*>?) {
-    val availableItemCount = state?.let { it.toData()?.size ?: 0 } ?: 0
-    view.visibility = if (availableItemCount > 0) View.VISIBLE else View.GONE
-}
-
 @BindingAdapter("visibilityIfNotBlank")
 fun setVisibilityIfNotBlank(view: View, text: String?) {
     if (text.isNullOrEmpty()) {
@@ -57,13 +38,6 @@ fun setVisibilityIfNotBlank(view: View, text: String?) {
         view.visibility = View.VISIBLE
     }
 }
-
-@BindingAdapter("visibilityIfNoItems")
-fun setVisibilityIfNoItems(view: View, availableItemCount: Int) {
-    view.visibility = if (availableItemCount == 0) View.GONE else View.VISIBLE
-}
-
-
 
 @BindingAdapter(value = ["app:showWhenError"])
 fun <T> showWhenError(view: View, state: DataState<T>?) {
