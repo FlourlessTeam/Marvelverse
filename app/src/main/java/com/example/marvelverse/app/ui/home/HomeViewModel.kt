@@ -83,7 +83,7 @@ class HomeViewModel @Inject constructor(private val repository: MarvelRepository
     override fun onCleared() {
         super.onCleared()
         disposables.dispose()
-        //repository.clearDisposables()
+        repository.clearDisposables()
     }
 
 
