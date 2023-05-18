@@ -17,6 +17,7 @@ import com.example.marvelverse.databinding.FragmentSearchBinding
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
+import com.example.marvelverse.domain.entities.SearchKeyword
 import com.example.marvelverse.utilites.DataState
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -24,11 +25,12 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
+
 @AndroidEntryPoint
 class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
     private val viewModel: SearchViewModel by viewModels()
-    private val disposable= CompositeDisposable()
+    private val disposable = CompositeDisposable()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
@@ -130,7 +132,7 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
     }
 
     private fun searchViewListener() {
-        val observable = Observable.create{ emitter ->
+        val observable = Observable.create { emitter ->
             binding.searchViewLayout.editText?.doOnTextChanged { text, _, _, _ ->
                 if (text.isNullOrBlank()) {
                     viewModel.showKeywordSuggests()
@@ -142,6 +144,7 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(1, TimeUnit.SECONDS)
             .subscribe { text ->
+                viewModel.cacheKeyword(SearchKeyword(text))
                 makeSearch(text, viewModel.searchFilterOption.value!!)
             }
         disposable.add(observable)

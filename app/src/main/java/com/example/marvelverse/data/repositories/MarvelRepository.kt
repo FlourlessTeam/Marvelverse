@@ -11,6 +11,7 @@ import com.example.marvelverse.data.dataSources.local.entities.SeriesEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.CharacterSearchEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.ComicSearchEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.EventSearchEntity
+import com.example.marvelverse.data.dataSources.local.entities.search.SearchKeywordEntity
 import com.example.marvelverse.data.dataSources.remote.MarvelApiServices
 import com.example.marvelverse.data.dataSources.remote.reponses.CharacterDto
 import com.example.marvelverse.data.dataSources.remote.reponses.ComicDto
@@ -19,6 +20,7 @@ import com.example.marvelverse.data.dataSources.remote.reponses.SeriesDto
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
+import com.example.marvelverse.domain.entities.SearchKeyword
 import com.example.marvelverse.domain.entities.Series
 import com.example.marvelverse.domain.mapper.MappersContainer
 import io.reactivex.rxjava3.core.Single
@@ -367,6 +369,14 @@ class MarvelRepository @Inject constructor(
             }
     }
 
+    fun saveKeyword(keyword: SearchKeyword){
+        disposable.add(searchDao.insertKeyword(keyword.mapToSearchKeywordEntity()).subscribe())
+    }
+
+    fun getSearchKeywords() : Single<List<SearchKeyword>>{
+        return searchDao.getAllKeywords().map { it.map { it.mapToSearchKeyword() } }
+    }
+
 
     /**
      * fake data
@@ -412,6 +422,8 @@ class MarvelRepository @Inject constructor(
     private fun Series.mapToSeriesEntity() = dataMapper.seriesToSeriesEntityMapper.map(this)
     private fun Event.mapToEventEntity() = dataMapper.eventToEventEntityMapper.map(this)
 
+    private fun SearchKeyword.mapToSearchKeywordEntity() = dataMapper.keywordToKeywordEntityMapper.map(this)
+    private fun SearchKeywordEntity.mapToSearchKeyword() = dataMapper.keywordEntityToKeywordMapper.map(this)
     /**
      * Disposable
      */
@@ -422,6 +434,8 @@ class MarvelRepository @Inject constructor(
     fun clearDisposables() {
         disposable.dispose()
     }
+
+
 
     companion object {
         private const val RANDOM_CHARACTER_LIMIT = 80
