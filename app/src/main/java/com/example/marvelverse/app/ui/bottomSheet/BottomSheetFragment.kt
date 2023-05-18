@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.marvelverse.R
-import com.example.marvelverse.app.ui.search.SearchFilter
+import com.example.marvelverse.app.ui.search.utils.SearchFilter
 import com.example.marvelverse.databinding.FragmentBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
