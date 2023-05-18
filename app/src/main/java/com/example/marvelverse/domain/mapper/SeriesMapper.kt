@@ -1,10 +1,9 @@
 package com.example.marvelverse.domain.mapper
 
-import com.example.marvelverse.data.dataSources.local.entities.SeriesEntity
 import com.example.marvelverse.data.dataSources.remote.reponses.SeriesDto
 import com.example.marvelverse.domain.entities.Series
 
-class SeriesMapper : Mapper<SeriesDto, Series> {
+class SeriesMapper:Mapper<SeriesDto,Series> {
     override fun map(input: SeriesDto): Series {
         return Series(
             id = input.id,
@@ -17,40 +16,6 @@ class SeriesMapper : Mapper<SeriesDto, Series> {
             eventsUri = input.events?.collectionURI,
             charactersUri = input.characters?.collectionURI,
             imageUrl = input.thumbnail?.path + "." + input.thumbnail?.extension
-        )
-    }
-}
-
-class SeriesToSeriesEntityMapper : Mapper<Series, SeriesEntity> {
-    override fun map(input: Series): SeriesEntity {
-        return SeriesEntity(
-            input.id,
-            input.title,
-            input.description,
-            input.resourceURI,
-            input.comicsUri,
-            input.charactersUri,
-            input.creatorsUri,
-            input.storiesUri,
-            input.eventsUri,
-            input.imageUrl
-        )
-    }
-}
-
-class SeriesEntityToSeriesMapper : Mapper<SeriesEntity, Series> {
-    override fun map(input: SeriesEntity): Series {
-        return Series(
-            input.id,
-            input.title,
-            input.description,
-            input.resourceURI,
-            input.comics,
-            input.characters,
-            input.creators,
-            input.stories,
-            input.events,
-            input.thumbnail
         )
     }
 }

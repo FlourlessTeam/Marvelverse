@@ -12,13 +12,5 @@ class MappersContainer @Inject constructor(
     val comicToComicSearchEntityMapper: ComicToComicSearchEntityMapper,
     val comicSearchEntityToComicMapper: ComicSearchEntityToComicMapper,
     val eventToEventSearchEntity: EventToEventSearchEntityMapper,
-    val eventSearchEntityToEventMapper: EventSearchEntityToEventMapper,
-    val characterEntityToCharacterMapper: CharacterEntityToCharacterMapper,
-    val characterToCharacterEntityMapper: CharacterToCharacterEntityMapper,
-    val comicEntityToComicMapper: ComicEntityToComicMapper,
-    val comicToComicEntityMapper: ComicToComicEntityMapper,
-    val seriesToSeriesEntityMapper: SeriesToSeriesEntityMapper,
-    val seriesEntityToSeriesMapper: SeriesEntityToSeriesMapper,
-    val eventEntityToEventMapper: EventEntityToEventMapper,
-    val eventToEventEntityMapper: EventToEventEntityMapper
+    val eventSearchEntityToEventMapper: EventSearchEntityToEventMapper
 )
