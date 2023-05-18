@@ -214,8 +214,8 @@ class MarvelRepository @Inject constructor(
             .doOnSuccess { characters ->
                 insertCharactersToDatabase(characters)
             }
-            .onErrorResumeNext { throwable ->
-                getCharactersFromDatabase(throwable)
+            .onErrorResumeNext {
+                getCharactersFromDatabase()
             }
     }
     private fun getRandomCharacters(): Single<List<Character>> {
@@ -231,7 +231,7 @@ class MarvelRepository @Inject constructor(
             .subscribeOn(Schedulers.io()).subscribe().addTo(disposable)
     }
 
-    private fun getCharactersFromDatabase(throwable: Throwable): Single<List<Character>> {
+    private fun getCharactersFromDatabase(): Single<List<Character>> {
         return homeDao.getAllCharacters()
             .map { characterEntities -> characterEntities.map { it.mapToChar() } }
             .subscribeOn(Schedulers.io())
@@ -239,7 +239,7 @@ class MarvelRepository @Inject constructor(
                 if (characters.isNotEmpty()) {
                     Single.just(characters)
                 } else {
-                    Single.error(throwable)
+                    Single.error(Throwable("No characters found"))
                 }
             }
     }
@@ -250,8 +250,8 @@ class MarvelRepository @Inject constructor(
             .doOnSuccess { comics ->
                 insertComicsToDatabase(comics)
             }
-            .onErrorResumeNext { throwable ->
-                getComicsFromDatabase(throwable)
+            .onErrorResumeNext {
+                getComicsFromDatabase()
             }
     }
 
@@ -268,7 +268,7 @@ class MarvelRepository @Inject constructor(
             .subscribe().addTo(disposable)
     }
 
-    private fun getComicsFromDatabase(throwable: Throwable): Single<List<Comic>> {
+    private fun getComicsFromDatabase(): Single<List<Comic>> {
         return homeDao.getAllComics()
             .map { comicEntities -> comicEntities.map { it.mapToComic() } }
             .subscribeOn(Schedulers.io())
@@ -276,7 +276,7 @@ class MarvelRepository @Inject constructor(
                 if (comics.isNotEmpty()) {
                     Single.just(comics)
                 } else {
-                    Single.error(throwable)
+                    Single.error(Throwable("No comics found"))
                 }
             }
     }
@@ -287,8 +287,8 @@ class MarvelRepository @Inject constructor(
             .doOnSuccess { series ->
                 insertSeriesToDatabase(series)
             }
-            .onErrorResumeNext { throwable ->
-                getSeriesFromDatabase(throwable)
+            .onErrorResumeNext {
+                getSeriesFromDatabase()
             }
     }
     private fun getRandomSeries(): Single<List<Series>> {
@@ -304,7 +304,7 @@ class MarvelRepository @Inject constructor(
             .subscribe().addTo(disposable)
     }
 
-    private fun getSeriesFromDatabase(throwable: Throwable): Single<List<Series>> {
+    private fun getSeriesFromDatabase(): Single<List<Series>> {
         return homeDao.getAllSeries()
             .map { it.map { seriesEntity -> seriesEntity.mapToSeries() } }
             .subscribeOn(Schedulers.io())
@@ -312,7 +312,7 @@ class MarvelRepository @Inject constructor(
                 if (series.isNotEmpty()) {
                     Single.just(series)
                 } else {
-                    Single.error(throwable)
+                    Single.error(Throwable("No series"))
                 }
             }
     }
@@ -323,8 +323,8 @@ class MarvelRepository @Inject constructor(
             .doOnSuccess { events ->
                 insertEventsToDatabase(events)
             }
-            .onErrorResumeNext { throwable ->
-                getEventsFromDatabase(throwable)
+            .onErrorResumeNext {
+                getEventsFromDatabase()
             }
     }
     private fun getRandomEvents(): Single<List<Event>> {
@@ -340,7 +340,7 @@ class MarvelRepository @Inject constructor(
             .subscribe().addTo(disposable)
     }
 
-    private fun getEventsFromDatabase(throwable: Throwable): Single<List<Event>> {
+    private fun getEventsFromDatabase(): Single<List<Event>> {
         return homeDao.getAllEvents()
             .map { it.map { eventEntity -> eventEntity.mapToEvent() } }
             .subscribeOn(Schedulers.io())
@@ -348,7 +348,7 @@ class MarvelRepository @Inject constructor(
                 if (events.isNotEmpty()) {
                     Single.just(events)
                 } else {
-                    Single.error(throwable)
+                    Single.error(Throwable("No events"))
                 }
             }
     }
