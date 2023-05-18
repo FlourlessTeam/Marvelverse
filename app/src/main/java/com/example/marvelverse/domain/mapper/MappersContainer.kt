@@ -7,6 +7,8 @@ class MappersContainer @Inject constructor(
     val comicMapper: ComicMapper,
     val eventMapper: EventMapper,
     val seriesMapper: SeriesMapper,
+    val keywordEntityToKeywordMapper: KeywordEntityToKeywordMapper,
+    val keywordToKeywordEntityMapper: KeywordToKeywordEntityMapper,
     val charToCharSearchEntityMapper: CharacterToCharacterSearchEntityMapper,
     val charSearchEntityToCharMapper: CharacterSearchEntityToCharacterMapper,
     val comicToComicSearchEntityMapper: ComicToComicSearchEntityMapper,
