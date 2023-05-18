@@ -231,16 +231,14 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun getCharactersFromDatabase(throwable: Throwable): Single<List<Character>> {
-        return homeDao.getAllCharacters()
-            .map { characterEntities -> characterEntities.map { it.mapToChar() } }
-            .subscribeOn(Schedulers.io())
-            .flatMap { characters ->
-                if (characters.isNotEmpty()) {
-                    Single.just(characters)
-                } else {
-                    Single.error(throwable)
-                }
-            }
+        val characters = homeDao.getAllCharacters()
+            .map { characterEntities -> characterEntities.map { it.mapToChar() } }.subscribeOn(Schedulers.io())
+            .blockingGet()
+        return if (characters.isNotEmpty()) {
+            Single.just(characters)
+        } else {
+            Single.just(emptyList())
+        }
     }
 
     private fun getComics(): Single<List<Comic>> {
@@ -267,16 +265,14 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun getComicsFromDatabase(throwable: Throwable): Single<List<Comic>> {
-        return homeDao.getAllComics()
-            .map { comicEntities -> comicEntities.map { it.mapToComic() } }
-            .subscribeOn(Schedulers.io())
-            .flatMap { comics ->
-                if (comics.isNotEmpty()) {
-                    Single.just(comics)
-                } else {
-                    Single.error(throwable)
-                }
-            }
+        val comics = homeDao.getAllComics()
+            .map { comicEntities -> comicEntities.map { it.mapToComic() } }.subscribeOn(Schedulers.io())
+            .blockingGet()
+        return if (comics.isNotEmpty()) {
+            Single.just(comics)
+        } else {
+            Single.just(emptyList())
+        }
     }
 
     private fun getSeries(): Single<List<Series>> {
@@ -302,16 +298,14 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun getSeriesFromDatabase(throwable: Throwable): Single<List<Series>> {
-        return homeDao.getAllSeries()
-            .map { it.map { seriesEntity -> seriesEntity.mapToSeries() } }
-            .subscribeOn(Schedulers.io())
-            .flatMap { series ->
-                if (series.isNotEmpty()) {
-                    Single.just(series)
-                } else {
-                    Single.error(throwable)
-                }
-            }
+        val series = homeDao.getAllSeries()
+            .map { it.map { seriesEntity -> seriesEntity.mapToSeries() } }.subscribeOn(Schedulers.io())
+            .blockingGet()
+        return if (series.isNotEmpty()) {
+            Single.just(series)
+        } else {
+            Single.just(emptyList())
+        }
     }
 
     private fun getEvents(): Single<List<Event>> {
@@ -337,16 +331,14 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun getEventsFromDatabase(throwable: Throwable): Single<List<Event>> {
-        return homeDao.getAllEvents()
-            .map { it.map { eventEntity -> eventEntity.mapToEvent() } }
-            .subscribeOn(Schedulers.io())
-            .flatMap { events ->
-                if (events.isNotEmpty()) {
-                    Single.just(events)
-                } else {
-                    Single.error(throwable)
-                }
-            }
+        val events = homeDao.getAllEvents()
+            .map { it.map { eventEntity -> eventEntity.mapToEvent() } }.subscribeOn(Schedulers.io())
+            .blockingGet()
+        return if (events.isNotEmpty()) {
+            Single.just(events)
+        } else {
+            Single.just(emptyList())
+        }
     }
 
     /**
