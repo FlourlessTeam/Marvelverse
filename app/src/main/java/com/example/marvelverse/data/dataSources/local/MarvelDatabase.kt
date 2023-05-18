@@ -1,8 +1,6 @@
 package com.example.marvelverse.data.dataSources.local
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.marvelverse.data.dataSources.local.dao.HomeDao
 import com.example.marvelverse.data.dataSources.local.dao.SearchDao
