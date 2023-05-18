@@ -207,6 +207,7 @@ class MarvelRepository @Inject constructor(
                 HomeItem.SeriesItem(series)
             )
         }.subscribeOn(Schedulers.io())
+
     }
     private fun getCharacters(): Single<List<Character>> {
         return getRandomCharacters()
@@ -231,15 +232,18 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun getCharactersFromDatabase(throwable: Throwable): Single<List<Character>> {
-        val characters = homeDao.getAllCharacters()
-            .map { characterEntities -> characterEntities.map { it.mapToChar() } }.subscribeOn(Schedulers.io())
-            .blockingGet()
-        return if (characters.isNotEmpty()) {
-            Single.just(characters)
-        } else {
-            Single.just(emptyList())
-        }
+        return homeDao.getAllCharacters()
+            .map { characterEntities -> characterEntities.map { it.mapToChar() } }
+            .subscribeOn(Schedulers.io())
+            .flatMap { characters ->
+                if (characters.isNotEmpty()) {
+                    Single.just(characters)
+                } else {
+                    Single.error(throwable)
+                }
+            }
     }
+
 
     private fun getComics(): Single<List<Comic>> {
         return getRandomComics()
@@ -265,15 +269,18 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun getComicsFromDatabase(throwable: Throwable): Single<List<Comic>> {
-        val comics = homeDao.getAllComics()
-            .map { comicEntities -> comicEntities.map { it.mapToComic() } }.subscribeOn(Schedulers.io())
-            .blockingGet()
-        return if (comics.isNotEmpty()) {
-            Single.just(comics)
-        } else {
-            Single.just(emptyList())
-        }
+        return homeDao.getAllComics()
+            .map { comicEntities -> comicEntities.map { it.mapToComic() } }
+            .subscribeOn(Schedulers.io())
+            .flatMap { comics ->
+                if (comics.isNotEmpty()) {
+                    Single.just(comics)
+                } else {
+                    Single.error(throwable)
+                }
+            }
     }
+
 
     private fun getSeries(): Single<List<Series>> {
         return getRandomSeries()
@@ -298,15 +305,18 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun getSeriesFromDatabase(throwable: Throwable): Single<List<Series>> {
-        val series = homeDao.getAllSeries()
-            .map { it.map { seriesEntity -> seriesEntity.mapToSeries() } }.subscribeOn(Schedulers.io())
-            .blockingGet()
-        return if (series.isNotEmpty()) {
-            Single.just(series)
-        } else {
-            Single.just(emptyList())
-        }
+        return homeDao.getAllSeries()
+            .map { it.map { seriesEntity -> seriesEntity.mapToSeries() } }
+            .subscribeOn(Schedulers.io())
+            .flatMap { series ->
+                if (series.isNotEmpty()) {
+                    Single.just(series)
+                } else {
+                    Single.error(throwable)
+                }
+            }
     }
+
 
     private fun getEvents(): Single<List<Event>> {
         return getRandomEvents()
@@ -331,15 +341,18 @@ class MarvelRepository @Inject constructor(
     }
 
     private fun getEventsFromDatabase(throwable: Throwable): Single<List<Event>> {
-        val events = homeDao.getAllEvents()
-            .map { it.map { eventEntity -> eventEntity.mapToEvent() } }.subscribeOn(Schedulers.io())
-            .blockingGet()
-        return if (events.isNotEmpty()) {
-            Single.just(events)
-        } else {
-            Single.just(emptyList())
-        }
+        return homeDao.getAllEvents()
+            .map { it.map { eventEntity -> eventEntity.mapToEvent() } }
+            .subscribeOn(Schedulers.io())
+            .flatMap { events ->
+                if (events.isNotEmpty()) {
+                    Single.just(events)
+                } else {
+                    Single.error(throwable)
+                }
+            }
     }
+
 
     /**
      * fake data
