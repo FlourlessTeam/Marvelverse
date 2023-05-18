@@ -204,14 +204,15 @@ class MarvelRepository @Inject constructor(
             } ?: emptyList()
         }
     }
+
     fun getHomeItems(): Single<List<HomeItem>> {
         return Single.zip(
             getRandomCharacters(), getRandomComics(), getRandomSeries(), getRandomEvents()
         ) { characters, comics, series, events ->
-            homeDao.insertCharacters(characters.map { it.mapToCharacterEntity() })
-            homeDao.insertComics(comics.map { it.mapToComicEntity() })
-            homeDao.insertSeries(series.map { it.mapToSeriesEntity() })
-            homeDao.insertEvents(events.map { it.mapToEventEntity() })
+            homeDao.insertCharacters(characters.map { it.mapToCharacterEntity() }).subscribeOn(Schedulers.io()).subscribe()
+            homeDao.insertComics(comics.map { it.mapToComicEntity() }).subscribeOn(Schedulers.io()).subscribe()
+            homeDao.insertSeries(series.map { it.mapToSeriesEntity() }).subscribeOn(Schedulers.io()).subscribe()
+            homeDao.insertEvents(events.map { it.mapToEventEntity() }).subscribeOn(Schedulers.io()).subscribe()
             listOf(
                 HomeItem.CharactersItem(characters),
                 HomeItem.ComicsItem(comics),
@@ -219,10 +220,10 @@ class MarvelRepository @Inject constructor(
                 HomeItem.SeriesItem(series)
             )
         }.onErrorReturn {
-            val chars = homeDao.getAllCharacters().map { it.map { it.mapToChar() } }.blockingGet()
-            val comics = homeDao.getAllComics().map { it.map { it.mapToComic() } }.blockingGet()
-            val events = homeDao.getAllEvents().map { it.map { it.mapToEvent() } }.blockingGet()
-            val series = homeDao.getAllSeries().map { it.map { it.mapToSeries() } }.blockingGet()
+            val chars = homeDao.getAllCharacters().map { it.map { it.mapToChar() } }.subscribeOn(Schedulers.io()).blockingGet()
+            val comics = homeDao.getAllComics().map { it.map { it.mapToComic() } }.subscribeOn(Schedulers.io()).blockingGet()
+            val events = homeDao.getAllEvents().map { it.map { it.mapToEvent() } }.subscribeOn(Schedulers.io()).blockingGet()
+            val series = homeDao.getAllSeries().map { it.map { it.mapToSeries() } }.subscribeOn(Schedulers.io()).blockingGet()
             if (chars.isEmpty() &&
                 comics.isEmpty() &&
                 events.isEmpty() &&
@@ -239,6 +240,7 @@ class MarvelRepository @Inject constructor(
             }
         }
     }
+
 
     private fun getRandomEvents(): Single<List<Event>> {
         return marvelApiServices.fetchEvents(50, null).map { baseResponse ->
