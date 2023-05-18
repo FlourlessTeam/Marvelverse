@@ -65,7 +65,7 @@ class MarvelRepository @Inject constructor(
         val cachedResponse = characters.blockingGet().map { character ->
             character.MapToCharacterEntity()
         }
-        searchDao.insertCharacters(cachedResponse).subscribeOn(Schedulers.io()).subscribe().dispose()
+        searchDao.insertCharacters(cachedResponse).subscribeOn(Schedulers.io()).subscribe()
     }
 
     fun searchComics(limit: Int? = null, title: String? = null): Single<List<Comic>> {
@@ -99,7 +99,7 @@ class MarvelRepository @Inject constructor(
 
     private fun cacheComics(comics: Single<List<Comic>>) {
         val cachedResponse = comics.blockingGet().map { comic -> comic.MapToComicEntity() }
-        searchDao.insertComics(cachedResponse).subscribeOn(Schedulers.io()).subscribe().dispose()
+        searchDao.insertComics(cachedResponse).subscribeOn(Schedulers.io()).subscribe()
     }
 
     fun searchEvents(limit: Int? = null, title: String? = null): Single<List<Event>> {
@@ -133,7 +133,7 @@ class MarvelRepository @Inject constructor(
 
     private fun cacheEvents(events: Single<List<Event>>) {
         val cachedResponse = events.blockingGet().map { event -> event.MapToEventEntity() }
-        searchDao.insertEvents(cachedResponse).subscribeOn(Schedulers.io()).subscribe().dispose()
+        searchDao.insertEvents(cachedResponse).subscribeOn(Schedulers.io()).subscribe()
     }
 
 
