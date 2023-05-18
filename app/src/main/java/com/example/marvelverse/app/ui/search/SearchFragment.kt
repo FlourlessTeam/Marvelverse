@@ -17,6 +17,7 @@ import com.example.marvelverse.databinding.FragmentSearchBinding
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
+import com.example.marvelverse.domain.entities.SearchKeyword
 import com.example.marvelverse.utilites.DataState
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -142,6 +143,7 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(1, TimeUnit.SECONDS)
             .subscribe { text ->
+                viewModel.cacheKeyword(SearchKeyword(text))
                 makeSearch(text, viewModel.searchFilterOption.value!!)
             }
         disposable.add(observable)

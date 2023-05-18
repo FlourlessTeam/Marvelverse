@@ -20,5 +20,7 @@ class MappersContainer @Inject constructor(
     val seriesToSeriesEntityMapper: SeriesToSeriesEntityMapper,
     val seriesEntityToSeriesMapper: SeriesEntityToSeriesMapper,
     val eventEntityToEventMapper: EventEntityToEventMapper,
-    val eventToEventEntityMapper: EventToEventEntityMapper
+    val eventToEventEntityMapper: EventToEventEntityMapper,
+    val keywordEntityToKeywordMapper: KeywordEntityToKeywordMapper,
+    val keywordToKeywordEntityMapper: KeywordToKeywordEntityMapper
 )
