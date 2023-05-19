@@ -1,6 +1,6 @@
 package com.example.marvelverse.domain.mapper
 
-import com.example.marvelverse.data.dataSources.local.entities.CharacterEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.CharacterEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.CharacterSearchEntity
 import com.example.marvelverse.data.dataSources.remote.reponses.CharacterDto
 import com.example.marvelverse.domain.entities.Character
@@ -27,11 +27,11 @@ class CharacterSearchEntityToCharacterMapper @Inject constructor() : Mapper<Char
             id = input.id,
             name = input.name,
             description = input.description,
-            seriesUri = input.series,
-            comicsUri = input.comics,
-            storiesUri = input.stories,
-            eventsUri = input.events,
-            imageUrl = input.thumbnail
+            seriesUri = input.seriesUri,
+            comicsUri = input.comicsUri,
+            storiesUri = input.storiesUri,
+            eventsUri = input.eventsUri,
+            imageUrl = input.imageUrl
         )
     }
 }
@@ -42,11 +42,11 @@ class CharacterToCharacterSearchEntityMapper @Inject constructor() : Mapper<Char
             id = input.id,
             name = input.name,
             description = input.description,
-            series = input.seriesUri,
-            comics = input.comicsUri,
-            stories = input.storiesUri,
-            events = input.eventsUri,
-            thumbnail = input.imageUrl
+            seriesUri = input.seriesUri,
+            comicsUri = input.comicsUri,
+            storiesUri = input.storiesUri,
+            eventsUri = input.eventsUri,
+            imageUrl = input.imageUrl
         )
     }
 }
@@ -56,11 +56,11 @@ class CharacterEntityToCharacterMapper @Inject constructor() : Mapper<CharacterE
             id = input.id,
             name = input.name,
             description = input.description,
-            seriesUri = input.series,
-            comicsUri = input.comics,
-            storiesUri = input.stories,
-            eventsUri = input.events,
-            imageUrl = input.thumbnail
+            seriesUri = input.seriesUri,
+            comicsUri = input.comicsUri,
+            storiesUri = input.storiesUri,
+            eventsUri = input.eventsUri,
+            imageUrl = input.imageUrl
         )
     }
 }
@@ -71,11 +71,11 @@ class CharacterToCharacterEntityMapper @Inject constructor() : Mapper<Character,
             id = input.id,
             name = input.name,
             description = input.description,
-            series = input.seriesUri,
-            comics = input.comicsUri,
-            stories = input.storiesUri,
-            events = input.eventsUri,
-            thumbnail = input.imageUrl
+            seriesUri = input.seriesUri,
+            comicsUri = input.comicsUri,
+            storiesUri = input.storiesUri,
+            eventsUri = input.eventsUri,
+            imageUrl = input.imageUrl
         )
     }
 }

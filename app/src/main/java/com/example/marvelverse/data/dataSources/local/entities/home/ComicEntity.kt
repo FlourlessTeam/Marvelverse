@@ -1,4 +1,4 @@
-package com.example.marvelverse.data.dataSources.local.entities
+package com.example.marvelverse.data.dataSources.local.entities.home
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,11 +10,11 @@ data class ComicEntity(
     val description: String?,
     val resourceURI: String?,
     val pageCount: Int?,
-    val series: String?,
-    val characters: String?,
-    val creators: String?,
-    val stories: String?,
-    val events: String?,
-    val thumbnail: String?,
+    val seriesUri: String?,
+    val charactersUri: String?,
+    val creatorsUri: String?,
+    val storiesUri: String?,
+    val eventsUri: String?,
+    val imageUrl: String?,
 )
 
