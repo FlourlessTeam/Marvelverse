@@ -8,6 +8,7 @@ import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.domain.entities.SearchKeyword
 import com.example.marvelverse.domain.entities.Series
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 interface MarvelRepository {
@@ -18,7 +19,7 @@ interface MarvelRepository {
     fun searchCachedEvents(limit: Int? = null, title: String): Single<List<Event>>
     fun searchEvents(limit: Int? = null, title: String? = null): Single<List<Event>>
     fun searchSeries(limit: Int? = null, title: String? = null): Single<List<Series>>
-    fun saveKeyword(keyword: SearchKeyword)
+    fun saveKeyword(keyword: SearchKeyword): Completable
     fun getSearchKeywords(): Single<List<SearchKeyword>>
     fun getComicsByUrl(url: String): Single<List<Comic>>
     fun getSeriesByUrl(url: String): Single<List<Series>>
@@ -26,5 +27,4 @@ interface MarvelRepository {
     fun getEventsByUrl(url: String): Single<List<Event>>
     fun getHomeItems(): Single<List<HomeItem>>
     fun getItems(): List<About>
-    fun clearDisposables()
 }
