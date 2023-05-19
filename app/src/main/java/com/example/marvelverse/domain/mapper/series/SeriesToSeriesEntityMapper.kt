@@ -1,6 +1,6 @@
 package com.example.marvelverse.domain.mapper.series
 
-import com.example.marvelverse.data.dataSources.local.entities.SeriesEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.SeriesEntity
 import com.example.marvelverse.domain.entities.Series
 import com.example.marvelverse.domain.mapper.Mapper
 import javax.inject.Inject
