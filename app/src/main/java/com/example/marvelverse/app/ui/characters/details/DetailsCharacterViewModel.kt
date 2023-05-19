@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class DetailsCharacterViewModel @Inject constructor(private val repository :MarvelRepository): BaseViewModel(), ComicInteractionListener,
+class DetailsCharacterViewModel @Inject constructor(private val repository : MarvelRepository): BaseViewModel(), ComicInteractionListener,
     EventInteractionListener,
     SeriesInteractionListener {
 

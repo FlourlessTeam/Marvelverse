@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventsViewModel @Inject constructor(
-    private val repository:MarvelRepository
+    private val repository: MarvelRepository
 ): BaseViewModel(), EventInteractionListener {
 
     private var _event = MutableLiveData<DataState<Event>>()
