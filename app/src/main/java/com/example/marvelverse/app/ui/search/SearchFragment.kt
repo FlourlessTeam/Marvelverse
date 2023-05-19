@@ -35,6 +35,8 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        viewModel.getAllSearchKeyword()
+
         viewModel.searchEvent.observe(viewLifecycleOwner) { event ->
             event.getUnHandledData()?.let {
                 handleEvent(it)

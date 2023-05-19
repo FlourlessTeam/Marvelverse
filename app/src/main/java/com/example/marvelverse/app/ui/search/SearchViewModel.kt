@@ -1,6 +1,7 @@
 package com.example.marvelverse.app.ui.search
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,6 +20,7 @@ import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.SearchKeyword
 import com.example.marvelverse.utilites.SingleEventState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -47,7 +49,12 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
 
     private val _searchResult = MediatorLiveData<SearchItems>()
     val searchResult: LiveData<SearchItems> = _searchResult
+
+    private val _searchKeyword = MutableLiveData<List<SearchKeyword>>()
+    val searchKeyword :LiveData<List<SearchKeyword>> = _searchKeyword
+
     init {
+        getAllSearchKeyword()
         searchFilterOption.postValue(SearchFilter.Character)
         _searchResult.addSource(_comicList) { comics ->
             _searchResult.value = SearchItems(comics, _characterList.value ?: DataState.Empty, _eventList.value ?: DataState.Empty)
@@ -61,6 +68,19 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
             _searchResult.value = SearchItems(_comicList.value ?: DataState.Empty, _characterList.value ?: DataState.Empty, events)
         }
 
+    }
+
+    fun getAllSearchKeyword() {
+        repository.getSearchKeywords()
+            .subscribeBy(::onGetSearchKeywordSuccess, ::onGetSearchKeywordError)
+    }
+
+    private fun onGetSearchKeywordError(throwable: Throwable) {
+        TODO("Not yet implemented")
+    }
+
+    private fun onGetSearchKeywordSuccess(searchKeywords: List<SearchKeyword>) {
+        _searchKeyword.postValue(searchKeywords)
     }
 
     fun comicSearch(limit: Int?, title: String) {
@@ -126,12 +146,13 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
 
     fun onSearchFilterOptionSelected(searchFilter: SearchFilter) {
         this.searchFilterOption.postValue(searchFilter)
-        _characterList.postValue(DataState.Empty)
-        _comicList.postValue(DataState.Empty)
-        _eventList.postValue(DataState.Empty)
+        _characterList.postValue(DataState.ShowKeywordSuggests)
+        _comicList.postValue(DataState.ShowKeywordSuggests)
+        _eventList.postValue(DataState.ShowKeywordSuggests)
     }
 
     fun showKeywordSuggests() {
+        getAllSearchKeyword()
         _characterList.postValue(DataState.ShowKeywordSuggests)
         _comicList.postValue(DataState.ShowKeywordSuggests)
         _eventList.postValue(DataState.ShowKeywordSuggests)
