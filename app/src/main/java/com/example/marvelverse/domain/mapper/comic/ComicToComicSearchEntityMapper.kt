@@ -10,15 +10,15 @@ class ComicToComicSearchEntityMapper  @Inject constructor(): Mapper<Comic, Comic
         return ComicSearchEntity(
             id = input.id,
             title = input.title,
-            characters = input.charactersUri,
-            creators = input.creatorsUri,
-            events = input.eventsUri,
-            series = input.seriesUri,
-            stories = input.storiesUri,
+            charactersUri = input.charactersUri,
+            creatorsUri = input.creatorsUri,
+            eventsUri = input.eventsUri,
+            seriesUri = input.seriesUri,
+            storiesUri = input.storiesUri,
             description = input.description,
             pageCount = input.pageCount,
             resourceURI = input.resourceURI,
-            thumbnail = input.imageUrl
+            imageUrl = input.imageUrl
         )
     }
 }
