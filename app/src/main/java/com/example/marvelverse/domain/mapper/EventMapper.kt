@@ -1,6 +1,6 @@
 package com.example.marvelverse.domain.mapper
 
-import com.example.marvelverse.data.dataSources.local.entities.EventEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.EventEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.EventSearchEntity
 import com.example.marvelverse.data.dataSources.remote.reponses.EventDto
 import com.example.marvelverse.domain.entities.Event
@@ -27,13 +27,13 @@ class EventSearchEntityToEventMapper @Inject constructor() : Mapper<EventSearchE
         return Event(
             id = input.id,
             title = input.title,
-            charactersUri = input.characters,
-            creatorsUri = input.creators,
+            charactersUri = input.charactersUri,
+            creatorsUri = input.creatorsUri,
             description = input.description,
-            seriesUri = input.series,
-            comicsUri = input.comics,
-            storiesUri = input.stories,
-            imageUrl = input.thumbnail
+            seriesUri = input.seriesUri,
+            comicsUri = input.comicsUri,
+            storiesUri = input.storiesUri,
+            imageUrl = input.imageUrl
         )
     }
 }
@@ -43,13 +43,13 @@ class EventToEventSearchEntityMapper  @Inject constructor(): Mapper<Event, Event
         return EventSearchEntity(
             id = input.id,
             title = input.title,
-            creators = input.creatorsUri,
+            creatorsUri = input.creatorsUri,
             description = input.description,
-            characters = input.charactersUri,
-            series = input.seriesUri,
-            comics = input.comicsUri,
-            stories = input.storiesUri,
-            thumbnail = input.imageUrl
+            charactersUri = input.charactersUri,
+            seriesUri = input.seriesUri,
+            comicsUri = input.comicsUri,
+            storiesUri = input.storiesUri,
+            imageUrl = input.imageUrl
         )
     }
 }
@@ -60,13 +60,13 @@ class EventEntityToEventMapper  @Inject constructor() : Mapper<EventEntity, Even
         return Event(
             id = input.id,
             title = input.title,
-            charactersUri = input.characters,
-            creatorsUri = input.creators,
+            charactersUri = input.charactersUri,
+            creatorsUri = input.creatorsUri,
             description = input.description,
-            seriesUri = input.series,
-            comicsUri = input.comics,
-            storiesUri = input.stories,
-            imageUrl = input.thumbnail
+            seriesUri = input.seriesUri,
+            comicsUri = input.comicsUri,
+            storiesUri = input.storiesUri,
+            imageUrl = input.imageUrl
         )
     }
 }
@@ -76,13 +76,13 @@ class EventToEventEntityMapper  @Inject constructor() : Mapper<Event, EventEntit
         return EventEntity(
             id = input.id,
             title = input.title,
-            creators = input.creatorsUri,
+            creatorsUri = input.creatorsUri,
             description = input.description,
-            characters = input.charactersUri,
-            series = input.seriesUri,
-            comics = input.comicsUri,
-            stories = input.storiesUri,
-            thumbnail = input.imageUrl
+            charactersUri = input.charactersUri,
+            seriesUri = input.seriesUri,
+            comicsUri = input.comicsUri,
+            storiesUri = input.storiesUri,
+            imageUrl = input.imageUrl
         )
     }
 }

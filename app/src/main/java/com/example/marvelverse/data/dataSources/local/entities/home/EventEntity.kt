@@ -1,10 +1,10 @@
-package com.example.marvelverse.data.dataSources.local.entities.search
+package com.example.marvelverse.data.dataSources.local.entities.home
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity("EVENT_SEARCH_TABLE")
-data class EventSearchEntity(
+@Entity("EVENT_TABLE")
+data class EventEntity(
     @PrimaryKey(autoGenerate = true) val id: Int?,
     val title: String?,
     val description: String?,

@@ -1,6 +1,6 @@
 package com.example.marvelverse.domain.mapper
 
-import com.example.marvelverse.data.dataSources.local.entities.ComicEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.ComicEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.ComicSearchEntity
 import com.example.marvelverse.data.dataSources.remote.reponses.ComicDto
 import com.example.marvelverse.domain.entities.Comic
@@ -30,14 +30,14 @@ class ComicSearchEntityToComicMapper  @Inject constructor(): Mapper<ComicSearchE
             id = input.id,
             title = input.title,
             description = input.description,
-            charactersUri = input.characters,
-            seriesUri = input.series,
-            storiesUri = input.stories,
-            eventsUri = input.events,
+            charactersUri = input.charactersUri,
+            seriesUri = input.seriesUri,
+            storiesUri = input.storiesUri,
+            eventsUri = input.eventsUri,
             pageCount = input.pageCount,
-            creatorsUri = input.creators,
+            creatorsUri = input.creatorsUri,
             resourceURI = input.resourceURI,
-            imageUrl = input.thumbnail
+            imageUrl = input.imageUrl
         )
     }
 }
@@ -47,15 +47,15 @@ class ComicToComicSearchEntityMapper  @Inject constructor(): Mapper<Comic, Comic
         return ComicSearchEntity(
             id = input.id,
             title = input.title,
-            characters = input.charactersUri,
-            creators = input.creatorsUri,
-            events = input.eventsUri,
-            series = input.seriesUri,
-            stories = input.storiesUri,
+            charactersUri = input.charactersUri,
+            creatorsUri = input.creatorsUri,
+            eventsUri = input.eventsUri,
+            seriesUri = input.seriesUri,
+            storiesUri = input.storiesUri,
             description = input.description,
             pageCount = input.pageCount,
             resourceURI = input.resourceURI,
-            thumbnail = input.imageUrl
+            imageUrl = input.imageUrl
         )
     }
 }
@@ -67,14 +67,14 @@ class ComicEntityToComicMapper  @Inject constructor() : Mapper<ComicEntity, Comi
             id = input.id,
             title = input.title,
             description = input.description,
-            charactersUri = input.characters,
-            seriesUri = input.series,
-            storiesUri = input.stories,
-            eventsUri = input.events,
+            charactersUri = input.charactersUri,
+            seriesUri = input.seriesUri,
+            storiesUri = input.storiesUri,
+            eventsUri = input.eventsUri,
             pageCount = input.pageCount,
-            creatorsUri = input.creators,
+            creatorsUri = input.creatorsUri,
             resourceURI = input.resourceURI,
-            imageUrl = input.thumbnail
+            imageUrl = input.imageUrl
         )
     }
 }
@@ -84,15 +84,15 @@ class ComicToComicEntityMapper  @Inject constructor() : Mapper<Comic, ComicEntit
         return ComicEntity(
             id = input.id,
             title = input.title,
-            characters = input.charactersUri,
-            creators = input.creatorsUri,
-            events = input.eventsUri,
-            series = input.seriesUri,
-            stories = input.storiesUri,
+            charactersUri = input.charactersUri,
+            creatorsUri = input.creatorsUri,
+            eventsUri = input.eventsUri,
+            seriesUri = input.seriesUri,
+            storiesUri = input.storiesUri,
             description = input.description,
             pageCount = input.pageCount,
             resourceURI = input.resourceURI,
-            thumbnail = input.imageUrl
+            imageUrl = input.imageUrl
         )
     }
 }

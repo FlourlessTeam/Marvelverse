@@ -3,10 +3,10 @@ package com.example.marvelverse.data.repositories
 import com.example.marvelverse.app.ui.home.HomeItem
 import com.example.marvelverse.data.dataSources.local.dao.HomeDao
 import com.example.marvelverse.data.dataSources.local.dao.SearchDao
-import com.example.marvelverse.data.dataSources.local.entities.CharacterEntity
-import com.example.marvelverse.data.dataSources.local.entities.ComicEntity
-import com.example.marvelverse.data.dataSources.local.entities.EventEntity
-import com.example.marvelverse.data.dataSources.local.entities.SeriesEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.CharacterEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.ComicEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.EventEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.SeriesEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.CharacterSearchEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.ComicSearchEntity
 import com.example.marvelverse.data.dataSources.local.entities.search.EventSearchEntity
