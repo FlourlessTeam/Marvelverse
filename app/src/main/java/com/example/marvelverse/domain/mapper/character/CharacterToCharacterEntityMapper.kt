@@ -1,6 +1,6 @@
 package com.example.marvelverse.domain.mapper.character
 
-import com.example.marvelverse.data.dataSources.local.entities.CharacterEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.CharacterEntity
 import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.mapper.Mapper
 import javax.inject.Inject
@@ -11,11 +11,11 @@ class CharacterToCharacterEntityMapper @Inject constructor() : Mapper<Character,
             id = input.id,
             name = input.name,
             description = input.description,
-            series = input.seriesUri,
-            comics = input.comicsUri,
-            stories = input.storiesUri,
-            events = input.eventsUri,
-            thumbnail = input.imageUrl
+            seriesUri = input.seriesUri,
+            comicsUri = input.comicsUri,
+            storiesUri = input.storiesUri,
+            eventsUri = input.eventsUri,
+            imageUrl = input.imageUrl
         )
     }
 }
