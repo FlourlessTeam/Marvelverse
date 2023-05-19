@@ -1,6 +1,6 @@
 package com.example.marvelverse.domain.mapper.event
 
-import com.example.marvelverse.data.dataSources.local.entities.EventEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.EventEntity
 import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.domain.mapper.Mapper
 import javax.inject.Inject
@@ -10,13 +10,13 @@ class EventEntityToEventMapper  @Inject constructor() : Mapper<EventEntity, Even
         return Event(
             id = input.id,
             title = input.title,
-            charactersUri = input.characters,
-            creatorsUri = input.creators,
+            charactersUri = input.charactersUri,
+            creatorsUri = input.creatorsUri,
             description = input.description,
-            seriesUri = input.series,
-            comicsUri = input.comics,
-            storiesUri = input.stories,
-            imageUrl = input.thumbnail
+            seriesUri = input.seriesUri,
+            comicsUri = input.comicsUri,
+            storiesUri = input.storiesUri,
+            imageUrl = input.imageUrl
         )
     }
 }

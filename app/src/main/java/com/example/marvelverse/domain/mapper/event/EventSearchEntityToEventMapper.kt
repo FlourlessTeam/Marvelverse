@@ -10,13 +10,13 @@ class EventSearchEntityToEventMapper @Inject constructor() : Mapper<EventSearchE
         return Event(
             id = input.id,
             title = input.title,
-            charactersUri = input.characters,
-            creatorsUri = input.creators,
+            charactersUri = input.charactersUri,
+            creatorsUri = input.creatorsUri,
             description = input.description,
-            seriesUri = input.series,
-            comicsUri = input.comics,
-            storiesUri = input.stories,
-            imageUrl = input.thumbnail
+            seriesUri = input.seriesUri,
+            comicsUri = input.comicsUri,
+            storiesUri = input.storiesUri,
+            imageUrl = input.imageUrl
         )
     }
 }
