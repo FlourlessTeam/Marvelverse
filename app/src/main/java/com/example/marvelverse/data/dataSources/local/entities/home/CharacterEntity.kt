@@ -1,4 +1,4 @@
-package com.example.marvelverse.data.dataSources.local.entities
+package com.example.marvelverse.data.dataSources.local.entities.home
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,9 +8,9 @@ data class CharacterEntity(
     @PrimaryKey(autoGenerate = true) val id: Int?,
     val name: String?,
     val description: String?,
-    val series: String?,
-    val comics: String?,
-    val stories: String?,
-    val events: String?,
-    val thumbnail: String?,
+    val seriesUri: String?,
+    val comicsUri: String?,
+    val storiesUri: String?,
+    val eventsUri: String?,
+    val imageUrl: String?,
 )

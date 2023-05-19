@@ -10,11 +10,11 @@ data class ComicSearchEntity(
     val description: String?,
     val resourceURI: String?,
     val pageCount: Int?,
-    val series: String?,
-    val characters: String?,
-    val creators: String?,
-    val stories: String?,
-    val events: String?,
-    val thumbnail: String?,
+    val seriesUri: String?,
+    val charactersUri: String?,
+    val creatorsUri: String?,
+    val storiesUri: String?,
+    val eventsUri: String?,
+    val imageUrl: String?,
 )
 

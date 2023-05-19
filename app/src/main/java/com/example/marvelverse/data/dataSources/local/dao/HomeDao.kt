@@ -3,10 +3,10 @@ package com.example.marvelverse.data.dataSources.local.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.marvelverse.data.dataSources.local.entities.CharacterEntity
-import com.example.marvelverse.data.dataSources.local.entities.ComicEntity
-import com.example.marvelverse.data.dataSources.local.entities.EventEntity
-import com.example.marvelverse.data.dataSources.local.entities.SeriesEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.CharacterEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.ComicEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.EventEntity
+import com.example.marvelverse.data.dataSources.local.entities.home.SeriesEntity
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
