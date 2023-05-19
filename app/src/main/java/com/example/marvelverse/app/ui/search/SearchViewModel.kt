@@ -19,6 +19,7 @@ import com.example.marvelverse.domain.entities.Character
 import com.example.marvelverse.domain.entities.SearchKeyword
 import com.example.marvelverse.utilites.SingleEventState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
@@ -135,14 +136,9 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
         _comicList.postValue(DataState.ShowKeywordSuggests)
         _eventList.postValue(DataState.ShowKeywordSuggests)
     }
-    override fun onCleared() {
-        super.onCleared()
-        disposables.dispose()
-        repository.clearDisposables()
-    }
 
     fun cacheKeyword(keyword: SearchKeyword) {
-        repository.saveKeyword(keyword)
+        repository.saveKeyword(keyword).subscribeOn(Schedulers.io()).subscribe().addTo(disposables)
     }
 
 }
