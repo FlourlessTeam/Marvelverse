@@ -2,13 +2,18 @@ package com.example.marvelverse.app.ui.bindingAdapters
 
 import android.view.View
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.marvelverse.R
 import com.example.marvelverse.utilites.DataState
 import com.example.marvelverse.app.ui.base.BaseAdapter
 import com.example.marvelverse.app.ui.base.BaseNestedRecyclerAdapter
 import com.example.marvelverse.app.ui.search.utils.SearchItems
+import com.example.marvelverse.domain.entities.SearchKeyword
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 
 @BindingAdapter(value = ["app:items"])
@@ -115,6 +120,18 @@ fun <T> showWhenSearchEmpty(view: View, items: SearchItems?) {
     }
 }
 
+@BindingAdapter(value = ["app:showWhenSearchInSearchSuggests"])
+fun <T> showWhenSearchInSearchSuggests(view: View, items: SearchItems?) {
+    if (items?.characters is DataState.ShowKeywordSuggests &&
+        items.comics is DataState.ShowKeywordSuggests &&
+        items.events is DataState.ShowKeywordSuggests
+    ) {
+        view.visibility = View.VISIBLE
+    } else {
+        view.visibility = View.GONE
+    }
+}
+
 @BindingAdapter("thumbnail")
 fun ImageView.bindThumbNail(thumbnail: String) {
     thumbnail.let {
@@ -124,3 +141,5 @@ fun ImageView.bindThumbNail(thumbnail: String) {
             .into(this)
     }
 }
+
+

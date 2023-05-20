@@ -2,10 +2,14 @@ package com.example.marvelverse.app.ui.search
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.marginEnd
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
+import com.example.marvelverse.R
 import com.example.marvelverse.app.ui.base.BaseAdapter
 import com.example.marvelverse.app.ui.base.BottomNavFragment
 import com.example.marvelverse.app.ui.characters.CharactersAdapter
@@ -19,21 +23,25 @@ import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.domain.entities.Event
 import com.example.marvelverse.domain.entities.SearchKeyword
 import com.example.marvelverse.utilites.DataState
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
+
 @AndroidEntryPoint
 class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
     private val viewModel: SearchViewModel by viewModels()
-    private val disposable= CompositeDisposable()
+    private val disposable = CompositeDisposable()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        viewModel.getAllSearchKeyword()
 
         viewModel.searchEvent.observe(viewLifecycleOwner) { event ->
             event.getUnHandledData()?.let {
@@ -45,6 +53,7 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
             handleRecyclerAdapters()
 
         }
+        viewModel.searchKeyword.observe(viewLifecycleOwner){searchKeywordsToChips(it)}
         onChangeSelectedChip()
         searchViewListener()
 
@@ -131,7 +140,7 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
     }
 
     private fun searchViewListener() {
-        val observable = Observable.create{ emitter ->
+        val observable = Observable.create { emitter ->
             binding.searchViewLayout.editText?.doOnTextChanged { text, _, _, _ ->
                 if (text.isNullOrBlank()) {
                     viewModel.showKeywordSuggests()
@@ -143,8 +152,11 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(1, TimeUnit.SECONDS)
             .subscribe { text ->
-                viewModel.cacheKeyword(SearchKeyword(text))
-                makeSearch(text, viewModel.searchFilterOption.value!!)
+                val current = binding.searchViewLayout.editText?.text.toString()
+                if (current == text) {
+                    viewModel.cacheKeyword(SearchKeyword(text))
+                    makeSearch(text, viewModel.searchFilterOption.value!!)
+                }
             }
         disposable.add(observable)
     }
@@ -156,6 +168,23 @@ class SearchFragment : BottomNavFragment<FragmentSearchBinding>(FragmentSearchBi
                 SearchFilter.Comic -> viewModel.comicSearch(null, text)
                 SearchFilter.Event -> viewModel.eventSearch(null, text)
             }
+        }
+    }
+
+    private fun searchKeywordsToChips(items: List<SearchKeyword>?) {
+        binding.searchSuggest.removeAllViews()
+
+        items?.take(10)?.forEach {searchKeyword->
+            val c = Chip(context).apply {
+                text = searchKeyword.keyword
+                isCloseIconVisible = false
+                setTextColor(ContextCompat.getColor(context, R.color.black))
+                setOnClickListener{
+                    binding.searchViewLayout.editText?.setText(searchKeyword.keyword)
+                    makeSearch(searchKeyword.keyword,viewModel.searchFilterOption.value!!)
+                }
+            }
+            binding.searchSuggest.addView(c)
         }
     }
 
