@@ -3,39 +3,37 @@ package com.example.marvelverse.app.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.example.marvelverse.app.ui.base.BottomNavFragment
 import com.example.marvelverse.app.ui.adapter.HomeAdapter
+import com.example.marvelverse.data.dataSources.local.MarvelDatabase
 import com.example.marvelverse.databinding.FragmentHomeBinding
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
-import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
+import com.example.marvelverse.domain.entities.Series
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BottomNavFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private val viewModel: HomeViewModel by viewModels()
-    private lateinit var adapter: HomeAdapter
+    private val adapter by lazy { HomeAdapter(viewModel) }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setupRecyclerView()
-        setupObservers()
-    }
-
-    private fun setupRecyclerView() {
-        adapter = HomeAdapter(viewModel)
         binding.recyclerView.adapter = adapter
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        setupObservers()
     }
 
     private fun setupObservers() {
-        viewModel.homeEvents.observe(viewLifecycleOwner) { event ->
-            event?.let {
-                handleEvent(event)
-                viewModel.clearEvents()
+        viewModel.homeEvent.observe(viewLifecycleOwner) { event ->
+            event.getUnHandledData()?.let {
+                handleEvent(it)
             }
         }
     }
@@ -50,52 +48,56 @@ class HomeFragment : BottomNavFragment<FragmentHomeBinding>(FragmentHomeBinding:
             HomeEvent.ClickSeeAllEventsEvent -> handleSeeAllEventsClick()
             HomeEvent.ClickSeeAllSeriesEvent -> handleSeeAllSeriesClick()
             HomeEvent.ClickSeeAllCharactersEvent -> handleSeeAllCharactersClick()
-            else -> {}
         }
     }
 
     private fun handleCharacterClick(character: Character) {
         val direction =
             HomeFragmentDirections.actionHomeFragmentToDetailsCharacterFragment(character)
-        binding.root.findNavController().navigate(direction)
+        goToNavigate(direction)
     }
 
     private fun handleComicClick(comic: Comic) {
         val direction = HomeFragmentDirections.actionHomeFragmentToComicDetailsFragment(comic)
-        binding.root.findNavController().navigate(direction)
+        goToNavigate(direction)
     }
 
     private fun handleEventClick(event: Event) {
         val direction = HomeFragmentDirections.actionHomeFragmentToEventDetailsFragment(event)
-        binding.root.findNavController().navigate(direction)
+        goToNavigate(direction)
     }
 
     private fun handleSeriesClick(series: Series) {
         val direction = HomeFragmentDirections.actionHomeFragmentToSeriesDetailsFragment(series)
-        binding.root.findNavController().navigate(direction)
+        goToNavigate(direction)
     }
 
     private fun handleSeeAllComicsClick() {
         val direction = HomeFragmentDirections.actionHomeFragmentToComicsFragment()
-        binding.root.findNavController().navigate(direction)
+        goToNavigate(direction)
     }
 
     private fun handleSeeAllEventsClick() {
         val direction = HomeFragmentDirections.actionHomeFragmentToEventsFragment()
-        binding.root.findNavController().navigate(direction)
+        goToNavigate(direction)
     }
 
     private fun handleSeeAllSeriesClick() {
         val direction = HomeFragmentDirections.actionHomeFragmentToSeriesFragment()
-        binding.root.findNavController().navigate(direction)
+        goToNavigate(direction)
     }
 
     private fun handleSeeAllCharactersClick() {
         val direction = HomeFragmentDirections.actionHomeFragmentToCharactersFragment()
+        goToNavigate(direction)
+    }
+    private fun goToNavigate(direction: NavDirections){
         binding.root.findNavController().navigate(direction)
     }
 
 
-
 }
+
+
+
 

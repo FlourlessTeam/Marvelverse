@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.dagger.hilt.android'
 }
 
 
@@ -20,6 +21,7 @@ android {
         //Todo add your Api Keys here
         buildConfigField "String", "public_key", '"4af2f3af478a5ca944259f72d0b5565c"'
         buildConfigField "String", "private_key", '"32b03f302eff2def1086558620b3657a1ab873fa"'
+        buildConfigField "String", "base_url", '"https://gateway.marvel.com/v1/public/"'
     }
     buildFeatures {
         dataBinding true
@@ -38,6 +40,7 @@ android {
 
 
 dependencies {
+    implementation 'androidx.room:room-common:2.5.1'
     def nav_version = "2.5.3"
 
     implementation 'androidx.core:core-ktx:1.10.0'
@@ -73,5 +76,19 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.15.1'
     implementation "com.airbnb.android:lottie:3.4.0"
+
+    //lottie
+    implementation 'com.airbnb.android:lottie:6.0.0'
+
+    //room database
+    def room_version = "2.5.1"
+
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava3:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+   //hilt dependency
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
 
 }

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.marvelverse.domain.entities.main.Character" />
+            type="com.example.marvelverse.domain.entities.Character" />
         <variable
             name="listener"
             type="com.example.marvelverse.app.ui.interfaces.CharacterInteractionListener" />
@@ -29,7 +29,7 @@
             app:shapeAppearanceOverlay="@style/card_circle"
             app:strokeColor="#303030"
             android:padding="2dp"
-            app:imageUrl="@{item.thumbnail.path+'.'+item.thumbnail.extension}"
+            thumbnail="@{item.imageUrl}"
             app:strokeWidth="1dp" />
 
         <TextView

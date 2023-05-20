@@ -3,6 +3,7 @@ package com.example.marvelverse.app.ui.events.details
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.marvelverse.app.ui.base.InnerFragment
@@ -10,11 +11,12 @@ import com.example.marvelverse.app.ui.adapter.CharactersAdapter
 import com.example.marvelverse.app.ui.adapter.ComicsAdapter
 import com.example.marvelverse.app.ui.adapter.SeriesAdapter
 import com.example.marvelverse.databinding.FragmentEventDetailsBinding
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Series
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Series
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class EventDetailsFragment :
     InnerFragment<FragmentEventDetailsBinding>(FragmentEventDetailsBinding::inflate) {
     private val args: EventDetailsFragmentArgs by navArgs()
@@ -37,22 +39,25 @@ class EventDetailsFragment :
 
     private fun getRecyclerData() {
         viewModel.apply {
-            getCharacters(args.event.characters.collectionURI)
-            getSeries(args.event.series.collectionURI)
-            getComics(args.event.comics.collectionURI)
+            getCharacters(args.event.charactersUri!!)
+            getSeries(args.event.seriesUri!!)
+            getComics(args.event.comicsUri!!)
         }
     }
 
     private fun observeEvents() {
 
         viewModel.eventDetailsEvents.observe(viewLifecycleOwner) { clickEvent ->
-            when (clickEvent) {
-                is EventDetailsEvents.ClickCharacterEvent -> navigateToCharacterDetails(clickEvent.character)
-                is EventDetailsEvents.ClickComicEvent -> navigateToComicDetails(clickEvent.comic)
-                is EventDetailsEvents.ClickSeriesEvent -> navigateToSeriesDetails(clickEvent.series)
-                else -> {}
+            clickEvent.getUnHandledData()?.let {
+                handleEvent(it)
             }
-            viewModel.clearEvents()
+        }
+    }
+    fun handleEvent(event: EventDetailsEvents) {
+        when (event) {
+            is EventDetailsEvents.ClickCharacterEvent -> navigateToCharacterDetails(event.character)
+            is EventDetailsEvents.ClickComicEvent -> navigateToComicDetails(event.comic)
+            is EventDetailsEvents.ClickSeriesEvent -> navigateToSeriesDetails(event.series)
         }
     }
 
@@ -61,7 +66,7 @@ class EventDetailsFragment :
             EventDetailsFragmentDirections.actionEventDetailsFragmentToDetailsCharacterFragment(
                 character
             )
-        findNavController().navigate(directions)
+        goToNavigate(directions)
     }
 
     private fun navigateToComicDetails(comic: Comic) {
@@ -69,7 +74,7 @@ class EventDetailsFragment :
             EventDetailsFragmentDirections.actionEventDetailsFragmentToComicDetailsFragment(
                 comic
             )
-        findNavController().navigate(directions)
+        goToNavigate(directions)
 
     }
 
@@ -78,6 +83,9 @@ class EventDetailsFragment :
             EventDetailsFragmentDirections.actionEventDetailsFragmentToSeriesDetailsFragment(
                 series
             )
-        findNavController().navigate(directions)
+        goToNavigate(directions)
+    }
+    private fun goToNavigate(direction: NavDirections){
+        findNavController().navigate(direction)
     }
 }

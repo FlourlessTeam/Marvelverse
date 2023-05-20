@@ -1,7 +1,7 @@
 package com.example.marvelverse.app.ui.comics
 import com.example.marvelverse.R
 import com.example.marvelverse.app.ui.base.BaseInteractionListener
-import com.example.marvelverse.domain.entities.main.Comic
+import com.example.marvelverse.domain.entities.Comic
 import com.example.marvelverse.app.ui.base.BaseAdapter
 
 

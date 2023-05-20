@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.marvelverse.app.ui.search.SearchViewModel" />
@@ -13,38 +14,28 @@
         android:layout_height="match_parent"
         android:background="@color/background">
 
-        <SearchView
-            android:id="@+id/search_view_result"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search_view_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_margin="16dp"
             android:background="@drawable/search_view_background"
             android:iconifiedByDefault="false"
-            android:queryBackground="@android:color/transparent"
-            android:queryHint="Search"
-            app:clearWhenOptionChanged="@{viewModel.searchFilterOption}"
-            app:layout_constraintEnd_toStartOf="@+id/filter_button"
+            android:imeOptions="actionSearch"
+            app:endIconMode="clear_text"
+            app:hintEnabled="false"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:onTextChange="@{viewModel}" />
+            app:startIconDrawable="@drawable/search_icon">
 
-        <ImageButton
-            android:id="@+id/filter_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@drawable/search_view_background"
-            android:contentDescription="Advanced Filter"
-            android:src="@drawable/filter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/search_view_result"
-            app:layout_constraintTop_toTopOf="@id/search_view_result"
-            app:selectedFilterOption="@{viewModel.searchFilterOption}"
-            app:showBottomSheet="@{viewModel}"
-            app:tint="@color/icon_background" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Search" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <ImageView
             android:layout_width="wrap_content"
@@ -56,29 +47,70 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:showWhenError="@{viewModel.itemList}" />
+            app:showWhenSearchError="@{viewModel.searchResult}" />
+
+        <HorizontalScrollView
+            android:id="@+id/chips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:scrollbars="none"
+            app:layout_constraintTop_toBottomOf="@id/search_view_layout">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_search_option"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_character"
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Character" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_comics"
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comics" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_event"
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Events" />
+
+
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:clipToPadding="false"
             android:paddingHorizontal="8dp"
             android:paddingVertical="8dp"
-            android:layout_marginTop="8dp"
-            app:hideWhenEmpty="@{viewModel.itemList}"
-            app:items="@{viewModel.itemList.toData()}"
+            android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_view_result"
-            app:listener="@{viewModel}"
-            app:setUpRecyclerByData="@{viewModel.searchFilterOption}"
-            app:showWhenSuccess="@{viewModel.itemList}"
+            app:layout_constraintTop_toBottomOf="@id/chips"
+            app:showWhenSearchSuccess="@{viewModel.searchResult}"
             app:spanCount="2"
-            tools:visibility="gone"
-            tools:listitem="@layout/item_comic"/>
+            tools:listitem="@layout/item_comic"
+            tools:visibility="gone" />
 
         <ProgressBar
             android:layout_width="wrap_content"
@@ -88,48 +120,68 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:showWhenLoading="@{viewModel.itemList}" />
+            app:showWhenSearchLoading="@{viewModel.searchResult}" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center"
-            app:showWhenEmpty="@{viewModel.itemList}"
-            android:orientation="vertical">
+            app:showWhenSearchEmpty="@{viewModel.searchResult}">
+
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animationView"
                 android:layout_width="360dp"
                 android:layout_height="180dp"
+                android:layout_marginBottom="16dp"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                app:lottie_rawRes="@raw/empty_list"
-                android:layout_marginBottom="16dp"
-                />
+                app:lottie_rawRes="@raw/empty_list" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/main_title"
+                android:layout_marginBottom="8dp"
                 android:text="No results found "
+                android:textColor="@color/main_title"
                 android:textSize="18sp"
-                android:visibility="visible"
-                android:layout_marginBottom="8dp"/>
+                android:visibility="visible" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/body_text"
-                android:textSize="14sp"
                 android:gravity="center"
                 android:text="We couldn't find what you searched for\nTry searching again"
+                android:textColor="@color/body_text"
+                android:textSize="14sp"
                 android:visibility="visible" />
         </LinearLayout>
 
 
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/search_Suggest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:scrollbars="none"
+            app:showWhenSearchInSearchSuggests="@{viewModel.searchResult}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chips"
+            app:layout_constraintVertical_bias="0.053">
+
+        </com.google.android.material.chip.ChipGroup>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,47 +6,42 @@ import com.example.marvelverse.utilites.DataState
 import com.example.marvelverse.app.ui.base.BaseViewModel
 import com.example.marvelverse.app.ui.interfaces.ComicInteractionListener
 import com.example.marvelverse.data.repositories.MarvelRepository
-import com.example.marvelverse.domain.entities.main.Comic
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.utilites.SingleEventState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ComicViewModel : BaseViewModel(), ComicInteractionListener {
+@HiltViewModel
+class ComicViewModel @Inject constructor(private val repository: MarvelRepository) : BaseViewModel(), ComicInteractionListener {
+    private var _comic = MutableLiveData<DataState<Comic>>()
+    val comic: LiveData<DataState<Comic>> get() = _comic
 
-    private var _Comic = MutableLiveData<DataState<Comic>>()
-    val comic: LiveData<DataState<Comic>> get() = _Comic
-
-    private val _comicEvent = MutableLiveData<ComicEvent>()
-    val comicEvent: LiveData<ComicEvent> get() = _comicEvent
+    private val _comicEvent = MutableLiveData<SingleEventState<ComicEvent>>()
+    val comicEvent: LiveData<SingleEventState<ComicEvent>> get() = _comicEvent
 
     init {
         getComic()
     }
 
     private fun getComic() {
-        _Comic.postValue(DataState.Loading)
-        MarvelRepository.searchComics()
-            .applySchedulers()
-            .subscribe(
-                {
-                    _Comic.postValue(DataState.Success(it))
-                },
-                {
-                    _Comic.postValue(DataState.Error(it))
-                }
-            ).addTo(disposables)
+        _comic.postValue(DataState.Loading)
+        repository.searchComics().subscribeBy(::onComicSuccess, ::onComicError)
+    }
+    private fun onComicSuccess(it: List<Comic>) {
+        if (it.isEmpty()) {
+            _comic.postValue(DataState.Empty)
+        } else {
+            _comic.postValue(DataState.Success(it))
+        }
+    }
+    private fun onComicError(it: Throwable) {
+        _comic.postValue(DataState.Error(it))
     }
 
 
     override fun onComicClick(comic: Comic) {
-        _comicEvent.postValue(ComicEvent.ClickComicEvent(comic))
+        _comicEvent.postValue(SingleEventState(ComicEvent.ClickComicEvent(comic)))
     }
 
-    fun backToHome() {
-        _comicEvent.postValue(ComicEvent.BackToHome)
-    }
-
-
-    fun clearEvents() {
-        if (_comicEvent.value != ComicEvent.ReadyState)
-            _comicEvent.postValue(ComicEvent.ReadyState)
-    }
 
 }

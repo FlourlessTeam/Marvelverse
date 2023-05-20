@@ -11,7 +11,7 @@
 
         <variable
             name="item"
-            type="com.example.marvelverse.domain.entities.main.Event" />
+            type="com.example.marvelverse.domain.entities.Event" />
     </data>
 
     <ScrollView
@@ -36,7 +36,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/spider"
                 app:roundPercent="0.2"
-                app:thumbnail="@{item.thumbnail}" />
+                app:thumbnail="@{item.imageUrl}" />
 
             <TextView
                 android:id="@+id/event_title"
@@ -77,7 +77,7 @@
 
             <TextView
                 android:id="@+id/characters"
-                availableItemsVisibility="@{viewModel.character}"
+                app:showWhenSuccess="@{viewModel.comics}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -89,20 +89,20 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_characters"
-                availableItemsVisibility="@{viewModel.character}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="8dp"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
                 android:paddingHorizontal="16dp"
+                app:showWhenSuccess="@{viewModel.character}"
                 app:items="@{viewModel.character}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_character_card" />
 
             <TextView
                 android:id="@+id/comics"
-                availableItemsVisibility="@{viewModel.comics}"
+                app:showWhenSuccess="@{viewModel.comics}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -114,7 +114,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_comics"
-                availableItemsVisibility="@{viewModel.comics}"
+                app:showWhenSuccess="@{viewModel.comics}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="8dp"
@@ -127,7 +127,7 @@
 
             <TextView
                 android:id="@+id/series"
-                availableItemsVisibility="@{viewModel.series}"
+                app:showWhenSuccess="@{viewModel.comics}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -139,7 +139,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_series"
-                availableItemsVisibility="@{viewModel.series}"
+                app:showWhenSuccess="@{viewModel.series}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="8dp"

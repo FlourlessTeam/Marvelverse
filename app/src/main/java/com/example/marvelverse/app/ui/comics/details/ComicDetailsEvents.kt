@@ -1,10 +1,9 @@
 package com.example.marvelverse.app.ui.comics.details
 
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Event
 
 sealed interface ComicDetailsEvents {
-    object ReadyState : ComicDetailsEvents
     data class ClickCharacterEvent(val character: Character) : ComicDetailsEvents
     data class ClickEventEvent(val event: Event) : ComicDetailsEvents
 }

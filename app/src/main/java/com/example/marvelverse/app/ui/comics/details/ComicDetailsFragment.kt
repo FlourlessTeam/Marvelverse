@@ -9,9 +9,11 @@ import com.example.marvelverse.app.ui.base.InnerFragment
 import com.example.marvelverse.app.ui.adapter.CharactersAdapter
 import com.example.marvelverse.app.ui.adapter.EventDetailsAdapter
 import com.example.marvelverse.databinding.FragmentComicDetailsBinding
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Event
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ComicDetailsFragment :
     InnerFragment<FragmentComicDetailsBinding>(FragmentComicDetailsBinding::inflate) {
     private val viewModel: ComicsDetailsViewModel by viewModels()
@@ -33,18 +35,21 @@ class ComicDetailsFragment :
     }
 
     private fun getRecyclerData() {
-        viewModel.getEvent(args.comic.events.collectionURI)
-        viewModel.getCharacter(args.comic.characters.collectionURI)
+        viewModel.getEvent(args.comic.eventsUri!!)
+        viewModel.getCharacter(args.comic.charactersUri!!)
     }
 
     private fun observeEvents() {
-        viewModel.comicsDetailsEvent.observe(viewLifecycleOwner) {
-            when (it) {
-                is ComicDetailsEvents.ClickCharacterEvent -> navigateToCharacterDetails(it.character)
-                is ComicDetailsEvents.ClickEventEvent -> navigateToEventDetails(it.event)
-                else -> {}
+        viewModel.comicsDetailsEvent.observe(viewLifecycleOwner) { event->
+            event.getUnHandledData()?.let {
+                handleEvent(it)
             }
-            viewModel.clearEvents()
+        }
+    }
+    fun handleEvent(event: ComicDetailsEvents) {
+        when (event) {
+            is ComicDetailsEvents.ClickCharacterEvent -> navigateToCharacterDetails(event.character)
+            is ComicDetailsEvents.ClickEventEvent -> navigateToEventDetails(event.event)
         }
     }
 

@@ -10,10 +10,12 @@ import com.example.marvelverse.app.ui.adapter.CharactersAdapter
 import com.example.marvelverse.app.ui.adapter.ComicsAdapter
 import com.example.marvelverse.app.ui.adapter.EventDetailsAdapter
 import com.example.marvelverse.databinding.FragmentSeriesDetailsBinding
-import com.example.marvelverse.domain.entities.main.Character
-import com.example.marvelverse.domain.entities.main.Comic
-import com.example.marvelverse.domain.entities.main.Event
+import com.example.marvelverse.domain.entities.Character
+import com.example.marvelverse.domain.entities.Comic
+import com.example.marvelverse.domain.entities.Event
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SeriesDetailsFragment :
     InnerFragment<FragmentSeriesDetailsBinding>(FragmentSeriesDetailsBinding::inflate) {
     private val viewModel: SeriesDetailsViewModel by viewModels()
@@ -38,25 +40,28 @@ class SeriesDetailsFragment :
 
     private fun getRecyclerData() {
         viewModel.apply {
-            getCharacters(args.series.characters.collectionURI)
-            getEvents(args.series.events.collectionURI)
-            getComics(args.series.comics.collectionURI)
+            getCharacters(args.series.charactersUri!!)
+            getEvents(args.series.eventsUri!!)
+            getComics(args.series.comicsUri!!)
         }
     }
 
 
     private fun observeSeries() {
-
-        viewModel.detailsSeries.observe(viewLifecycleOwner) { clickSeries ->
-            when (clickSeries) {
-                is DetailsSeries.ClickCharacterSeries -> navigateToCharacterDetails(clickSeries.character)
-                is DetailsSeries.ClickComicSeries -> navigateToComicDetails(clickSeries.comic)
-                is DetailsSeries.ClickEventSeries -> navigateToEventDetails(clickSeries.event)
-                else -> {}
+        viewModel.detailsSeries.observe(viewLifecycleOwner) { event ->
+            event.getUnHandledData()?.let {
+                handleEvent(it)
             }
-            viewModel.clearEvents()
         }
 
+    }
+
+    fun handleEvent(event: SeriesDetailsEvents) {
+        when (event) {
+            is SeriesDetailsEvents.ClickCharacterSeries -> navigateToCharacterDetails(event.character)
+            is SeriesDetailsEvents.ClickComicSeries -> navigateToComicDetails(event.comic)
+            is SeriesDetailsEvents.ClickEventSeries -> navigateToEventDetails(event.event)
+        }
     }
 
     private fun navigateToCharacterDetails(character: Character) {

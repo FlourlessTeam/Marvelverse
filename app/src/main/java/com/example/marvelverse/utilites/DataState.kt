@@ -3,6 +3,8 @@ package com.example.marvelverse.utilites
 sealed class DataState<out T> {
     object Loading : DataState<Nothing>()
     object Empty : DataState<Nothing>()
+
+    object ShowKeywordSuggests : DataState<Nothing>()
     data class Error(val e: Throwable) : DataState<Nothing>()
     data class Success<T>(val data: List<T>) : DataState<T>()
 
