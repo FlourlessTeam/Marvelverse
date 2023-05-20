@@ -8,6 +8,6 @@ import javax.inject.Inject
 class KeywordToKeywordEntityMapper  @Inject constructor():
     Mapper<SearchKeyword, SearchKeywordEntity> {
     override fun map(input: SearchKeyword): SearchKeywordEntity {
-        return SearchKeywordEntity(input.keyword,input.timestamp)
+        return SearchKeywordEntity(null ,input.keyword,input.timestamp)
     }
 }

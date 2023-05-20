@@ -54,7 +54,7 @@ class SearchViewModel @Inject constructor(private val repository: MarvelReposito
     val searchKeyword :LiveData<List<SearchKeyword>> = _searchKeyword
 
     init {
-        getAllSearchKeyword()
+        showKeywordSuggests()
         searchFilterOption.postValue(SearchFilter.Character)
         _searchResult.addSource(_comicList) { comics ->
             _searchResult.value = SearchItems(comics, _characterList.value ?: DataState.Empty, _eventList.value ?: DataState.Empty)

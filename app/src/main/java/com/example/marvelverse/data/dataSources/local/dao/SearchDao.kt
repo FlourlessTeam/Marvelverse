@@ -35,7 +35,7 @@ interface SearchDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertKeyword(keyword: SearchKeywordEntity): Completable
 
-    @Query("SELECT * FROM KEYWORD_SEARCH_TABLE ORDER BY timestamp DESC")
+    @Query("SELECT * FROM KEYWORD_SEARCH_TABLE ORDER BY id DESC")
     fun getAllKeywords(): Single<List<SearchKeywordEntity>>
 
 }

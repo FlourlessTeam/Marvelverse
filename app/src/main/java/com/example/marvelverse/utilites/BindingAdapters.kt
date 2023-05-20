@@ -142,14 +142,4 @@ fun ImageView.bindThumbNail(thumbnail: String) {
     }
 }
 
-@BindingAdapter("app:ItemsToChip")
-fun ChipGroup.itemsToChips(items: List<SearchKeyword>?) {
-    items?.forEach {
-        val c = Chip(context).apply {
-        text = it.keyword
-        isCloseIconVisible = true
-        setTextColor(ContextCompat.getColor(context, R.color.black))
-    }
-        this.addView(c)
-    }
-}
+
