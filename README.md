@@ -25,4 +25,5 @@ About Screen: The app includes an "About" screen that provides information about
 - [Data Binding](https://developer.android.com/codelabs/android-databinding#0)
 - [Live Data](https://developer.android.com/topic/libraries/architecture/livedata)
 - [Navigation](https://developer.android.com/jetpack/androidx/releases/navigation)
-
+## Contributors
+Contributions are welcome! If you find any issues or want to contribute to the project, feel free to open a pull request or submit an issue.
