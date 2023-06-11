@@ -1,5 +1,5 @@
 # :clapper: Marvelverse
-The Marvel App is an exciting mobile application that allows users to explore and discover a vast universe of Marvel superheroes, comics, events, and more. With a sleek and user-friendly interface, the app provides an immersive experience for Marvel enthusiasts of all ages .
+The Marvel App is an exciting mobile application that allows users to explore and discover a vast universe of Marvel superheroes, comics, events, and more. With a sleek and user-friendly interface, the app provides an immersive experience for Marvel enthusiasts of all ages.
 # 📘 Features
 Home Screen: The app features a dynamic home screen that provides an overview of the latest and trending characters, comics, events, and series. Users can easily navigate and explore the Marvel universe right from the home screen.
 
